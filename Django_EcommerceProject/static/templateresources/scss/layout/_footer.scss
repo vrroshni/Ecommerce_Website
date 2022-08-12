@@ -1,0 +1,63 @@
+/*****************************
+11 - Layout - Footer
+*****************************/
+
+.footer{
+	&-widget{
+		.widget-title{
+			@extend %body-color;
+			@extend %fontSize18;
+			@extend %fontWeight500;
+			@extend %textTupper;
+			@extend %lineheight1;
+			@include breakpoint(large){
+				font-size: 15px;
+			}
+		}
+		.footer-menu{
+			li{
+				@extend %lineheight1;
+				&:not(:last-child){
+					margin-bottom: 25px;
+				}
+				a{
+					@extend %fontSize14;
+				}
+			}
+		}
+		.taglist{
+			@extend %textAcenter;
+			span{
+				@extend %fontWeight700;
+				@extend %fontSize14;
+				@extend %body-color;
+			}
+			a{
+				@extend %posrelative;
+				@extend %fontSize14;
+				@extend %body-color;
+				@extend %fontWeight300;
+				font-style: italic;
+				padding-left: 2px;
+				&:not(:last-child){
+					padding-right: 8px;
+					&:after{
+						@extend %posabsolute;
+						content: '|';
+						@extend %right-0;
+						@extend %top-0;
+						@extend %body-color;
+						@extend %lineheight1;
+						@extend %fontSize16;
+					}
+				}
+			}
+		}
+	}
+}
+.copyright-text{
+	margin-bottom: 0;
+	i{
+		color: red;
+	}
+}

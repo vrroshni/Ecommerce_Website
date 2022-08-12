@@ -1,0 +1,28 @@
+[data-theme-version="dark"] {
+	.nav-header{
+		border-color:$d-border;
+	}
+		
+  
+
+    .nav-control {
+        color: $white;
+    }
+
+    .brand-logo {
+        color: $white;
+
+        &:hover {
+            color: $white;
+        }
+    }
+	.brand-title{
+		path{
+			fill:$white;	
+		}	
+	}
+	
+	.svg-title-path{
+		fill:var(--primary);
+	}
+}

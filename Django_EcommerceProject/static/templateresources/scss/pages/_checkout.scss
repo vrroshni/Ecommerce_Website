@@ -1,0 +1,94 @@
+/*****************************
+41 - Pages - Checkout
+*****************************/
+
+.user-actions{
+	&__form{
+		margin-bottom: 30px;
+		@include breakpoint(small){
+			margin-bottom: 20px;
+		}
+		.form{
+			&__input{
+				width: 48%;
+				height: 47px;
+				@include breakpoint(xsmall){
+					width: 100%;
+					margin-bottom: 20px;
+				}
+			}
+		}
+	}
+}
+
+.checkout{
+	&-title{
+		h2{
+			font-size: 20px;
+			margin-bottom: 45px;
+			@extend %posrelative;
+			@include breakpoint(medium){
+				margin-bottom: 30px;
+			}
+			@include breakpoint(xsmall){
+				margin-bottom: 20px;
+			}
+			&:after{
+			    content: "";
+			    width: 50px;
+			    @extend %displayBlock;
+			    margin-top: 10px;
+			    border-bottom-width: 2px;
+			    border-bottom-style: solid;
+			    border-color: inherit;
+			}
+		}
+	}
+}
+.new-account{
+	padding-top: 20px;
+}
+.order-details{
+	padding: 40px 45px;
+	border: 2px solid $border-color;
+	@include breakpoint(small){
+		padding: 30px 35px;
+	}
+	@include breakpoint(xsmall){
+		padding: 20px 25px;
+	}
+}
+.payment{
+	&-label{
+		@extend %heading-color;
+		@extend %textTupper;
+	}
+	&-radio{
+		input{
+			margin-right: 10px;
+		}
+	}
+	&-info{
+		padding: 10px 0;
+		p{
+			@extend %fontSize12;
+			@extend %marginBottom-0;
+		}
+	}
+}
+.terms-condition-label{
+	a{
+		@extend %fontSize18;
+		@extend %fontWeight500;
+		&:hover{
+			@extend %textDunder;
+		}
+	}
+}
+.shipping-method{
+	@extend %verticalFlexCenter;
+	@extend %flex-column;
+	.custom-radio{
+		width: 150px; 
+	}
+} 

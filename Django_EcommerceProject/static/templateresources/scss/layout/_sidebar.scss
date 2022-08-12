@@ -1,0 +1,120 @@
+/*****************************
+12 - Layout - Sidebar
+*****************************/
+
+.bl-widget{
+    @extend %border;
+    &.author{ 
+        padding: 29px 20px 0;
+        @extend %paddingBottom-0;
+        .inner{
+            @extend %textAcenter;
+            .thumb {
+                img {
+                    width: 150px;
+                    height: 150px;
+                    margin-bottom: 16px;
+                    @extend %borderRadius50;
+                }
+            }
+            .info{
+                .degne{
+                    color: #a1a1a1;
+                    @extend %fontSize13;
+                    font-style: italic;
+                    margin-bottom: 6px;
+                }
+
+                .autor-meta{
+                    @extend %border-top;
+                    margin: 0 -20px;
+                    span{
+                        @extend %displayInlineBlock;
+                        @extend %fontSize14;
+                        color: #222;
+                        padding: 10px 12px;
+                        strong{
+                            color: #5a5c68;
+                            @extend %displayBlock;
+                        }
+                        & + span{
+                            @extend %border-left;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.post{
+        padding: 20px;
+        @extend %textAleft;
+        .inner{
+            .post-list{
+                @extend %padding-0;
+                @extend %margin-0;
+                list-style: none;
+                margin-bottom: -20px;
+                margin-top: 30px;
+                li{
+                    margin-bottom: 20px;
+                    a {
+                        color: #222;
+                        @extend %displayBlock;
+                        line-height: 20px;
+                        @extend %textTupper;
+                        margin-bottom: 6px;
+                        transition: 0.4s;
+                        @extend %fontSize13;
+                        &:hover{
+                            color: $primary-color;
+                        }
+                    }
+                    span { 
+                        color: #bab9be;
+                        i {
+                            padding-right: 6px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.quote{
+        padding: 20px;
+        .inner{
+            .post-quote {
+                .quote-info {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    i {
+                        color: $primary-color;
+                        padding-right: 15px;
+                        font-size: 22px;
+                    }
+                }
+                p{
+                    font-size: 15px;
+                    line-height: 1.6;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

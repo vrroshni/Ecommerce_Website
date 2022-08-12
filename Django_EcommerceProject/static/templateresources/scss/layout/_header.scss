@@ -1,0 +1,143 @@
+/*****************************
+10 - Layout - Header
+*****************************/
+
+/*-- 10.00 - Header --*/
+
+.header{
+	.logo{
+		display: block;
+		&--transparent{
+			height: 0;
+			opacity: 0;
+			visibility: hidden;
+		}
+		&--normal{
+			height: auto;
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	&__main{
+		&-inner{
+			position: relative;
+	        @include flexbox;
+	        @include align-items(center);
+	        padding-top: 25px;
+	        padding-bottom: 25px;
+		}
+		&-left{
+            @include flex-shrink(0);
+            @include flex-basis(18%);
+            @include breakpoint(small){
+            	@include flex-basis(45%);
+            }
+		}
+		&-center{
+			@include flex-grow(1);
+		}
+		&-right{
+            @include flex-shrink(0);
+            @include flex-basis(18%);
+            @include breakpoint(small){
+            	@include flex-basis(55%);
+            }
+		}
+	}
+	&-toolbar{
+		@include flexbox;
+		@include align-items(center);
+		@include justify-content(flex-end);
+		line-height: 1;
+		&--search-btn{
+			margin-right: 50px;
+			@include breakpoint(large){
+				margin-right: 30px;
+			}
+			@include breakpoint(xsmall){
+				margin-right: 20px;
+			}
+			@include breakpoint(xsmall){
+				margin-right: 10px;
+			}
+		}
+		&--minicart-btn{
+			@include breakpoint(medium){
+				margin-right: 30px;
+			}
+			@include breakpoint(xsmall){
+				margin-right: 20px;
+			}
+			@include breakpoint(xsmall){
+				margin-right: 10px;
+			}
+			.toolbar-btn{
+				@include flexbox;
+				@include align-items(center);
+				span{
+					display: inline-block;
+					@include borderIconCenter(25,1);
+					@include border-radius(50%);
+					font-size: 12px;
+					border: 1px solid $border-color;
+					margin-left: 12px;
+					@include breakpoint(xsmall){
+						margin-left: 5px;
+					}
+					&:hover{
+						border-color: $primary-color;
+					}
+				}
+			}
+		}
+		&__btn{
+			font-size: 30px;
+			@include breakpoint(xsmall){
+				font-size: 25px;
+			}
+			&.menu-btn{
+			    width: 32px;
+			    height: 32px;
+			    line-height: 32px;
+			    text-align: center;
+			    display: inline-block;
+			    @include breakpoint(xsmall){
+				    width: 30px;
+				    height: 30px;
+				    line-height: 30px;
+			    }
+			}
+		}
+	}
+}
+
+/*-- 10.01 - Sticky Header --*/
+.sticky-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    margin: 0;
+    background-color: $color-white;
+    @include animation(fadeInDown .8s ease-in-out);
+    @include box-shadow(0 1px 3px rgba(0,0,0,.14));
+    .header__top{
+        display: none;
+    }
+} 
+
+
+/*-- 10.02 - Header Site Info --*/
+
+.site-info{
+	@include flexbox;
+	@include justify-content(flex-end);
+	&.vertical{
+		@include justify-content(flex-start);
+	}
+	&__item{
+        @include flex-grow(0);
+        @include flex-basis(20%);
+	}
+}

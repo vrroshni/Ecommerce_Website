@@ -1,0 +1,199 @@
+/*****************************
+00 - Base - Global
+*****************************/
+  
+html{
+	// Default
+	height: 100%;
+	font-size: 62.5%; // 1rem = 10px
+
+	// Extra Large Device >1199 to <1499
+	@include breakpoint(xlarge){
+		font-size: 56.25%;  // 1rem = 9px
+	}
+
+	// Large Device >991 to <1200
+	@include breakpoint(large){
+		font-size: 50%;  // 1rem = 8px
+	}
+	
+	// Medium Device >767 to <992
+	@include breakpoint(medium){
+		font-size: 43.75%;  // 1rem = 7px
+	}
+	
+	// Small Device <768
+	@include breakpoint(small){
+		font-size: 37.5%;  // 1rem = 6px
+	} 
+}
+body{
+	@include breakpoint(xlarge){
+		font-size: 16px;
+	}
+	font-weight: 400;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{
+	@include breakpoint(medium){
+		line-height: 1.25;
+	}
+	@include breakpoint(small){
+		margin-bottom: 10px;
+	}
+}
+h1, .h1 {
+    @include breakpoint(large){
+    	font-size: 30px;
+    }
+}
+h2, .h2 {
+    @include breakpoint(large){
+    	font-size: 24px;
+    }
+}
+h3, .h3 {
+    @include breakpoint(large){
+    	font-size: 20px;
+    }
+}
+h4, .h4 {
+    @include breakpoint(large){
+    	font-size: 18px;
+    }
+}
+h5, .h5 {
+    @include breakpoint(large){
+    	font-size: 16px;
+    }
+}
+
+p {
+	@include breakpoint(small){
+		margin: 0 0 10px;
+	}
+    &:last-child{
+    	margin-bottom: 0;
+    }
+    &:only-child{
+    	margin-bottom: 0;
+    }
+}
+blockquote{
+    &:last-child{
+    	margin-bottom: 0;
+    }
+    &:only-child{
+    	margin-bottom: 0;
+    }	
+}
+strong, b{
+	font-weight: bold;
+}
+a{
+	color: inherit;
+}
+// Base
+
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+figure{
+	margin: 0;
+}
+img{
+	max-width: 100%;
+}
+a, button{
+	@extend %basetransition; 
+	cursor: pointer;
+}
+a:hover{
+	color: $primary-color;
+	text-decoration: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+
+a, a:hover, a:focus, a:active, button, button:focus, input, select, textarea, .slick-slide{
+	outline: none;
+}
+
+
+/*****************************
+01 - Base - Typography
+*****************************/
+
+
+
+.heading{
+	&__primary{
+		font-size: 5rem;
+  		line-height: 1; 
+  		color: #010225;
+  		@extend %textTupper;
+  		@extend %fontWeight600;
+  		@include breakpoint(medium){
+  			font-size: 4.2rem;
+  		}
+	}
+	&__secondary{
+		font-size: 40px;
+		@extend %posrelative;
+		padding-bottom: 20px;
+		@include breakpoint(medium){
+			font-size: 35px;
+		}
+		@include breakpoint(small){
+			font-size: 30px;
+		}
+		&:after{
+			@extend %pseudo;
+			@extend %left-0;
+			@extend %bottom-0;
+			@extend %primary-bg-color;
+		    width: 35px;
+		    height: 5px;
+		    @include border-radius(35px);
+		}
+		&--main{
+			@extend %displayBlock;
+		}
+		&--sub{
+			@extend %displayBlock;
+			@extend %fontWeight300;
+			color: $color-dust; 
+		}
+	}
+}
+
+.font-size{
+
+}
+.lts{
+
+}
+.lh{
+	&-pt7{
+		line-height: .7;
+	}
+	&-1{
+		line-height: 1;
+	}
+}

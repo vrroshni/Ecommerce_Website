@@ -1,0 +1,612 @@
+
+// Color Change
+@mixin changeColor($bg-color: $bg-color, $body-color: $body-color, $heading-color: $heading-color) {
+	$bg-color: $bg-color;
+}
+
+
+// Absolute center
+
+@mixin absCenter{
+	@extend %posabsolute;
+	left: 50%;
+	top: 50%;
+	@include transform(translate(-50%, -50%));
+}
+
+// Before After Pseudo
+
+@mixin textBoxCenter($width, $height){
+	width: ($width)#{px};
+	height: ($height)#{px};
+	line-height: ($height)#{px};
+	text-align: center;
+}
+
+@mixin borderIconCenter($measure, $border: 1){
+	width: ($measure)#{px};
+	height: ($measure)#{px};
+	line-height: (($measure) - ($border) * 2 )#{px};
+	text-align: center;
+}
+
+@mixin circle($measure){
+	width: ($measure)#{px};
+	height: ($measure)#{px};
+	line-height: ($measure)#{px};
+	@include border-radius(50%);
+}
+@mixin circleCenter($measure){
+	width: ($measure)#{px};
+	height: ($measure)#{px};
+	line-height: ($measure)#{px};
+	@include border-radius(50%);
+	text-align: center;
+}
+@mixin circleBorderCenter($measure, $border: 1){
+	width: ($measure)#{px};
+	height: ($measure)#{px};
+	line-height: (($measure) - ($border) * 2 )#{px};
+	@include border-radius(50%);
+	text-align: center;
+}
+
+// Hypens
+
+@mixin hyphens($value: auto){
+	-webkit-hyphens: $value;
+	-moz-hyphens: $value;
+	-ms-hyphens: $value;
+	hyphens: $value;
+}
+
+
+// Placeholder CSS
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder { 
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+
+
+
+// White space
+
+@mixin white-space($value){
+	white-space: -moz-#{$value};
+	white-space: $value; 
+}
+
+// box reflect
+@mixin box-reflect($value...){
+	-webkit-box-reflect: $value;
+	-moz-box-reflect: $value;
+	-o-box-reflect: $value;
+	-ms-box-reflect: $value;
+	box-reflect: $value;
+}
+
+// Filter
+@mixin filter($value...){
+	-webkit-filter: $value;
+	-moz-filter: $value;
+	-o-filter: $value;
+	-ms-filter: $value;
+	filter: $value;
+}
+
+// Appearance
+@mixin appearance($value...){
+	-webkit-appearance: $value;
+	-moz-appearance: $value;
+	-ms-appearance: $value;
+	-o-appearance: $value;
+	appearance: $value;
+}
+
+// Transform
+@mixin transform($value...){
+	-webkit-transform: $value;
+	-moz-transform: $value;
+	-ms-transform: $value;
+	-o-transform: $value;
+	transform: $value;
+}
+
+// Box sizing
+@mixin box-sizing($bz-value...){
+	-webkit-box-sizing: $bz-value;
+	-moz-box-sizing: $bz-value;
+	-ms-box-sizing: $bz-value;
+	-o-box-sizing: $bz-value;
+	box-sizing: $bz-value;
+}
+
+
+// Backface visibility
+@mixin backface-visibility($br-value){
+	-webkit-backface-visibility: $br-value;
+	-moz-backface-visibility: $br-value;
+	-ms-backface-visibility: $br-value;
+	-o-backface-visibility: $br-value;
+	backface-visibility: $br-value;
+}
+
+
+// Box shadow
+@mixin box-shadow($bs-value...){
+	-webkit-box-shadow: $bs-value;
+	-moz-box-shadow: $bs-value;
+	-ms-box-shadow: $bs-value;
+	-o-box-shadow: $bs-value;
+	box-shadow: $bs-value;
+}
+
+// Border radius
+@mixin border-radius($br-value){
+	-webkit-border-radius: $br-value;
+	-moz-border-radius: $br-value;
+	-ms-border-radius: $br-value;
+	-o-border-radius: $br-value;
+	border-radius: $br-value;
+}
+
+// Transition
+@mixin transition($transition...) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	-ms-transition: $transition;
+	-o-transition: $transition;
+	transition: $transition;
+}
+
+// Transition Delay
+@mixin transition-delay($time...) {
+	-moz-transition-delay: $time;
+	-ms-transition-delay: $time;
+	-o-transition-delay: $time;
+	-webkit-transition-delay: $time;
+	transition-delay: $time;
+}
+
+// Text Shadow
+@mixin text-shadow($t-shadow...){
+	-webkit-text-shadow:$t-shadow;
+	-moz-text-shadow:$t-shadow;
+	-ms-text-shadow:$t-shadow;
+	-o-text-shadow:$t-shadow;
+	text-shadow:$t-shadow;
+}
+
+
+// Transform Origin
+@mixin transform-origin($transform-origin...) {
+	-webkit-transform-origin : $transform-origin ;
+	-moz-transform-origin : $transform-origin ;
+	-ms-transform-origin : $transform-origin ;
+	-o-transform-origin : $transform-origin ;
+	transform-origin : $transform-origin ;
+}
+
+// Animation
+@mixin animation($value...){
+	-webkit-animation: $value;
+	-moz-animation: $value;
+	-ms-animation: $value;
+	-o-animation: $value;
+	animation: $value;
+}
+
+// background gradient
+@mixin background($value...){
+	-webkit-background: $value;
+	-moz-background: $value;
+	-ms-background: $value;
+	-o-background: $value;
+	background: $value;
+}
+
+// Flexbox
+@mixin flexbox{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+// Inline flex
+@mixin inline-flex{
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -moz-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+}
+
+// Flexbox Direction
+@mixin flex-direction($value: row) {
+	@if $value == row-reverse {
+		-webkit-box-direction: reverse;
+		-webkit-box-orient: horizontal;
+	} @else if $value == column {
+		-webkit-box-direction: normal;
+		-webkit-box-orient: vertical;
+	} @else if $value == column-reverse {
+		-webkit-box-direction: reverse;
+		-webkit-box-orient: vertical;
+	} @else {
+		-webkit-box-direction: normal;
+		-webkit-box-orient: horizontal;
+	}
+	-webkit-flex-direction: $value;
+	-moz-flex-direction: $value;
+	-ms-flex-direction: $value;
+	flex-direction: $value;
+}
+
+
+// Flexbox Wrap
+@mixin flex-wrap($value: nowrap) {
+	-webkit-flex-wrap: $value;
+	-moz-flex-wrap: $value;
+	@if $value == nowrap {
+		-ms-flex-wrap: none;
+	} @else { 
+		-ms-flex-wrap: $value; 
+	}
+	flex-wrap: $value;
+}
+
+// Flexbox Flow (shorthand)
+@mixin flex-flow($values: (row nowrap)) {
+	-webkit-flex-flow: $values;
+	-moz-flex-flow: $values;
+	-ms-flex-flow: $values;
+	flex-flow: $values;
+}
+
+// Flexbox Order
+@mixin order($int: 0) {
+	-webkit-box-ordinal-group: $int + 1;
+	-webkit-order: $int;
+	-moz-order: $int;
+	-ms-flex-order: $int;
+	order: $int;
+}
+
+
+// Flexbox Grow
+@mixin flex-grow($int: 0) {
+	-webkit-box-flex: $int;
+	-webkit-flex-grow: $int;
+	-moz-flex-grow: $int;
+	-ms-flex-positive: $int;
+	flex-grow: $int;
+}
+
+// Flexbox Shrink
+@mixin flex-shrink($int: 1) {
+	-webkit-flex-shrink: $int;
+	-moz-flex-shrink: $int;
+	-ms-flex-negative: $int;
+	flex-shrink: $int;
+}
+
+// Flexbox Basis
+@mixin flex-basis($value: auto) {
+	-webkit-flex-basis: $value;
+	-moz-flex-basis: $value;
+	-ms-flex-preferred-size: $value;
+	flex-basis: $value;
+}
+
+// Flexbox "Flex" (shorthand)
+@mixin flex($fg: 1, $fs: null, $fb: null) {
+	$fg-boxflex: $fg;
+
+	@if type-of($fg) == 'list' {
+		$fg-boxflex: nth($fg, 1);
+	}
+
+	-webkit-box-flex: $fg-boxflex;
+	-webkit-flex: $fg $fs $fb;
+	-moz-box-flex: $fg-boxflex;
+	-moz-flex: $fg $fs $fb;
+	-ms-flex: $fg $fs $fb;
+	flex: $fg $fs $fb;
+}
+
+// Flexbox Justify Content
+@mixin justify-content($value: flex-start) {
+	@if $value == flex-start {
+		-webkit-box-pack: start;
+		-ms-flex-pack: start;
+	} @else if $value == flex-end {
+		-webkit-box-pack: end;
+		-ms-flex-pack: end;
+	} @else if $value == space-between {
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+	} @else if $value == space-around {
+		-ms-flex-pack: distribute;		
+	} @else {
+		-webkit-box-pack: $value;
+		-ms-flex-pack: $value;
+	}
+	-webkit-justify-content: $value;
+	-moz-justify-content: $value;
+	justify-content: $value;
+}
+
+//----------------------------------------------------------------------
+
+// Flexbox Align Items
+
+@mixin align-items($value: stretch) {
+	@if $value == flex-start {
+		-webkit-box-align: start;
+		-ms-flex-align: start;
+	} @else if $value == flex-end {
+		-webkit-box-align: end;
+		-ms-flex-align: end;
+	} @else {
+		-webkit-box-align: $value;
+		-ms-flex-align: $value;
+	}
+	-webkit-align-items: $value;
+	-moz-align-items: $value;
+	align-items: $value;
+}
+
+//----------------------------------
+
+// Flexbox Align Self
+
+@mixin align-self($value: auto) {
+	// No Webkit Box Fallback.
+	-webkit-align-self: $value;
+	-moz-align-self: $value;
+	@if $value == flex-start {
+		-ms-flex-item-align: start;
+	} @else if $value == flex-end {
+		-ms-flex-item-align: end;
+	} @else {
+		-ms-flex-item-align: $value;
+	}
+	align-self: $value;
+}
+
+
+//----------------------------------------------------------------------
+
+// Flexbox Align Content
+
+@mixin align-content($value: stretch) {
+	-webkit-align-content: $value;
+	-moz-align-content: $value;
+	@if $value == flex-start {
+		-ms-flex-line-pack: start;
+	} @else if $value == flex-end {
+		-ms-flex-line-pack: end;
+	} @else {
+		-ms-flex-line-pack: $value;
+	}
+	align-content: $value;
+}
+
+
+
+
+// BREAKPOINTS
+
+@mixin breakpoint($point) {
+
+	// 767 to Upper
+	@if $point == smalltoupper {
+		@media (min-width: 47.94em) { 
+			@content ; 
+		}
+	}
+
+	// 992 to Upper
+	@if $point == largeonly {
+		@media (min-width: 62em) { 
+			@content ; 
+		}
+	}
+
+	// 1200 to Upper
+	@if $point == xlargeonly {
+		@media (min-width: 75em) { 
+			@content ; 
+		}
+	}
+
+	// 1367 to Upper
+	@if $point == xxblargeonly {
+		@media (min-width: 85.4375em) { 
+			@content ; 
+		}
+	}
+
+	// 1400 to Upper
+	@if $point == xxclargeonly {
+		@media (min-width: 87.5625em) { 
+			@content ; 
+		}
+	}
+
+	// 1500 to Upper
+	@if $point == xxlargeonly {
+		@media (min-width: 93.75em) { 
+			@content ; 
+		}
+	}
+
+	// 1600 to Upper
+	@if $point == xxalargeonly {
+		@media (min-width: 100em) { 
+			@content ; 
+		}
+	}
+
+	// 1751 to Upper
+	@if $point == xxlupper {
+		@media (min-width: 109.4375em) { 
+			@content ; 
+		}
+	}
+
+	// 1920
+	@if $point == xxlarge {
+		@media (max-width: 120em) { 
+			@content ; 
+		}
+	}
+
+	// 1750
+	@if $point == xxalarge {
+		@media (max-width: 109.375em) { 
+			@content ; 
+		}
+	}
+
+	// 1650
+	@if $point == xxclarge {
+		@media (max-width: 103.125em) { 
+			@content ; 
+		}
+	}
+
+	// 1600
+	@if $point == xxblarge {
+		@media (max-width: 100em) { 
+			@content ; 
+		}
+	}
+
+	// 1530
+	@if $point == xxdlarge {
+		@media (max-width: 95.625em) { 
+			@content ; 
+		}
+	}
+
+	// 1499
+	@if $point == xlarge {
+		@media (max-width: 93.6875em) { 
+			@content ; 
+		}
+	}
+
+	// 1400
+	@if $point == xalarge {
+		@media (max-width: 87.5em) { 
+			@content ; 
+		}
+	}
+
+	// 1366
+	@if $point == xblarge {
+		@media (max-width: 85.375em) { 
+			@content ; 
+		}
+	}
+
+	// 1300
+	@if $point == xclarge {
+		@media (max-width: 81.25em) { 
+			@content ; 
+		}
+	}
+
+	// 1200
+	@else if $point == large {
+		@media (max-width: 74.9375em) {
+			@content ; 
+		}
+	}
+
+	// 1152
+	@else if $point == blarge {
+		@media (max-width: 72em) {
+			@content ; 
+		}
+	}
+
+	// 1050
+	@else if $point == clarge {
+		@media (max-width: 65.625em) {
+			@content ; 
+		}
+	}
+
+	// 991
+	@else if $point == medium {
+		@media (max-width: 61.94em) {
+			@content ; 
+		}
+	}
+
+	// 850
+	@else if $point == bsmall {
+		@media (max-width: 51.25em) {
+			@content ; 
+		}
+	}
+
+	// 820
+	@else if $point == asmall {
+		@media (max-width: 51.25em) {
+			@content ; 
+		}
+	}
+	// 767
+	@else if $point == small {
+		@media (max-width: 47.94em) {
+			@content ; 
+		}
+	}
+
+	// 600
+	@else if $point == xasmall {
+		@media (max-width: 37.5em) {
+			@content ; 
+		}
+	}
+
+	// 575
+	@else if $point == xsmall {
+		@media (max-width: 35.94em)  {
+			@content ; 
+		}
+	}
+
+	// 450
+	@else if $point == xxsmall {
+		@media (max-width: 28.125em)  {
+			@content ; 
+		}
+	}
+	// 375
+	@else if $point == xxasmall {
+		@media (max-width: 23.4375em)  {
+			@content ; 
+		}
+	}
+
+} 

@@ -1,0 +1,723 @@
+/*****************************
+30 - Components - Product
+*****************************/
+
+/*-- 30.00 - Product --*/
+
+.product{
+	&-inner{
+		@extend %posrelative;
+	}
+	&-image{
+		@extend %posrelative;
+		margin-bottom: 22px;
+		&--holder{
+			img{
+				@extend %width100;
+			}
+		}
+	}
+	&-badge{
+		@extend %posabsolute;
+		@extend %displayInlineBlock;
+		@extend %primary-bg-color;
+		@extend %white-color;
+		@extend %fontSize12;
+		@extend %left-0;
+		@extend %top-0;
+		padding: 3px 5px;
+	}
+	&-overlay{
+		@extend %posabsolute;
+		@extend %fullwidth;
+	}
+	&-info{
+		&-bottom{
+			@extend %verticalFlexCenter;
+			@extend %justify-between;
+		}
+	}
+	&-title{
+		@extend %fontSize16;
+		@extend %body-color;
+		@extend %fontWeight400;
+		margin-bottom: 6px;
+	}
+	&-price-wrapper{
+		line-height: 1.5;
+		.new-price{
+			.money{
+				@extend %fontWeight600;
+				@extend %body-color;
+				@extend %fontSize18;
+				margin-right: 20px;
+			}
+		}
+		.old-price{
+			.money{
+				@extend %fontWeight300;
+				@extend %body-color;
+				@extend %fontSize14;
+				@extend %textDline;
+			}
+		}
+		.money{
+			@extend %displayInlineBlock;
+			@extend %fontSize16;
+			@extend %fontWeight500;
+			@extend %primary-color;
+		}
+	}
+	&-short-description{
+		@extend %fontSize14;
+	}
+	&-description{
+		p{
+			@extend %fontSize14;
+			line-height: 25px;
+			&:not(:last-child){
+				margin-bottom: 3rem;
+			}
+		}
+		&__heading{
+			@extend %fontSize14;
+			@extend %fontWeight700;
+			line-height: 23px;
+			margin-bottom: 20px;
+			color: #404040;
+		}
+		ul{
+			li{
+				@extend %fontSize14;
+				line-height: 20px;
+				&:not(:last-child){
+					margin-bottom: 14px;
+				}
+				i{
+					padding-right: 10px;
+				}
+			}
+		}
+	}
+	&-size{
+		@extend %posrelative;
+		.action-btn{
+			span{
+				&.current{
+					@extend %black-color;
+				}
+			}
+		}
+		&-swatch{
+			@extend %posabsolute;
+	 		@extend %invisible;
+			bottom: 100%;
+			&-btn{
+	 			@extend %actionBtn;
+	 			@extend %black-color;
+	 			@extend %cursorPointer;
+	 			@extend %invisible;
+	 			@extend %swatchAnimation;
+	 			background-color: rgba(255,255,255,.6);
+	 			margin-bottom: 1px;
+	 			&.clicked{
+	 				background-color: rgba(255,255,255,1);
+	 			}
+			}	
+		}
+		&:hover{
+			.product-size-swatch{
+				@extend %visible;
+				&-btn{
+					@extend %visible;
+				}
+			}
+		}
+	}
+	&-color{
+		@extend %posrelative;
+		.action-btn{
+			span{
+				&.current{
+					@extend %displayInlineBlock;
+					text-indent: -999999px;
+					&:after{
+						@extend %productSwatch;
+					}
+				}
+			}
+		}
+		&-swatch{
+			@extend %posabsolute;
+			@extend %invisible;
+			bottom: 100%;
+			&-btn{
+	 			@extend %actionBtn;
+	 			@extend %cursorPointer;
+	 			background-color: rgba(255,255,255,.6);
+	 			margin-bottom: 1px;
+	 			text-indent: -999999px;
+	 			@extend %posrelative;
+	 			@extend %invisible;
+	 			@extend %swatchAnimation;
+	 			&:after{
+	 				@extend %productSwatch;
+	 			}
+	 			&.clicked{
+	 				background-color: rgba(255,255,255,1);
+	 			}
+			}
+		}
+
+		.abbey{
+			&:after{
+				background-color: $color-abbey;
+			}
+		}
+		.blue{
+			&:after{
+				background-color: $color-blue;
+			}
+		}
+		.copper{
+			&:after{
+				background-color: $color-copper;
+			}
+		}
+		.old-rose{
+			&:after{
+				background-color: $color-old-rose;
+			}
+		}
+		&:hover{
+			.product-color-swatch{
+				@extend %visible;
+				&-btn{
+					@extend %visible;
+				}
+			}
+		}
+	}
+}
+
+.ft-product{
+	.product{
+		&-inner{
+			.add-to-cart{
+				@extend %primary-color;
+				@extend %fontSize14;
+				opacity: 0;
+				@include transform(translate(0, 50px));
+			}
+			&:hover{
+				.product{
+					&-action{
+						a{
+							opacity: 1;
+							@include transform(translate(0, 0));
+						}
+					}
+				}
+				.add-to-cart{
+					opacity: 1;
+					@include transform(translate(0, 0));
+				}
+			}
+		}
+		&-action{
+			@extend %posabsolute;
+			left: 20px;
+			bottom: 20px;
+			a{
+				@include transform(translate(-70px, 0));
+				@include transition-delay(50ms);
+				opacity: 0;
+				@extend %displayBlock;
+				&:not(:last-child){
+					margin-bottom: 10px;
+				}
+				&:nth-child(2){
+					@include transition-delay(100ms);
+				}
+				&:nth-child(3){
+					@include transition-delay(150ms);
+				}
+			}
+			&-list{
+				.action-btn{
+					background-color: $color-gray;
+					@extend %posrelative;
+					margin-right: 4px;
+					height: 50px;
+				}
+				.btn-small{
+					height: 44px;
+					line-height: 44px;
+				}
+			}
+		}
+	}
+}
+
+/*-- 30.01 - Proudct List --*/
+
+.ft-product-list{
+	.product{
+		&-inner{
+			@extend %flexbox;
+			@extend %flex-wrap;
+		}
+		&-image{
+			@include flex-basis(270px);
+			max-width: 270px;
+			@extend %posrelative;
+			@include breakpoint(small){
+				@include flex-basis(230px);
+				max-width: 230px;
+			}
+			@include breakpoint(xsmall){
+				@include flex-basis(100%);
+				max-width: 100%;
+			}
+		}
+		&-thumbnail-action{
+			@extend %posabsolute;
+			@extend %fullwidth;
+			@extend %absFlexCenter;
+			@extend %invisible;
+			@extend %basetransition;
+			@include transform(scale(.2, .2));
+		}
+		&-info{
+			@include flex-basis(calc(100% - 270px));
+			max-width: calc(100% - 270px);
+			padding-left: 40px;
+			@extend %textAleft;
+			@extend %paddingLeft-0;
+			@include breakpoint(small){
+				@include flex-basis(calc(100% - 230px));
+				max-width: calc(100% - 230px);
+				padding-left: 30px;
+			}
+			@include breakpoint(xsmall){
+				@include flex-basis(100%);
+				max-width: 100%;
+				padding-left: 0;
+				padding-top: 30px;
+			}
+			.star-rating{
+				@extend %marginLeft-0;
+			}
+		}
+		&-size{
+			@extend %verticalFlexCenter;
+		}
+		&-color{
+			@extend %verticalFlexCenter;
+		}
+		&-size-swatch,
+		&-color-swatch {
+		    @extend %posrelative;
+		    @extend %visible;
+		    bottom: auto;
+		    left: auto;
+		    &-btn{
+		    	@extend %visible;
+		    	@extend %marginBottom-0;
+		    	background-color: $color-white-dark;
+		    	height: 50px;
+		    	line-height: 50px;
+		    }
+		}
+		&-title{
+			font-size: 28px;
+			line-height: 34px;
+			@include breakpoint(medium){
+				font-size: 24px;
+				line-height: 28px;
+			}
+		}
+	}
+	&:hover{
+		.product{
+			&-thumbnail-action{
+				@extend %visible;
+				@include transform(scale(1, 1));
+			}
+		}
+	}
+}
+
+
+/*-- 30.02 - Feature Product --*/
+
+.feature-product{
+	padding: 30px 40px;
+	@include breakpoint(small){
+		padding: 25px 30px;
+	}
+	&__inner{
+		padding-left: 60px;
+		padding-right: 60px;
+		padding-top: 20px;
+		@extend %verticalFlexCenter;
+		@extend %justify-between;
+		@extend %flex-wrap;
+		@include breakpoint(medium){
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		@include breakpoint(small){
+			padding-left: 30px;
+			padding-right: 30px;
+			padding-bottom: 20px;
+		}
+	}
+	&__image{
+		@include flex-basis(60%);
+		max-width: 60%;
+		@include breakpoint(small){
+			@include flex-basis(100%);
+			max-width: 100%;
+			order: 1;
+		}
+	}
+	&__info{
+		@include flex-basis(40%);
+		max-width: 40%;
+		@include breakpoint(small){
+			@include flex-basis(100%);
+			max-width: 100%;
+			order: 2;
+		}
+		p{
+			@extend %margin-0;
+			@extend %lineheight1;
+		}
+	}
+	&__title{
+		color: #221f26;
+		font-size: 7.2rem;
+		line-height: 1.1;
+		@extend %fontWeight500;
+		@extend %margin-0;
+		@include breakpoint(medium){
+			font-size: 6rem;
+		}
+	}
+	&__btn{
+		color: $color-dark;
+		@extend %textTupper;
+		@extend %fontSize14;
+		@extend %fontWeight500;
+		border-bottom: 1px solid #8e9898;
+	}
+}
+
+/*-- 30.03 - Best Sale Product --*/
+
+.best-sale-product{
+	padding: 60px;
+	@extend %posrelative;
+	@include breakpoint(medium){
+		padding: 30px;
+	}
+	&__inner{
+		@extend %verticalFlexCenter;
+		@extend %flex-wrap;
+	}
+	&__img{
+		max-width: 50%;
+		@include flex-basis(50%);
+		margin-top: -30px;
+		@extend %textAcenter;
+		@include breakpoint(large){
+			max-width: 45%;
+			@include flex-basis(45%);
+		}
+		@include breakpoint(xsmall){
+			max-width: 100%;
+			@include flex-basis(100%);
+			padding-left: 5%;
+			margin-top: 0
+		}
+	}
+	&__info{
+		max-width: 50%;
+		@include flex-basis(50%);
+		@include breakpoint(large){
+			max-width: 55%;
+			@include flex-basis(55%);
+			padding-left: 2%;
+		}
+		@include breakpoint(medium){
+			padding-top: 55px;
+			padding-bottom: 40px;
+		}
+		@include breakpoint(xsmall){
+			max-width: 100%;
+			@include flex-basis(100%);
+			padding-left: 5%;
+			padding-top: 0;
+		}
+	}
+	&__heading{
+		&--main{
+			@extend %displayBlock;
+  			line-height: 0.22;
+			font-family: $font-2;
+			font-size: 100px;
+  			color: rgba(1, 2, 37, 0.102);
+  			@include breakpoint(xxclarge){
+  				font-size: 80px;
+  			}
+  			@include breakpoint(xlarge){
+  				font-size: 70px;
+  			}
+  			@include breakpoint(medium){
+  				font-size: 55px;
+  			}
+  			@include breakpoint(small){
+  				font-size: 50px;
+  			}
+		}
+		&--sub{
+			@extend %displayBlock;
+			@extend %fontWeight500;
+			font-size: 50px;
+			color: #010225;
+  			@include breakpoint(xxclarge){
+  				font-size: 40px;
+  			}
+  			@include breakpoint(xlarge){
+  				font-size: 35px;
+  			}
+  			@include breakpoint(medium){
+  				font-size: 30px;
+  			}
+  			@include breakpoint(small){
+  				font-size: 25px;
+  			}
+		}
+	}
+	&__desc{
+		color: #010225;
+		max-width: 56%;
+		@include breakpoint(xxclarge){
+			max-width: 68%;
+		}
+		@include breakpoint(medium){
+			max-width: 90%;
+		}
+	}
+	&__top-image{
+		@extend %posabsolute;
+		@extend %top-0;
+		right: 9%;
+		@include breakpoint(xxclarge){
+			right: 5%;
+		}
+		@include breakpoint(large){
+			right: 0;
+			img{
+				width: 70%;
+			}
+		}
+		@include breakpoint(medium){
+			display: none;
+		}
+	}
+}
+
+
+/*-- 30.04 - Product Summery --*/
+
+.product-summary{
+	.product{
+		&-large-image{
+			@extend %posrelative;
+		}
+		&-navigation{
+			a{
+				@extend %border;
+				@extend %displayInlineBlock;
+				@extend %textAcenter;
+				@extend %white-bg-color;
+				@extend %fontSize18;
+				@extend %body-color;
+				@include box-shadow(0px 0px 11.83px 1.17px rgba(72, 72, 72, 0.13));
+				width: 38px;
+				height: 31px;
+				line-height: 31px;
+				&:hover{
+					@extend %primary-color;
+				}
+				&.next{
+					margin-left: 5px;
+				}
+			}
+		}
+		&-rating{
+			.star-rating{
+				@extend %marginLeft-0;
+			}
+		}
+		&-title{
+			font-size: 35px;
+			@extend %fontWeight400;
+			@extend %lineheight1;
+			@include breakpoint(large){
+				font-size: 30px;
+			}
+			@include breakpoint(small){
+				font-size: 25px;
+			}
+			a{
+				@extend %heading-color;
+				&:hover{
+					@extend %primary-color;
+				}
+			}
+		}
+		&-price-wrapper{
+			span{
+				@extend %fontSize24;
+				@extend %heading-color;
+				@extend %displayInlineBlock;
+			}
+		}
+		&-footer-meta{
+			p{
+				line-height: 21px;
+				span{
+					@extend %variationLabel;
+					@extend %marginRight-0;
+				}
+				a{
+					@extend %fontSize14;
+				}
+			}
+		}
+	}
+}
+
+
+/*-- 30.05 - Product Variations --*/
+
+.variation-form{
+	.variation{
+		float: left;
+		margin-right: 5px;
+		a{
+			@extend %displayInlineBlock;
+		}
+	}
+	.variation-label{
+		@extend %variationLabel;
+	}
+	.product-color-variations{
+		.product-color-variation{
+			@extend %overflowHidden;
+			clear: both;
+			&-btn{
+				@extend %posrelative;
+				@extend %basetransition;
+				@extend %margin-0;
+				@extend %displayBlock;
+				@extend %border-width-1;
+				@extend %border-style;
+				@extend %cursorPointer;
+				text-indent: -99999px;
+				width: 45px;
+				height: 45px;
+				border-color: transparent;
+				&:after{
+					@extend %pseudo;
+					@extend %fullwidth;
+					@extend %white-bg-color;
+					@extend %borderRadius50;
+				}
+				&:hover{
+					border-color: transparent;
+				}
+				&.red{
+					&:hover{
+						border-color: $color-red;
+					}
+					&:after{
+						background-color: $color-red;
+					}
+					&.selected{
+						border-color: $color-red;
+					}
+				}
+				&.black{
+					&:hover{
+						border-color: $color-black;
+					}
+					&:after{
+						background-color: $color-black;
+					}
+				}
+				&.pink{
+					&:hover{
+						border-color: $color-pink;
+					}
+					&:after{
+						background-color: $color-pink;
+					}
+				}
+				&.blue{
+					&:hover{
+						border-color: $color-blue;
+					}
+					&:after{
+						background-color: $color-blue;
+					}
+				}
+			}
+		}
+	}
+	.product-size-variations{
+		.product-size-variation{
+			@extend %overflowHidden;
+			clear: both;
+			&-btn{
+				width: 58px;
+				height: 43px;
+				line-height: 43px;
+				@extend %fontSize14;
+				@extend %fontWeight600;
+				@extend %textAcenter;
+				@extend %border;
+				@include breakpoint(xsmall){
+					width: 50px;
+					height: 40px;
+					line-height: 40px;
+				}
+				@extend %heading-color;
+				&:hover{
+					@extend %primary-color;
+				}
+				&.selected{
+					@extend %primary-color;
+				}
+			}
+		}
+	}
+	.reset_variations{
+		@extend %posrelative;
+		@extend %heading-color;
+		padding-right: 20px;
+		font-weight: 500;
+		line-height: 30px;
+		&:before{
+		    @extend %pseudo;
+		    @extend %right-0;
+		    background: url(../img/icons/cross.png) no-repeat scroll right center;
+		    top: 7px;
+		    width: 10px;
+		    height: 10px;
+		}
+	}	
+}

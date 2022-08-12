@@ -1,0 +1,285 @@
+
+
+//heart Blast Effect
+
+.heart-blast {
+    background-position: -1680px 0!important;
+    transition: background 1s steps(28);
+}
+
+.heart {
+    width   	: 3.75rem;
+    height  	: 3.75rem;
+    display 	: inline-block;
+    background  : url('../images/like.png');
+    cursor      : pointer;
+    margin      : -1.5625rem -0.9375rem;
+}
+
+
+.progress-bar-legend{	
+	.marker{
+		height:12px;
+		width:12px;
+		margin-right: 8px;
+		border-radius:12px;
+		display:inline-block;
+	}
+	.status{
+		font-size:12px;
+		margin-bottom:8px;
+		line-height: 1;
+	}
+	.result{
+		font-size:16px;
+		color:#000;
+		font-weight:700;
+	}
+}
+
+.customer-review-bx{
+	height:600px;
+}
+
+//dz-review-bx
+.dz-review-bx{
+	display:flex;
+	padding: 1.5rem 1.875rem;
+	border-bottom:1px solid $border-color;
+	.dz-media{
+		height:2.875rem;
+		width:2.875rem;
+		border-radius:2.875rem;
+		object-fit:cover;
+	}
+	.dz-name{
+		display:flex;
+		justify-content:space-between;
+	}
+	.title{
+		font-size:1rem;
+		font-weight: 600;
+	}
+	.date{
+		font-size:0.75rem;
+	}
+	.star-review{
+		display:flex;
+		li{
+			margin-right:5px;
+		}
+		i{
+			color:#DCDFF1;
+			font-size:16px;
+			&.orange{
+				color:#FFBC39;
+			}
+		}
+	}
+	.dz-footer{
+		display:flex;
+		
+	}
+	@include respond ('phone'){
+		.dz-footer{
+			display:initial;
+		}
+		.dz-media{
+			float:left;	
+		}
+		display:inline-block;
+	}
+}	
+.review-icon{
+	height:3rem;
+	width:3rem;
+	min-width:3rem;
+	line-height:3rem;
+	font-size:1.5rem;
+	text-align:center;
+	display:inline-block;
+}
+.card-footer.style-1{
+	.dz-load-more{
+		height:3.75rem;
+		width:3.75rem;
+		border-radius:50%;
+		font-size: 1.75rem;
+		color:var(--primary);
+		text-align:center;
+		line-height:3.75rem;
+		box-shadow: 0px 13px 22px rgba(0, 0, 0, 0.12);
+		background:#fff;
+	}
+}
+
+.dz-image-bx{
+	border:1px solid $border-color;
+	padding:1.25rem 1.25rem;
+	display:flex;
+	margin-bottom:1.875rem;
+	.dz-media{
+		display:inline-block;
+		img{
+			height:3.5rem;
+			width:3.5rem;
+			min-width:3.5rem;
+			object-fit:cover;
+		}
+		&.active{
+			position:relative;
+			&:after{
+				content:"";
+				position:absolute;
+				height:1.4rem;
+				width:1.4rem;
+				border-radius:1.4rem;
+				right: -0.3125rem;
+				top: -0.3125rem;
+				border:3px solid #fff;
+				background:$warning;
+			}
+		}
+	}
+	@include respond ('laptop'){
+		padding: 1rem 1rem;	
+	}
+}
+
+
+.booking-calender{
+	.bootstrap-datetimepicker-widget table thead tr:first-child th{
+		font-size:1.25rem;
+		color:$black;
+		font-weight:600;
+		padding: 1rem 0.625rem;
+	}
+	.bootstrap-datetimepicker-widget table td, .patient-calender .bootstrap-datetimepicker-widget table th{
+		padding: 1.3rem 0.625rem;
+		font-size:1.25rem;
+		color:#161616;
+		border-radius:1.375rem;
+	}
+	.bootstrap-datetimepicker-widget table th{
+		font-size:0.875rem;
+		font-weight: 500;
+		color:rgba(0,0,0,0.6);
+		padding-top: 1.5625rem;
+		padding-bottom: 1.25rem;
+	}
+	.bootstrap-datetimepicker-widget .datepicker{
+		tbody td{
+			&.active{
+				background:var(--primary)!important;
+				color:$white;
+				box-shadow: none;
+			}
+			&.today{
+				box-shadow: none;
+				background:var(--primary)!important;
+				&:before{
+					height: 1.4rem;
+					width: 1.4rem;
+					border-radius: 1.4rem;
+					right: -0.3125rem;
+					top: -0.3125rem;
+					border: 3px solid #fff;
+					background: $warning;
+				}
+			}
+		}
+	}
+}
+.radialChart{
+	.apexcharts-series{
+		path{
+			stroke:var(--primary);	
+		}	
+	}	
+}
+
+//card-tabs
+.card-tabs{
+	.nav-tabs{
+		border-bottom:0;
+		font-weight: 500;
+		background:$white;
+		padding: 0 1.875rem;
+		border-radius:$radius;
+		box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, .03);
+		.nav-link{
+			font-size:16px;
+			color:#666666;
+			padding: 1.25rem 1.25rem;
+			border:0;
+			position:relative;
+			&:after{
+				opacity:0;
+				content:"";
+				position:absolute;
+				background:var(--primary);
+				width:100%;
+				height:0.25rem;
+				border-radius:1rem;
+				bottom:-.25rem;
+				left:0;
+				@include transitionFast;
+			}
+			&.active{
+				background:#fff;
+				color:#000;
+				&:after{
+					opacity:1;
+					bottom:-3px;
+				}
+			}
+		}
+		@include respond ('phone'){
+			padding: 0 1rem;	
+			.nav-link{
+				font-size:12px;
+				padding: 12px 10px;
+			}
+		}
+	}
+}
+
+.media-bx{
+	display:flex;
+	align-items:center;
+	img{
+		height:3.625rem;
+		width:3.625rem;
+		object-fit:cover;
+	}
+}
+
+.bg-none{
+	background-image:none!important;
+}
+.table-search{
+	.search-area,
+	.input-group-text{
+		@include respond ('tab-land'){
+			height:40px;	
+		}
+		.form-control{
+			@include respond ('tab-land'){
+				height:40px;	
+			}	
+		}
+	}	
+}
+table.dataTable.default-table tbody td{
+		@include respond ('phone'){
+			padding-top: 1rem;
+			padding-bottom: 1rem;	
+		}
+}
+.card-bx{
+	@include respond ('phone'){
+		svg{
+			width:40px;	
+		}	
+	}	
+}	

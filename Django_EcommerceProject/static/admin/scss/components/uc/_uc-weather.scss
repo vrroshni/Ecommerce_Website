@@ -1,0 +1,61 @@
+@import "../../abstracts/variable";
+
+.twitter-typeahead {
+    width: 100%;
+
+    // .form-control {
+    //     background-color: $l-bg !important;
+    // }
+
+    .tt-dataset.tt-dataset-states {
+        border: 0.0625rem solid $border;
+    }
+
+    .tt-menu {
+        width: 100%;
+        background-color: $white;
+
+        .tt-suggestion {
+            padding: 0.625rem;
+            cursor: pointer;
+ // Variable.scss
+
+.weather-one {
+    i {
+        font-size: 8rem;
+        position : relative;
+        top      : .5rem;
+    }
+
+    h2 {
+        display  : inline-block;
+        float    : right;
+        font-size: 4.8rem;
+    }
+
+    .city {
+        position  : relative;
+        text-align: right;
+        top       : -2.5rem;
+    }
+
+    .currently {
+        font-size  : 1.6rem;
+        font-weight: 400;
+        position   : relative;
+        top        : 2.5rem;
+    }
+
+    .celcious {
+        text-align: right;
+        font-size : 2rem;
+    }
+}
+            &:hover {
+                background-color: var(--primary);
+                color: $white;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,268 @@
+/*****************************
+23 - Components - Carousel
+*****************************/
+
+.element-carousel{
+	@extend %posrelative;
+}
+
+/*-- 23.00 - Carousel Gutter --*/
+
+.slick{
+	&-gutter{
+		&-10{
+			.slick-list{
+				margin-left: -5px;
+				margin-right: -5px;
+				.slick-slide{
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+			&.slick-vertical{
+				.slick-list{
+					margin-left: 0;
+					margin-right: 0;
+					margin-top: -5px;
+					margin-bottom: -5px;
+					.slick-slide{
+						padding-top: 5px;
+						padding-bottom: 5px;
+						padding-left: 0;
+						padding-right: 0;
+					}
+				}
+			}
+		}
+		&-30{
+			.slick-list{
+				margin-left: -15px;
+				margin-right: -15px;
+				.slick-slide{
+					padding-left: 15px;
+					padding-right: 15px;
+				}
+			}
+			&.slick-vertical{
+				.slick-list{
+					margin-top: -15px;
+					margin-bottom: -15px;
+					margin-top: -5px;
+					margin-bottom: -5px;
+					.slick-slide{
+						padding-top: 15px;
+						padding-bottom: 15px;
+						padding-left: 0;
+						padding-right: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+/*-- 23.01 - Slick Dot Margin Top --*/
+
+.slick-dot-mt-40{
+	.slick-dots{
+		margin-top: 40px !important;
+	}
+}
+
+/*-- 23.02 - Carousel Dots --*/
+
+.slick{
+	&-dots{
+		@extend %posrelative;
+		@extend %textAcenter;
+		line-height: 0;
+		li{
+		    @extend %posrelative;
+		    @extend %displayInlineBlock;
+		    @extend %cursorPointer;
+			@extend %basetransition;
+			@extend %primary-bg-color;
+			@extend %padding-0;
+			margin: 0 3px;
+			opacity: .4;
+			@include transform(scale(.8));
+			@include circle(8);
+			button{
+			    font-size: 0;
+				@extend %padding-0;
+			    @extend %displayBlock;
+			    @extend %width100;
+			    @extend %height100;
+			    @extend %cursorPointer;
+			    @extend %border-none;
+			    @extend %transparent-bg;
+			    @extend %basetransition;
+			}
+			&.slick-active{
+				opacity: 1;
+				@include transform(scale(1));
+			}
+		}
+	}
+}
+
+
+/*-- 23.03 - Carousel Navs --*/
+
+.slick{
+	&-btn{
+		@extend %posabsolute;
+		@extend %textAcenter;
+		@extend %cursorPointer;
+		width: 65px;
+		height: 50px;
+		line-height: 50px;
+		background-color: rgba($color-white, .6);
+		z-index: 1;
+		i{
+			color: #585e66;
+			@extend %fontSize24;
+			@extend %linheightInherit;
+		}
+	}
+	&-right-bottom{
+		.slick{
+			&-btn{
+				right: 50px;
+				bottom: 30px;
+			} 
+			&-prev{
+				right: 115px;
+				border-right: 1px solid #dfe9f0;
+			}
+		}
+	}
+	&-center-bottom{
+		.slick{
+			&-btn{
+				@extend %bottom-0;
+				@extend %hCenter;
+			} 
+			&-prev{
+				margin-left: -25px;
+				@include breakpoint(xsmall){
+					left: 20px;
+					margin-left: 0;
+				}
+			}
+			&-next{
+			    margin-right: -25px;
+				@include breakpoint(xsmall){
+					right: 0;
+					left: auto;
+					margin-right: 0;
+				}
+			}	
+		}
+	}
+	&-vertical-center{
+		.slick{
+			&-btn{
+				@extend %vCenter;
+			}
+			&-prev{
+				@extend %left-0;
+			}
+			&-next{
+				@extend %right-0;
+			}
+		}
+	}
+	&-horizontal-center{
+		.slick{
+			&-btn{
+				@extend %vCenter;
+			}
+			&-prev{
+				@extend %left-0;
+			}
+			&-next{
+				@extend %right-0;
+			}
+		}
+	}
+}
+.product-slide-nav{
+	.slick{
+		&-btn{
+			@extend %widthAuto;
+			@extend %heightAuto;
+			@extend %lineheight1;
+			@extend %transparent-bg;
+			i{
+				font-size: 20px;
+			}
+		}
+		&-prev{
+			
+		}
+	}
+	&.slick-center-bottom{
+		.slick{
+			&-btn{
+				@include breakpoint(xsmall){
+					top: 50%;
+					@include transform(translate(-50%, 0));
+					.la-angle-up{
+						&:before{
+							content: '\f111';
+						}
+					}
+					.la-angle-down{
+						&:before{
+							content: '\f112';
+						}
+					}
+				}
+			}
+			&-prev{
+				@include breakpoint(xsmall){
+					left: 20px;
+					margin-left: 0;
+				}
+			}
+			&-next{
+				@include breakpoint(xsmall){
+					right: 0;
+					left: auto;
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+
+/*-- 23.04 - Related Post Carousel --*/
+
+.related-post-carousel{
+	.slick-list{
+		padding: 0px 25% 0 0 !important;
+		@include breakpoint(medium){
+			padding: 0px 10% 0 0 !important;
+		}
+		@include breakpoint(small){
+			padding: 0px 30% 0 0 !important;
+		}
+		@include breakpoint(xsmall){
+			padding: 0px 20% 0 0 !important;
+		}
+		@include breakpoint(xxsmall){
+			padding: 0px !important;
+		}
+	}
+	.slick-slide{
+		&.last-active{
+			opacity: .5;
+			@extend %basetransition;
+			@include breakpoint(small){
+				opacity: 1;
+			}
+		}
+	}
+}

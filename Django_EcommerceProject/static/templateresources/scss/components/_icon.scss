@@ -1,0 +1,16 @@
+/*****************************
+26 - Components - Icon
+*****************************/
+
+.icon{
+	&-box{
+		@include borderIconCenter(46, 2);
+		@extend %borderRadius;
+		@extend %displayInlineBlock;
+	}
+	&-outline{
+		border-width: 2px;
+		border-style: solid;
+		@extend %primary-border-color;
+	}
+}

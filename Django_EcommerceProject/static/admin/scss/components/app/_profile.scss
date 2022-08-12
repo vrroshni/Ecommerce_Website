@@ -1,0 +1,212 @@
+.photo-content{
+    position: relative;
+    .cover-photo{
+        background: url(../images/profile/cover.jpg);
+        background-size: cover;
+        background-position: center;
+        min-height: 15.625rem;
+        width: 100%;
+
+    }
+
+}
+.profile .profile-photo {
+	max-width: 6.25rem;
+	position: relative;
+	z-index: 1;
+	margin-top: -2.5rem;
+	margin-right: 0.625rem;
+	
+	@include respond('tab-land') {
+		
+	}
+	@include respond('phone') {
+		width: 5rem;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom:1.25rem;
+	}
+}
+[direction="rtl"]{
+    
+	.profile .profile-photo {
+		left: auto;
+		right: 0;
+		margin-right: 0;
+		margin-left: 0.9375rem;
+		
+		@include respond('tab-land') {
+			right: 0.9375rem;
+		}
+		@include respond('phone') {
+			width: 5rem;
+			right: calc(50% - 2.5rem);
+			top: -6.25rem;
+			
+			
+		}
+	}
+}
+.profile-info{
+    padding: 0.9375rem 1.25rem;
+    // margin-bottom: 1.875rem;
+	@include respond('phone') {
+		padding: 0 0 1.25rem;
+		text-align:center;
+	}
+    h4 {
+        color: $l-ctd!important;
+    }
+
+    h4.text-primary {
+        color: var(--primary)!important;
+    }
+
+    p {
+        color: $l-ctl;
+    }
+
+    .prf-col{
+        min-width: 15.625rem;
+        padding: 0.625rem 3.125rem 0;
+    }
+}
+.profile-interest{
+    .row{
+        margin: 0 -0.0437rem;
+        .int-col{
+            padding: 0 0.0437rem;
+            .interest-cat{
+                margin-bottom: 0.0875rem;
+                position: relative;
+                display: block;
+                &:after{
+                    background: $black;
+                    bottom: 0;
+                    content: "";
+                    left: 0;
+                    opacity: 0.5;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    z-index: 0;
+                }
+                img{
+                    // margin-bottom: 0.075rem;
+                }
+                p{
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0.3125rem;
+                    left: 0;
+                    margin: 0;
+                    z-index: 1;
+                    color:white;
+                    font-size: 0.075rem;
+                }
+            }
+            
+        }
+    }
+}
+.profile-tab{
+    .nav-item{
+        .nav-link{
+            font-size: 1rem;
+            margin-right: 1.875rem;
+            transition: all 0.5s ease-in-out;
+            border: none;
+            border-bottom: 0.0125rem solid transparent;
+            color: $l-ctl;
+
+            &:hover, &.active{
+                border: 0;
+                background: transparent;
+                background: transparent;
+                border-bottom: 0.0125rem solid var(--primary);
+                color: var(--primary);
+            }
+			@include respond ('phone'){
+				margin-right:0rem;
+			}
+        }
+        
+    }
+}
+.profile-info{
+	display:flex;
+	@include respond('phone') {
+		display:block;
+	}
+	.profile-details {
+		display: flex;
+		width: 100%;
+		@include respond('phone') {
+			display:block;
+			.dropdown{
+				position: absolute;
+				top: 1.875rem;
+				right: 1.875rem;
+			}
+		}
+	}
+}
+
+.post-input{
+    margin-bottom: 1.875rem;
+    .form-control{
+        height: 4.6875rem;
+        font-weight: 400;
+        margin: 0.9375rem 0;
+    }
+	.btn-social{
+		font-size: 1.25rem;
+		height: 3.4375rem;
+		display:inline-block;
+		padding: 0;
+		text-align:center;
+		border-radius:$radius;
+		color:$white;
+		width: 3.4375rem;
+		line-height: 3.375rem;
+		&.facebook{
+			background-color: #3B5998;
+		}
+		&.google-plus{
+			background-color: #DE4E43;
+		}
+		&.linkedin{
+			background-color: #007BB6;
+		}
+		&.instagram{
+			background-color: #8A5A4E;
+		}
+		&.twitter{
+			background-color: #1EA1F3;
+		}
+		&.youtube{
+			background-color: #CE201F;
+		}
+		&.whatsapp{
+			background-color: #01C854;
+		}
+		i{
+			margin:0!important;
+		}
+	}
+    
+}  
+.profile-uoloaded-post{
+    
+    img{
+        margin-bottom: 1.25rem;
+    }
+    a{
+        h4{
+            margin-bottom: 0.625rem;
+            color: $l-ctd;
+        }
+    }
+}

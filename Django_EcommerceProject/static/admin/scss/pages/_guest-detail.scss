@@ -1,0 +1,148 @@
+.owl-carousel.gallery-carousel{
+	img{
+		width:19.375rem;
+		border-radius:0.875rem;
+		object-fit: cover;
+		height: 13.4375rem;
+	}
+	
+	.owl-nav{
+		.owl-prev,
+		.owl-next{
+			height:3.75rem;
+			width:3.75rem;
+			border-radius:3.75rem;
+			line-height:3.75rem;
+			background:$white;
+			color:var(--primary);
+			font-size:1.75rem;
+			cursor:pointer;
+			text-align:center;
+			box-shadow: 0 0.8125rem 1.375rem rgba(0, 0, 0, 0.12);
+			position:absolute;
+			top:50%;
+			transform:translateY(-50%);
+			opacity:0;
+			z-index:1;
+			@include transitionMedium;
+		}
+		.owl-prev{
+			left: -5.9375rem;
+		}
+		.owl-next{
+			right: -5.9375rem;
+		}
+	}
+	&:hover{
+		.owl-nav{
+			.owl-prev{
+				left: -2.8125rem;
+				opacity:1;
+			}
+			.owl-next{
+				right: -2.8125rem;
+				opacity:1;
+			}
+		}
+	}
+	&:after{
+		content:"";
+		height:100%;
+		width:6.25rem;
+		z-index:0;
+		position:absolute;
+		right:0;
+		top:0;
+		background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,1) 100%);
+		background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,1) 100%); 
+		background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 14%,rgba(255,255,255,1) 100%); 
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); 
+	}
+}
+
+.key-icon{
+	height:5.375rem;
+	width:5.375rem;
+	line-height:5.375rem;
+	border-radius:5.375rem;
+	text-align:center;
+	background:var(--primary);
+	@include respond ('phone'){
+		height:3.375rem;
+		width:3.375rem;
+		line-height:3.375rem;
+		svg{
+			width:1.5625rem;	
+		}
+	}
+}
+@include respond ('phone'){
+	.card-title{
+		font-size:0.75rem;	
+	}	
+}
+
+.profile-card{
+	.profile-img{
+		height:6.625rem;
+		width:6.625rem;
+		object-fit:cover;
+	}
+	.user-info-list{
+		i{
+			height:3.125rem;
+			width:3.125rem;
+			min-width:3.125rem;
+			border-radius:3.125rem;
+			line-height:3.125rem;
+			text-align:center;
+			border:0.0625rem solid var(--primary);
+			color:var(--primary);
+			margin-right:0.75rem;
+		}
+		li{
+			font-size:1rem;
+			margin-top:1rem;
+			display: flex;
+			align-items: center;
+			span{
+				color:#262626;	
+			}
+		}
+	}
+}
+.rooms{
+	margin-bottom:2rem;	
+	margin-top:1.25rem;	
+	h4{
+		font-size:1.75rem;	
+		margin-bottom:0;
+	}	
+}
+.guest-bx{
+	display:flex;
+	align-items:center;
+	img{
+		width:12.875rem;
+		height:6rem;
+		object-fit: cover;
+		border-radius:0.625rem;
+	}
+	.carousel {
+		width:12.875rem;
+		height:6rem;
+		border-radius:0.625rem;	
+		.carousel-control-prev,
+		.carousel-control-next{
+			height: 2.375rem;
+			width: 2.375rem;
+			background: $white;
+			margin: 0 0.25rem;
+			top: 50%;
+			border-radius: 50%;
+			transform: translateY(-50%);	
+		}
+		
+	}
+	
+}

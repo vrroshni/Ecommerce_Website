@@ -1,0 +1,579 @@
+/*****************************
+02 - Utilities - Helper
+*****************************/
+ 
+.wrapper{
+	@extend %posrelative;
+}
+.container{
+	@include breakpoint(xlargeonly){
+		max-width: 1200px;
+	}
+	&-fluid{
+		padding-left: 120px;
+		padding-right: 120px;
+		@include breakpoint(xlarge){
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+}
+
+.hide-in-default{
+	display: none;
+}
+.item-overlay{
+	@extend %posabsolute;
+	left: 0;
+	top: 0;
+	width: 5%;
+	height: 5%;
+	background-color: rgba($primary-color, .5);
+	@extend %invisible;
+	@extend %basetransition;	
+}
+.full-height{
+	height: 100vh;
+}
+.ov-hidden{
+	overflow: hidden;
+}
+.line-height-1{
+	line-height: 1;
+}
+.h-sm-auto{
+	@include breakpoint(small){
+		height: auto !important;
+	}
+}
+.no-radius{
+	@include border-radius(0);
+}
+.border{
+	&-top,
+	&-bottom, 
+	&-left, 
+	&-right{
+		border-color: $border-color !important;
+	}
+}
+.border-radius{
+	@extend %borderRadius;
+}
+.border-color-2{
+	border-color: $border-color-2;
+}
+
+// Margin & Padding
+
+
+%margin-0{
+	margin: 0;
+}
+%marginTop-0{
+	margin-top: 0;
+}
+%marginLeft-0{
+	margin-left: 0;
+}
+%marginRight-0{
+	margin-right: 0;
+}
+%marginBottom-0{
+	margin-bottom: 0;
+}
+%padding-0{
+	padding: 0;
+}
+%paddingTop-0{
+	padding-top: 0;
+}
+%paddingLeft-0{
+	padding-left: 0;
+}
+%paddingRight-0{
+	padding-right: 0;
+}
+%paddingBottom-0{
+	padding-bottom: 0;
+}
+%posabsolute{
+	position: absolute;
+}
+%pseudo{
+	position: absolute;
+	content: "";
+}
+%posrelative{
+	position: relative;
+}
+%absCenter{
+	@extend %posabsolute;
+	left: 50%;
+	top: 50%;
+	@include transform(translate(-50%, -50%));
+}
+%vCenter{
+	top: 50%;
+	@include transform(translate(0, -50%));
+}
+%hCenter{
+	left: 50%;
+	@include transform(translate(-50%, 0));
+}
+%lefttop{
+	left: 0;
+	top: 0;
+}
+%left-0{
+	left: 0;
+}
+%right-0{
+	right: 0;
+}
+%top-0{
+	top: 0;
+}
+%bottom-0{
+	bottom: 0;
+}
+%fullwidth{
+	@extend %lefttop;
+	@extend %width100;
+	@extend %height100;
+}
+%basetransition{
+	@include transition($baseTransition);
+}
+%invisible{
+	visibility: hidden;
+	opacity: 0;
+}
+%visible{
+	visibility: visible;
+	opacity: 1;
+}
+%fontAwesome{
+	position: absolute;
+	font-family: fontAwesome;
+	line-height: 1;
+}
+
+
+%overflowHidden{
+	overflow: hidden;
+}
+%cursorPointer{
+	cursor: pointer;
+}
+
+%tab-link{
+	border-width: 0 0 0;
+	border-style: solid;
+	border-color: transparent;
+	text-align: center;
+}
+%tab-link-span{
+	border-style: solid;
+	border-color: transparent;
+	display: inline-block;
+}
+%cart-calculator{
+	padding-top: 5px;
+	padding-bottom: 15px;
+	vertical-align: top;
+	@extend %heading-color;
+	text-transform: capitalize;
+	letter-spacing: 0;
+}
+%actionBtn{
+	@extend %displayInlineBlock;
+	@extend %textAcenter;
+	@extend %border-none;
+	width: 60px;
+	height: 45px;
+	
+	@include breakpoint(xlarge){
+		width: 52px;
+	}
+	@include breakpoint(medium){
+		width: 50px;
+		height: 40px;
+	}
+}
+%variationLabel{
+	@extend %heading-color;
+    @extend %textTcap;
+    @extend %marginBottom-0;
+    @extend %fontWeight600;
+    margin-right: 20px;
+}
+%productSwatch{
+	@extend %pseudo;
+	left: 50%;
+	top: 50%;
+	@include transform(translate(-50%, -50%));
+	@include circle(17);
+}
+%swatchAnimation{
+	transition-property: opacity, transform;
+	transition-duration: .3s;
+	transition-timing-function: ease;
+	@for $i from 1 through 4{
+		&:nth-child(#{$i}){
+			transition-delay: #{$i * 50}ms;
+		}
+	}
+}
+// Border
+
+%borderRadius{
+	@include border-radius($border-radius);
+}
+%borderRadius0{
+	@include border-radius(0);
+}
+%borderRadius50{
+	@include border-radius(50%);
+}
+%border{
+	border: 1px solid $border-color;
+}
+%border-left{
+	border-left: 1px solid $border-color;
+}
+%border-right{
+	border-right: 1px solid $border-color;
+}
+%border-top{
+	border-top: 1px solid $border-color;
+}
+%border-bottom{
+	border-bottom: 1px solid $border-color;
+}
+%border-none{
+	border: none;
+}
+%border-color{
+	border-color: $border-color;
+}
+%border-style{
+	border-style: solid;
+}
+%border-width-1{
+	border-width: 1px;
+}
+%border-width-2{
+	border-width: 2px;
+}
+
+/*-- Font --*/
+
+%font{
+	font-family: $body-font;
+}
+%headingFont{
+	font-family: $heading-font;
+}
+%fontSize24{
+	font-size: 24px;
+}
+%fontSize18{
+	font-size: 18px;
+}
+%fontSize16{
+	font-size: $body-font-size;
+}
+%fontSize15{
+	font-size: 15px;
+}
+%fontSize14{
+	font-size: 14px;
+}
+%fontSize13{
+	font-size: 13px; 
+}
+%fontSize12{
+	font-size: 12px;
+}
+%fontSize11{
+	font-size: 11px;
+}
+%fontWeight900{
+	font-weight: 900;
+}
+%fontWeight800{
+	font-weight: 800;
+}
+%fontWeight700{
+	font-weight: 700;
+}
+%fontWeight600{
+	font-weight: 600;
+}
+%fontWeight500{
+	font-weight: 500;
+}
+%fontWeight400{
+	font-weight: 400;
+}
+%fontWeight300{
+	font-weight: 300;
+}
+%fontItalic{
+	font-style: italic;
+}
+
+// Line Height
+
+%lineheight1{
+	line-height: 1;
+}
+
+// Width
+
+%widthAuto{
+	width: auto;
+}
+%heightAuto{
+	height: auto;
+}
+%width100{
+	width: 100%;
+}
+%height100{
+	height: 100%;
+}
+%widthInherit{
+	width: inherit;
+}
+%heightInherit{
+	height: inherit;
+}
+%maxWidth100{
+	max-width: 100%;
+}
+%maxHeight100{
+	max-height: 100%;
+}
+
+// Text Align
+
+%textAleft{
+	text-align: left;
+}
+%textAright{
+	text-align: right;
+}
+%textAcenter{
+	text-align: center;
+}
+
+// Text Transform
+
+%textTupper{
+	text-transform: uppercase;
+}
+%textTcap{
+	text-transform: capitalize;
+}
+%textTnone{
+	text-transform: none;
+}
+
+// Text Decoration
+
+%textDnone{
+	text-decoration: none;
+}
+%textDunder{
+	text-decoration: underline;
+}
+%textDline{
+	text-decoration: line-through;
+}
+
+
+// Display
+
+%displayBlock{
+	display: block;
+}
+%displayInline{
+	display: inline;
+}
+%displayInlineBlock{
+	display: inline-block;
+}
+
+// Inherit
+
+%linheightInherit{
+	line-height: inherit;
+}
+%fontSizeInherit{
+	font-size: inherit;
+}
+
+// Flexbox Extend
+
+%flexbox{
+	@include flexbox;
+}
+%justify-center{
+	@include justify-content(center);
+}
+%justify-around{
+	@include justify-content(space-around);
+}
+%justify-between{
+	@include justify-content(space-between);
+}
+%justify-start{
+	@include justify-content(flex-start);
+}
+%justify-end{
+	@include justify-content(flex-end);
+}
+%align-start{
+	@include align-items(flex-start);
+}
+%align-end{
+	@include align-items(flex-end);
+}
+%align-center{
+	@include align-items(center);
+}
+%align-stretch{
+	@include align-items(stretch);
+}
+%align-baseline{
+	@include align-items(baseline);
+}
+%flex-wrap{
+	@include flex-wrap(wrap);
+}
+%flex-nowrap{
+	@include flex-wrap(nowrap);
+}
+
+%flex-column{
+	@include flex-direction(column);
+}
+%flex-column-reverse{
+	@include flex-direction(column-reverse);
+}
+
+%flex-row{
+	@include flex-direction(row);
+}
+%flex-row-reverse{
+	@include flex-direction(row-reverse);
+}
+
+%absFlexCenter{
+	@include flexbox;
+	@include justify-content(center);
+	@include align-items(center);
+}
+%horizontalFlexCenter{
+	@include flexbox;
+	@include justify-content(center);
+}
+%verticalFlexCenter{
+	@include flexbox;
+	@include align-items(center);
+}
+
+
+
+/*-- Background Styles --*/
+
+.bg-image{
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center;
+	background-size: cover;
+}
+.bg-cover{
+	background-size: cover;
+}
+.bg-100{
+	background-size: 100% 100%;
+} 
+.bg-contain{
+	background-size: contain;
+}
+.bg-no-repeat{
+	background-repeat: no-repeat;
+}
+.bg-repeat{
+	background-repeat: repeat;
+}
+.bg-scroll{
+	background-attachment: scroll;
+}
+.bg-fixed{
+	background-attachment: fixed;
+}
+.bg-center{
+	background-position: center;
+}
+.bg-center-top{
+	background-position: center top;
+}
+.bg-center-bottom{
+	background-position: center bottom;
+}
+.bg-left-top{
+	background-position: left top;
+}
+.bg-left-bottom{
+	background-position: left bottom;
+}
+.bg-right-top{
+	background-position: right top;
+}
+.bg-right-bottom{
+	background-position: right bottom;
+}
+.bg-position-50-200p{
+	background-position: 50% 200px;
+}
+.bg-sm-padding{
+	@include breakpoint(small){
+		padding-top: 50%
+	}
+}
+
+
+
+
+// List
+
+.two-column-list{
+	@extend %flexbox;
+	@extend %flex-wrap;
+	& > * {
+		@include flex-basis(50%);
+		max-width: 50%;
+	}
+}
+.sm-one-column{
+	& > * {
+		@include breakpoint(small){
+			@include flex-basis(100%);
+			max-width: 100%;
+		}
+	}
+}
+
+
+
+// Max Width
+ 
+.max-width--1200{
+	max-width: 1200px;
+	margin: 0 auto;
+}
+

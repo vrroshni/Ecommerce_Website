@@ -1,0 +1,247 @@
+//demo styles
+table#example{
+    padding: 0rem 0 2rem 0;
+}
+table.dataTable{
+    font-size: 0.875rem;
+}
+#example2_wrapper {
+    .dataTables_scrollBody {
+        max-height: 33.25rem !important;
+    }
+}
+
+#employees, #custommers {
+    padding: .5rem 0 1rem 0;
+}
+//////////
+.dataTables_wrapper .dataTables_paginate{
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+}
+
+
+
+table.dataTable thead th, table.dataTable thead td{
+    border-bottom: 0.125rem solid $border-color;
+    border-top: 0;
+}
+
+table.dataTable tfoot th, table.dataTable tfoot td{
+    border-top: 0;
+}
+
+table.dataTable tbody tr, table.dataTable tbody td{
+    background: transparent !important;
+}
+
+table.dataTable thead th{
+    color: $black;
+	white-space:nowrap;
+	font-size:1.125rem;
+	text-transform:capitalize;
+    font-weight: 600;
+	padding: 1.25rem 0.9375rem;
+    @at-root [data-theme-version="dark"] & {
+        color: $white;
+    }
+	@include respond ('laptop'){
+		font-size:1rem;
+	}
+}
+
+table.dataTable.default-table{
+	 tbody{
+		 td{
+			padding-top:1.8rem;
+			padding-bottom:1.8rem;
+		}
+		tr{
+			@include transitionMedium;
+			&:hover{
+				box-shadow: 0 0.125rem 3.0625rem rgba(0, 0, 0, 0.19);
+			}
+		}
+	}
+}
+
+table.dataTable tbody td{
+    padding: 1.25rem 0.9375rem;
+	font-size:1rem;
+	font-weight: 400;
+	border-bottom:0;
+	@include respond('phone') {
+		padding: 0.5rem 0.3125rem;
+	}
+	@include respond ('laptop'){
+		font-size:0.875rem;
+		padding:0.5rem 0.9375rem;
+	}
+}
+
+table.dataTable tr.selected{
+    color: var(--primary);
+}
+
+table.dataTable tfoot th{
+    color: $dark;
+    font-weight: 600;
+    @at-root [data-theme-version="dark"] & {
+        color: $white;
+    }
+}
+
+
+.dataTables_wrapper .dataTables_info{
+	font-size:1rem;
+	color:#000;
+	font-weight: 600;
+}
+.dataTables_wrapper .dataTables_paginate{
+	&>.paginate_button{
+		font-size:1.125rem;
+		border-radius:$radius;
+		padding: 0.9rem 1.5625rem;
+		color:var(--primary)!important;
+		border:0.0625rem solid var(--primary)!important;
+		@include transitionFast;
+		&.disabled{
+			border-color:#666!important;
+		}
+		&:hover{
+			background:var(--primary)!important;
+			&.disabled{
+				border-color:#666!important;
+				background:transparent!important;
+			}
+		}
+		@include respond ('phone'){
+			font-size:0;
+			i{
+				font-size: 1.25rem;
+				margin: 0!important;
+				padding: 0.1875rem 0.3125rem;	
+			}
+			padding:0.5rem 0.5rem;
+		}
+	}
+	span{
+		background-color:#F4F4F4;
+		display: inline-flex;
+		padding: 0.4rem 0.625rem;
+		border-radius:$radius;
+		margin:0 1rem;
+		.paginate_button{
+			height:3.125rem;
+			width:3.125rem;
+			line-height:3.125rem;
+			text-align:center;
+			border-radius:$radius;
+			border:0!important;
+			font-size:1.125rem;
+			padding:0;
+			background:transparent;
+			color:#202020!important;
+			@include transitionFast;
+			&.current,
+			&:hover,
+			&:active,
+			&:focus,
+			{
+				background:var(--primary);
+				color:$white!important;
+			}
+		}
+	}
+}
+
+
+.dataTables_wrapper {
+    input[type="search"], input[type="text"], select {
+        border: 0.0625rem solid #e2e2e2;
+        padding: .3rem 0.5rem;
+        color: rgba(113, 93, 93, 1);
+        border-radius: 0.3125rem;
+        @at-root [data-theme-version="dark"] & {
+            background: $d-bg;
+            border-color: $d-border;
+            color: $white;
+        }
+    }
+	.dataTables_length{
+		margin-bottom: 0.9375rem;
+		.bootstrap-select{
+			width: 5rem;
+			margin: 0 0.3125rem;
+		}
+	}
+}
+table.dataTable.no-footer{
+    border-bottom: 0;
+}
+
+
+.rounded-lg{
+	min-width:1.875rem;
+}
+.dataTables_scroll{
+    padding: 1rem 0;
+
+    &Foot{
+        padding-top: 1rem;
+    }
+}
+
+.dataTablesCard{
+	background-color:$white;
+	border-radius:$radius;
+	&.border-no{
+		td{
+			border-top:0!important;
+		}
+	}
+}
+
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter {
+    @include media-breakpoint-down(md) {
+        text-align: left;
+    }
+}
+
+
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter, 
+.dataTables_wrapper .dataTables_processing, 
+.dataTables_wrapper .dataTables_paginate {
+    color: $body-color;
+	border-radius:1rem;
+	padding:0.125rem 0;
+	margin-bottom:1.25rem;
+}
+.paging_simple_numbers.dataTables_paginate {
+	padding: 0.3125rem 0.3125rem;
+}
+
+
+
+
+table.dataTable.row-border tbody th, 
+table.dataTable.row-border tbody td, 
+table.dataTable.display tbody th, 
+table.dataTable.display tbody td {
+    border-color: $border-color;
+    @at-root [data-theme-version="dark"] & {
+        border-color: $d-border;
+    }
+}
+
+.dataTables_wrapper{
+	.dataTables_length{
+		.bootstrap-select{
+			.dropdown-toggle{
+				font-size: 0.813rem !important;
+				padding: 0.625rem 1rem;
+			}
+		}
+	}
+}

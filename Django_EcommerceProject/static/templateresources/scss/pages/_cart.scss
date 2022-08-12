@@ -1,0 +1,55 @@
+/*****************************
+40 - Pages - Cart
+*****************************/
+
+.cart-collaterals{
+	background: $color-white-dark;
+}
+.cart-totals{
+	padding: 30px 30px 0;
+	margin-bottom: 15px;	
+}
+.cart-calculator{
+	&__item{
+		@extend %flexbox;
+		@extend %flex-wrap;
+		&--head{
+			@extend %cart-calculator;
+			@extend %fontSize14;
+			@extend %fontWeight700;
+			@include flex-basis(90px);
+			max-width: 90px;
+		}
+		&--value{
+			@extend %cart-calculator;
+			@include flex-basis(calc(100% - 90px));
+			max-width: calc(100% - 90px);
+			@include breakpoint(xxsmall){
+				@include flex-basis(100%);
+				max-width: 100%;
+			}
+			& > span,
+			& > a{
+				@extend %displayBlock;
+				margin-bottom: 5px;
+			}
+			.product-price-wrapper{
+				& > span{
+					@extend %fontWeight400;
+				}
+			}
+		}
+		&.order-total{
+			@extend %border-top;
+			& > div{
+				padding-top: 15px;
+			}
+		}
+	}
+}  
+
+.shipping-calculator-wrap{
+	a{
+		@extend %body-color;
+	}
+}  

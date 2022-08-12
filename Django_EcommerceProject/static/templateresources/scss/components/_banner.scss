@@ -1,0 +1,105 @@
+/*****************************
+20 - Components - Banner
+*****************************/
+
+.banner{
+	&__inner{
+		@extend %posrelative;
+	}
+	&__image{
+		img{
+			@extend %width100;
+		}
+	}
+	&__info{
+		@extend %posabsolute;
+		@extend %top-0;
+		@extend %height100;
+		&--inner{
+			@extend %posrelative;
+			z-index: 2;
+			&.width{
+				&-1{
+					width: 245px;
+				}
+				&-2{
+					width: 195px;
+				}
+				&-3{
+					width: 145px;
+				}
+			}
+		}
+	}
+	&__title{
+		&-1{
+			color: #010225;
+			font-size: 30px;
+			margin-bottom: 10px;
+			@extend %fontWeight700;
+			@include breakpoint(small){
+				font-size: 25px;
+			}
+		}
+	}
+	&__text{
+		&-1{
+			color: #010225;
+  			line-height: 1.571;
+			@extend %fontSize14;
+		}
+	}
+	&__btn{
+		color: #010225;
+  		line-height: 1.571;
+		@extend %textTupper;
+		@extend %fontSize14;
+		@extend %textDunder;
+		&:hover{
+			@extend %textDunder;
+		}
+	}
+	&__link{
+		@extend %posabsolute;
+		@extend %fullwidth;
+		z-index: 1;
+	}
+	&-info{
+		&-top{
+			.banner{
+				&__info{
+					@extend %top-0;
+				}
+			}
+		}
+		&-right{
+			&-center{
+				.banner{
+					&__info{
+						@extend %right-0;
+						@extend %verticalFlexCenter;
+					}
+				}
+			}
+		}
+		&-left{
+			&-center{
+				.banner{
+					&__info{
+						@extend %left-0;
+						@extend %verticalFlexCenter;
+					}
+				}
+			}
+		}
+	}
+	&.h-100{
+		.banner{
+			&__inner,
+			&__image,
+			&__image img{
+				@extend %height100;
+			}
+		}
+	}
+}

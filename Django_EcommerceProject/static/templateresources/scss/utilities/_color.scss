@@ -1,0 +1,121 @@
+/*****************************
+63 - Utilities - Color
+*****************************/
+
+%white-color{
+	color: $color-white;
+}
+%white-bg-color{
+	background-color: $color-white;
+}
+%white-border-color{
+	border-color: $color-white;
+}
+%blue-color{
+	color: $color-blue;
+}
+%blue-bg-color{
+	background-color: $color-blue;
+}
+%blue-border-color{
+	border-color: $color-blue;
+}
+%primary-color{
+	color: $primary-color;
+}
+%primary-bg-color{
+	background-color: $primary-color;
+}
+%primary-border-color{
+	border-color: $primary-color;
+}
+%black-color{
+	color: $color-black;
+}
+%black-bg-color{
+	background-color: $color-black;
+}
+%black-border-color{
+	border-color: $color-black;
+}
+%body-color{
+	color: $body-color;
+}
+%body-bg-color{
+	background-color: $body-color;
+}
+%body-border-color{
+	border-color: $body-color;
+}
+%heading-color{
+	color: $heading-color;
+}
+%heading-bg-color{
+	background-color: $heading-color;
+}
+%heading-border-color{
+	border-color: $heading-color;
+}
+%transparent-bg{
+	background-color: transparent;
+}
+
+
+
+// Color
+.color--primary{
+	color: $primary-color !important;
+}
+.color--light{
+	color: $color-light !important;
+}
+.color--black{
+	color: $color-black !important;
+}
+.color--white{
+	color: $color-white !important;
+}
+.color--white-light{
+	color: rgba($color-white, .8) !important;
+}
+.color--white-light-2{
+	color: rgba($color-white, .4) !important;
+}
+.color--dark{
+	color: $color-dark !important;
+}
+.color--dust{
+	color: $color-dust !important;
+}
+.heading-color{
+	color: $heading-color !important;
+}
+
+// Background
+.bg--white{
+	background-color: $color-white;
+}
+.bg--white-light{
+	background-color: rgba($color-white, .1);
+}
+.bg--light{
+	background-color: $color-light;
+}
+.bg--dark{
+	background-color: $color-dark;
+}
+.bg--black{
+	background-color: $color-black;
+}
+.bg--blue{
+	background-color: $color-blue;
+}
+.bg--dark{
+	background-color: $color-dark;
+}
+.bg--primary{
+	background-color: $primary-color;
+}
+.bd-color--primary{
+	border-color: $primary-color;
+}

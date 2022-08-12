@@ -1,0 +1,36 @@
+.star-review{
+	display:flex;
+	li{
+		margin-right: 0.3125rem;	
+		i.orange{
+			color:#FFBC39;	
+		}	
+	}
+}
+.review-bx{
+	display:flex;
+	img{
+		width:4rem;
+		height:4rem;
+		border-radius:1.375rem;
+	}
+}
+.customer-review-list{
+	position:relative;	
+	border-bottom:0.0625rem solid $border-color;
+	padding:1.25rem 0;
+	@include respond ('tab-land'){
+		.action-btn{
+			position: absolute;
+			top: 0.3125rem;
+			right: 0;
+			width: auto;	
+		}	
+	}
+	@include respond ('phone'){
+		.action-btn{
+			position: unset;
+			padding-top:0.625rem;
+		}		
+	}
+}

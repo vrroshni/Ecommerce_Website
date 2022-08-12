@@ -1,0 +1,97 @@
+/*****************************
+24 - Components - Comment
+*****************************/
+
+.comment{
+	&-title{
+	    margin-bottom: 27px;
+	    @extend %fontSize24;
+	}
+	&-list{
+		& > li{
+			&:last-child{
+				& > .single-comment:only-child{
+					margin-bottom: 0;
+				}
+				
+				.children{
+					& > li{
+						&:last-child{
+							.single-comment{
+								margin-bottom: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.single-comment{
+		@extend %posrelative;
+		margin-bottom: 20px;
+	}
+	&-avatar{
+		@extend %posabsolute;
+		@extend %lefttop;
+		@include breakpoint(xsmall){
+			position: relative !important;
+			margin-bottom: 10px;
+		}
+		img{
+			@extend %borderRadius50;
+		}
+	}
+	&-info{
+		margin-left: 120px;
+		@extend %border-width-2;
+		@extend %border-style;
+		@extend %border-color;
+		@extend %borderRadius;
+		padding: 20px 30px;
+		@include breakpoint(xsmall){
+			margin-left: 0;
+			padding: 15px 20px;
+		}
+	}
+	&-meta{
+		margin-bottom: 10px;
+		@extend %verticalFlexCenter;
+		@extend %justify-between;
+		@include breakpoint(xxsmall){
+			@include flex-direction(column);
+			align-items: flex-start !important;
+		}
+	}
+	&-author{
+		@extend %fontSize14;
+		a{
+			@extend %heading-color;
+			&:hover{
+				@extend %primary-color;
+			}
+		}
+	}
+	&-date{
+		@extend %fontItalic;
+		@extend %fontSize14;
+		margin-right: 40px;
+	}
+	&-reply-link{
+	    @extend %primary-color;
+	    @extend %fontSize14;
+	    @extend %fontWeight700;
+	}
+	&-content{
+		p{
+			@extend %heading-color;
+		}
+	}
+	.children{
+		margin-left: 20px;
+	}
+	&-reply-title{
+	    margin-bottom: 27px;
+	    @extend %fontSize24;
+	}
+}
+

@@ -1,0 +1,207 @@
+/*****************************
+21 - Components - Blog
+*****************************/
+
+
+/*-- 21.00 - Blog --*/
+
+.blog{
+	&__inner{
+		&:hover{
+			.item-overlay{
+				@extend %visible;
+				@extend %width100;
+				@extend %height100;
+			}
+			.blog{
+				&__media{
+					.image{
+						img{
+							@include transform(scale(1.1));
+						}
+					}
+				}
+			}
+		}
+	}
+	&__media{
+		margin-bottom: 27px;
+		@extend %posrelative;
+		@extend %overflowHidden;
+		@include breakpoint(medium){
+			margin-bottom: 23px;
+		}
+		img{
+			@include transition(all .3s .25s);
+		}
+	}
+	&__info{
+		padding-left: 70px;
+		@extend %posrelative;
+		@include breakpoint(large){
+			padding-left: 60px;
+		}
+		@include breakpoint(xsmall){
+			padding-left: 0;
+		}
+		&:before{
+			@extend %pseudo;
+			left: 35px;
+			top: -56px;
+			width: 8px;
+			height: 60px;
+			@extend %primary-bg-color;
+			@include breakpoint(large){
+				left: 30px;
+			}
+			@include breakpoint(xsmall){
+				display: none;
+			}
+		}
+	}
+	&__title{
+		@extend %body-color;
+		@extend %fontSize18;
+		@extend %margin-0;
+		@extend %textTupper;
+  		line-height: 1.8;
+  		@include breakpoint(large){
+  			font-size: 16px;
+  		}
+	}
+	&__meta{
+		margin: 8px 0 14px;
+		.posted-on{
+			@extend %fontSize14;
+		}
+		.posted-by{
+			padding-left: 15px;
+			@extend %fontSize14;
+		}
+	}
+	&__desc{
+		margin-bottom: 12px;
+	}
+}
+
+/*-- 21.01 - Blog Details --*/
+
+.single-post{
+	margin-top: -315px;
+	border-bottom: 2px solid $border-color;
+	@include breakpoint(medium){
+		margin-top: -250px;
+	}
+	@include breakpoint(small){
+		margin-top: -200px;
+	}
+	&__header{
+		@extend %border-bottom;
+		margin-bottom: 32px;
+		@include breakpoint(small){
+			margin-bottom: 20px;
+		}
+	}
+	&__title{
+		font-size: 45px;
+		line-height: 1.222;
+		margin-bottom: 38px;
+		@extend %fontWeight400;
+		@extend %body-color;
+		@include breakpoint(medium){
+			font-size: 35px;
+		}
+		@include breakpoint(small){
+			font-size: 30px;
+		}
+	}
+	&__header-meta{
+		@extend %verticalFlexCenter;
+		@extend %justify-between;
+		padding-top: 12px;
+		padding-bottom: 10px;
+	}
+	&__info{
+		p{
+			&:not(:last-child){
+				margin-bottom: 35px;
+				@include breakpoint(small){
+					margin-bottom: 25px;
+				}
+			}
+		}
+		blockquote{
+			color: $color-shark;
+			font-size: 28px;
+			padding-top: 19px;
+			margin-bottom: 29px;
+  			line-height: 1.357;
+			@extend %fontWeight500;
+			@extend %textAcenter;
+			@extend %posrelative;
+			@include breakpoint(small){
+				font-size: 24px;
+			}
+			&:before{
+				@extend %posabsolute;
+				@extend %hCenter;
+				content: '\0022';
+				font-family: $body-font;
+				line-height: 0;
+				font-size: 140px;
+				color: $color-shark;
+				top: 6px;
+			}
+		}
+	}
+	&__meta{
+		@include breakpoint(small){
+			margin-bottom: 22px;
+		}
+		.posted-by{
+			border-bottom: 2px solid $border-color-2;
+			margin-bottom: 26px;
+			padding-bottom: 30px;
+			@include breakpoint(small){
+				margin-bottom: 30px;
+				padding-bottom: 23px;
+			}	
+			span{
+  				line-height: 1.846;
+  				@extend %displayBlock;
+				@extend %fontSize13;
+				@extend %fontItalic;
+				@include breakpoint(small){
+					display: inline-block;
+				}
+				&.byline{
+					color: $color-dust-gray;
+				}
+			}
+			a{
+				color: $color-dark;
+			}
+		}
+	}
+}
+
+/*-- 21.02 - Related Post --*/
+
+.related-post{
+	&__inner{
+		@extend %flexbox;
+	}
+	&__media{
+		max-width: 150px;
+		@include flex-basis(150px);
+	}
+	&__info{
+		max-width: calc(100% - 150px);
+		@include flex-basis(calc(100% - 150px));
+		padding-left: 30px;
+	}
+	&__title{
+		@extend %fontSize18;
+		@extend %fontWeight500;
+	}
+}

@@ -1,0 +1,125 @@
+/*****************************
+27 - Components - Mini Cart
+*****************************/
+
+.mini-cart{
+	position: fixed;
+	width: 420px;
+	min-height: 100vh;
+	z-index: 99999;
+	@extend %top-0;
+	@extend %bottom-0;
+	@extend %right-0;
+	@extend %invisible;
+	@extend %heading-color;
+	@extend %white-bg-color;
+	@include transition(all 400ms ease-out);
+	@include transform(translate(200px, 0));
+	@include box-shadow(0px 0px 87px 0px rgba(0, 0, 0, 0.09));
+
+    @include breakpoint(medium){
+    	width: 350px;
+    }
+
+	@include breakpoint(xsmall){
+		max-width: 100%;
+	}
+	&.open{
+	    @extend %visible;
+	    @include transform(translate(0, 0));
+	}
+	&-wrapper{
+		padding-top: 5rem;
+		@extend %posrelative;
+	}
+	&__close{
+		@extend %posabsolute;
+		width: 40px;
+		height: 40px;
+	    right: 20px;
+	    top: 20px;
+		.btn-close{
+			@extend %displayBlock;
+			@extend %lineheight1;
+			i{
+				font-size: 40px;
+				@extend %lineheight1;
+			}
+		}
+	}
+	&-inner{
+		@extend %height100;
+		@extend %overflowHidden;
+		padding: 5rem;
+	}
+
+	&__heading{
+		@extend %fontWeight500;
+		@extend %fontSize24;
+	}
+	&__list{
+	    max-height: 300px;
+	    overflow: auto;
+	    margin-right: -70px;
+	    padding-right: 70px;
+	    margin-bottom: 30px;
+	    @include breakpoint(xsmall){
+	    	margin-bottom: 20px;
+	    }
+	}
+	&__product{
+		@extend %flexbox;
+		@extend %posrelative;
+		&:not(:last-child){
+			margin-bottom: 30px;
+		}
+		&-remove{
+			@extend %posabsolute;
+			@extend %lineheight1;
+			@extend %overflowHidden;
+		    @extend %heading-color; 
+		    font-size: 20px;
+		    height: 20px;
+		    width: 20px;
+		    right: -17px;
+		    top: 8px;
+		    &:hover{
+		    	@extend %primary-color;
+		    }
+		}
+		&-image{
+			@include flex-basis(70px);
+			max-width: 70px;
+		}
+		&-content{
+			@include flex-basis(calc(100% - 70px));
+			max-width: calc(100% - 70px);
+			padding-left: 20px;
+			padding-right: 10px;
+			@include breakpoint(small){
+				@include flex-basis(calc(100% - 90px));
+				max-width: calc(100% - 90px);
+				padding-left: 10px;
+			}
+		}
+		&-title{
+			@extend %heading-color;
+			@extend %displayBlock;
+			@extend %fontSize18;
+			@extend %fontWeight500;
+			margin: 0 0 5px;
+			&:hover{
+				@extend %primary-color;
+			}
+		}
+	}
+	&__total{
+		@extend %verticalFlexCenter;
+		@extend %justify-between;
+		margin-bottom: 30px;
+		span{
+			font-size: 30px;
+		}
+	}
+}
+ 

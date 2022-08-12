@@ -1,0 +1,272 @@
+/*****************************
+25 - Components - Form
+*****************************/
+
+
+/*-- 25.00 - Global Form --*/
+
+.form{
+    &__notes{
+        color: $color-dust-gray;
+        @extend %fontSize12;
+    }
+    &__label{
+        @extend %body-color;
+        @extend %fontSize14;
+        @extend %fontWeight500;
+    }
+    &__input{
+        @extend %border;
+        @extend %width100;
+        @extend %borderRadius;
+        height: 40px;
+        padding-left: 10px;
+        &--textarea{
+            height: 100px;
+        }
+        &.nice-select{
+            width: 100%;
+            height: 40px;
+            @extend %paddingLeft-0;
+        }
+    }
+    &__output{
+        @extend %textAleft;
+        margin-top: 5px;
+        &.success{
+            color: $color-green;
+        }
+        &.error{ 
+            color: $color-red;
+        }
+    }
+    &__fieldset{
+        @extend %border;
+        @extend %margin-0;
+        padding: 15px;
+    }
+    &__legend{
+        @extend %fontSize12;
+        @extend %border-none;
+        @extend %displayInlineBlock;
+        @extend %linheightInherit;
+        @extend %widthAuto;
+        padding: 0 10px;
+    }
+    &.shipping-calculator-form{
+        .nice-select{
+            margin-bottom: 10px;
+        }
+    }
+}
+
+
+/*-- 25.01 - Newsletter Form --*/
+
+.newsletter-form{
+	@extend %posrelative;
+	&__input{
+		height: 40px;
+		@extend %width100;
+		@extend %transparent-bg;
+        @extend %border-width-1;
+        @extend %border-style;
+        @extend %border-color;
+        @extend %fontSize14;
+		padding-left: 10px;
+		padding-right: 100px;
+		@include placeholder{
+			font-size: 13px;
+			font-style: italic;
+		}
+	}
+	&__btn{
+		@extend %border-none;
+		@extend %padding-0;
+		@extend %posabsolute;
+		@extend %right-0;
+		@extend %top-0;
+		@extend %primary-bg-color;
+		@extend %white-color;
+		height: 40px;
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+}
+
+
+/*-- 25.02 - Search Form --*/
+
+.searchform {
+    @extend %posrelative;
+    width: 800px;
+    @include breakpoint(medium){
+        width: 700px;
+    }
+    @include breakpoint(small){
+        width: 95%;
+    }
+    &__input {
+        @extend %width100;
+        @extend %transparent-bg;
+        @extend %border-none;
+        @extend %border-width-2;
+        @extend %border-style;
+        @extend %border-color;
+        @extend %textAcenter;
+        @extend %fontWeight400;
+        @extend %maxWidth100;
+        color: #232324;
+        border-color: #232324;
+        font-size: 30px;
+        padding: 10px 50px 10px 10px;
+        @extend %basetransition;
+        @include breakpoint(medium){
+            font-size: 25px;
+        }
+        @include breakpoint(small){
+            font-size: 20px;
+        }
+    }
+
+    &__submit {
+        @extend %posabsolute;
+        @extend %displayBlock;
+        @extend %cursorPointer;
+        @extend %border-none;
+        @extend %transparent-bg;
+        @extend %padding-0;
+        @extend %vCenter;
+        right: 5px;
+        color: #000;
+        font-size: 30px;
+        height: 30px;
+        i{
+            @extend %displayBlock;
+            font-size: 35px;
+        }
+    }
+    &--2{
+        @extend %width100;
+        .searchform{
+            @extend %flexbox;
+            &__input{
+                height: 40px;
+                padding: 0 10px;
+                @extend %width100;
+                @extend %border;
+                @extend %textAleft;
+                @extend %fontSize14;
+            }
+            &__submit{
+                padding: 5px 10px;
+                height: 40px;
+                transform: translate(0);
+                @extend %primary-bg-color;
+                @extend %white-color;
+                @extend %displayInlineBlock;
+                @extend %border-none;
+                @extend %fontSize16;
+                @extend %right-0;
+                @extend %top-0;
+            }
+        }
+    }
+}
+
+
+/*--- 25.03 - Nice Select --*/
+
+.nice-select{
+    padding-right: 0;
+    .current{
+        @extend %displayBlock;
+        @extend %fontSize16;
+        @extend %body-color;
+        padding-left: 10px;
+    }
+    &:after{
+        font-family: 'LineAwesome';
+        content: '\f110';
+        @extend %border-none;
+        @extend %top-0;
+        @extend %right-0;
+        @extend %marginTop-0;
+        @extend %height100;
+        @extend %textAcenter;
+        @extend %fontSize16;
+        @extend %heading-color;
+        width: 40px;
+        background-color: #eeeeee;
+        line-height: 40px;
+        @include transform-origin(0 0);
+        @include transform(rotate(0));
+    }
+    &.open{
+        &:after{
+            @include transform(rotate(0));
+        }
+    }
+    .list{
+        width: 100%;
+        max-height: 260px;
+    }
+}
+
+
+/*--- 25.04 - Review Form --*/
+
+.review-form-wrapper{
+    .reply-title{
+        color: $color-shaft;
+        @extend %fontWeight700;
+        @extend %textTupper;
+    }
+    .rating{
+        i{
+            color: $color-dust;
+            @extend %fontSize14;
+        }
+    }
+}
+
+
+/*-- 25.05 - Cart Form --*/ 
+
+.cart-form{
+    &__input{
+        @extend %border-none;
+        @extend %heading-color;
+        @extend %width100;
+        @extend %fontSize12;
+        border-bottom: 1px solid $border-color; 
+        padding-bottom: 5px;
+        color: $heading-color;
+        @include placeholder{
+            color: $heading-color;
+        }
+    }
+    &__btn{
+        @extend %transparent-bg;
+        @extend %border-none;
+        @extend %heading-color;
+        @extend %fontWeight700;
+        @extend %fontSize14;
+        &:hover{
+            @extend %primary-color;
+        }
+    }
+    .coupon{
+        @extend %posrelative;
+        @include breakpoint(xsmall){
+            margin-bottom: 20px;
+        }
+        .cart-form{
+            &__btn{
+                @extend %posabsolute;
+                @extend %right-0;
+                @extend %top-0;
+            }
+        }
+    }
+}

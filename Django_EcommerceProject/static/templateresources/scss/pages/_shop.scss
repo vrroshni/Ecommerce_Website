@@ -1,0 +1,75 @@
+/*****************************
+42 - Pages - Shop
+*****************************/
+
+.shop-toolbar{
+	.product{
+		&-view-mode{
+			a{
+				&:not(:last-child){
+					margin-right: 15px;
+				}
+			}
+		}
+		&-pages{
+			margin-bottom: 0;
+			@include breakpoint(xsmall){
+				margin-bottom: 10px;
+			}
+		}
+		&-categories{
+			margin-right: 5rem; 
+		}
+		&-ordering, &-categories{
+			&__select{
+				&.nice-select{
+					&:after{
+						line-height: 40px;
+					}
+				}
+			}
+		}
+	}
+	.nice-select{
+		background-color: #f5f5f5;
+		width: 220px;
+		height: 40px;
+		@extend %border-none;
+		@extend %borderRadius0;
+		@extend %paddingRight-0;
+		@extend %paddingLeft-0;
+		.current{
+			padding-left: 20px;
+		}
+	}
+}
+
+.shop-products{
+	.ft-product{
+		display: block;
+	}
+	.ft-product-list{
+		display: none;
+	}
+	&.grid{
+		.ft-product{
+			display: block;
+		}
+		.ft-product-list{
+			display: none;
+		}
+	}
+	&.list{
+		.ft-product{
+			display: none;
+		}
+		.ft-product-list{
+			display: block;
+		}	
+		.row > [class^="col"]{
+			@include flex-basis(100%);
+			max-width: 100%;
+		}
+	}
+}
+

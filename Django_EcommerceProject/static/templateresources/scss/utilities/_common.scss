@@ -1,0 +1,574 @@
+/*****************************
+03 - Utilities - Common
+*****************************/
+
+/*-- Global Overlay --*/
+
+.global-overlay{
+	position: fixed;
+	background-color: rgba($heading-color, .7);
+	z-index: 1000;
+	@extend %basetransition;
+	@extend %width100;
+	@extend %height100;
+	@extend %left-0;
+	@extend %top-0;
+	@extend %invisible;
+	&.overlay-open{
+		@extend %visible;
+	}
+}
+.body-open{
+	@extend %overflowHidden;
+} 
+
+/*-- Pagination --*/
+
+.pagination{
+	@extend %justify-center;
+	li{
+		&:not(:last-child){
+   			margin-right: 20px;
+		}
+		.page-number{
+			@include textBoxCenter(35, 35);
+			@extend %primary-bg-color;
+			@extend %white-color;
+			@extend %displayBlock;
+			@extend %basetransition;
+			@extend %border-width-1;
+			@extend %border-style;
+			border-color: transparent;
+			&.current{
+				@extend %transparent-bg;
+				@extend %border-color;
+				@extend %primary-color;
+			}
+			&:hover{
+				@extend %transparent-bg;
+				@extend %border-color;
+				@extend %primary-color;
+			}
+		}
+		.dot{
+			@extend %displayInlineBlock;
+			@extend %primary-bg-color;
+			width: 5px;
+			height: 5px;
+			line-height: 5px;
+		}
+	}
+}
+
+
+/*-- Tooltip --*/
+
+.tooltip{
+	@include breakpoint(small){
+		display: none;
+	}
+	margin-bottom: 5px;
+	&:hover{
+		display: none;
+	}
+	&-inner{
+		padding: 3px 10px;
+		@extend %fontSize13;
+		@extend %white-color;
+	}
+	.arrow{
+		&:before, 
+		&:after{
+			border-left-color: transparent;
+			border-right-color: transparent;
+			border-top-color: #000;
+		}
+	}
+}
+
+
+/*-- Google Map --*/
+
+#google-map{
+	height: 350px;
+}
+
+/*-- Mailchimp Alerts --*/
+
+.mailchimp-alerts{
+	div:not(:empty){
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.mailchimp{
+		&-error{
+			color: $color-red;
+		}
+		&-success{
+			color: $color-green;	
+		}
+	}
+}
+
+
+/*-- Scroll To Top --*/
+
+.scroll-to-top{
+    position: fixed;
+    right: 50px;
+    bottom: 150px;
+    z-index: 999;
+    font-size: 20px;
+    background-color: $heading-color;
+    opacity: 0;
+    @extend %overflowHidden;
+    @extend %white-color;
+    @extend %displayBlock;
+    @extend %textAcenter;
+    @include textBoxCenter(50, 50);
+    @include transition(all 300ms ease);
+	i{
+		@extend %white-color;
+		@extend %posrelative;
+		&:before{
+			@extend %posrelative;
+			@extend %lefttop;
+			@extend %linheightInherit;
+		    @extend %widthInherit;
+		    @extend %heightInherit;
+		    @extend %basetransition;
+		}
+		&:after{
+			@extend %fontAwesome;
+			content: '\f106';
+		    top: 40px;
+		    @extend %left-0;
+		    @extend %widthInherit;
+		    @extend %heightInherit;
+		    @extend %linheightInherit;
+		    @include transition(all 300ms ease);
+		}
+	}
+}
+
+
+/*-- Hamburger Icon --*/ 
+
+.hamburger-icon{
+	@extend %width100;
+	@extend %height100;
+	@extend %posrelative;
+	@extend %cursorPointer;
+	@extend %displayBlock;
+	margin: 0 auto;
+	@include transform(rotate(0deg));
+	@include transition(.5s ease-in-out);
+	span{
+		@extend %displayBlock;
+		@extend %posabsolute;
+		height: 2px;
+		width: 50%;
+		background: $body-color;
+		opacity: 1;
+		@include transform(rotate(0deg));
+		@include transition(.25s ease-in-out);
+		&:nth-child(even){
+			left: 50%;
+			border-radius: 0 3px 3px 0;
+		}
+		&:nth-child(odd){
+			left:0px;
+			border-radius: 3px 0 0 3px;
+		}
+		&:nth-child(1), &:nth-child(2){
+			top: 6px;
+		}
+		&:nth-child(3), &:nth-child(4){
+  			top: 16px;
+		}
+		&:nth-child(5), &:nth-child(6){
+  			top: 25px;
+		}
+	}
+	&.open{
+		span{
+			&:nth-child(1), &:nth-child(6){
+				@include transform(rotate(45deg));
+			}
+			&:nth-child(2), &:nth-child(5){
+				@include transform(rotate(-45deg));
+			}
+			&:nth-child(1){
+				left: 5px;
+				top: 10px;
+			}
+			&:nth-child(2){
+				left: calc(50% - 2px);
+				top: 10px;
+			}
+			&:nth-child(3){
+				left: -50%;
+				opacity: 0;
+			}
+			&:nth-child(4){
+				left: 100%;
+				opacity: 0;
+			}
+			&:nth-child(5){
+				left: 5px;
+				top: 19px;
+			}
+			&:nth-child(6){
+			    left: calc(50% - 2px);
+			    top: 19px;
+			}
+		}
+	}
+}
+
+
+/*-- Breadcrumb --*/ 
+
+
+.page-title{
+	&-area{
+		@extend %posrelative;
+		&:after{
+			@extend %pseudo;
+			@extend %lefttop;
+			@extend %width100;
+			@extend %height100;
+			background-color: rgba(0, 0, 0, 0.7);
+			z-index: 1;
+		}
+		&-2{
+			height: 60rem;
+		}
+		*{
+			z-index: 4;
+		}
+	}
+	font-size: 36px;
+	line-height: 1.2;
+	@extend %widthAuto;
+	@extend %white-color;
+	@include breakpoint(small){
+		font-size: 22px;
+	}
+	@include breakpoint(xsmall){
+		margin-bottom: 10px;
+	}
+}
+.breadcrumb{
+	@extend %borderRadius0;
+	@extend %transparent-bg;
+	@extend %padding-0;
+	@extend %marginBottom-0;
+	@extend %justify-center;
+	li{
+		@extend %posrelative;
+		a, span{
+			@extend %white-color;
+		}
+		&:not(:last-child){
+		    margin-right: 10px;
+		    padding-right: 15px;
+			&:after{
+				@extend %posabsolute;
+				@extend %white-color;
+				@extend %right-0;
+				@extend %top-0;
+				content: '/';
+			}
+		}
+	}
+}
+
+/*-- Preloader --*/
+
+.ft-preloader {
+	display: none;
+	&.active{
+	    width: 100%;
+	    text-align: center;
+	    height: 100%;
+	    position: fixed;
+	    left: 0;
+	    top: 0;
+	    z-index: 99999999;
+	    background: rgba(255, 255, 255, 1); 
+	    display: block;	
+	}
+    .ft-child{
+	    width: 20px;
+	    height: 20px;
+	    background-color: $primary-color;
+	    border-radius: 100%;
+	    display: inline-block;
+		@include animation(ft-bouncedelay 1.4s ease-in-out 0s infinite both);
+    }
+    .ft-bounce1{
+		-webkit-animation-delay: -0.32s;
+		animation-delay: -0.32s; 
+    }
+    .ft-bounce2{
+		-webkit-animation-delay: -0.16s;
+		animation-delay: -0.16s; 
+    }
+}
+
+
+/*-- Rating --*/
+
+.star-rating{
+    @extend %displayBlock;
+    @extend %overflowHidden;
+    @extend %posrelative;
+    @extend %fontSize14;
+	margin-left: auto;
+	margin-right: auto;
+	height: 14px;
+	line-height: 14px;
+	letter-spacing: 5px;
+	width: 90px;
+	font-family: 'LineAwesome';
+	direction: ltr;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #9a9a9a;
+    &:before{
+		content: "\f318\f318\f318\f318\f318";
+		float: left;
+		@extend %left-0;
+		@extend %top-0;
+		@extend %posabsolute;
+    }
+	span{
+	    color: $body-color;
+	    @extend %overflowHidden;
+	    @extend %left-0;
+	    @extend %top-0;
+	    @extend %posabsolute;
+	    float: left;
+	    padding-top: 15px;
+	    height: 0;
+	    &:before{
+			content: "\f318\f318\f318\f318\f318";
+			@extend %left-0;
+			@extend %top-0;
+			@extend %posabsolute;
+	    }
+	}
+	&.star{
+		&-five{
+			span{
+				width: 100%;
+			}
+		}
+		&-four{
+			span{
+				width: 80%;
+			}
+			&-half{
+				span{
+					width: 90%;
+				}
+			}
+		}
+		&-three{
+			span{
+				width: 60%;
+			}
+			&-half{
+				span{
+					width: 70%;
+				}
+			}
+		}
+		&-two{
+			span{
+				width: 40%;
+			}
+			&-half{
+				span{
+					width: 50%;
+				}
+			}
+		}
+		&-one{
+			span{
+				width: 20%;
+			}
+			&-half{
+				span{
+					width: 50%;
+				}
+			}
+		}
+		&-half{
+			span{
+				width: 10%;
+			}
+		}
+	}
+}
+
+/*-- Contact Info --*/ 
+
+.contact-info{
+	p{
+		line-height: 1.9;
+		i{
+			padding-right: 5px;
+		}
+	}
+}
+
+/*-- Message Box --*/
+
+.message-box{
+	background: $color-white-dark;
+    padding: 14px 30px;
+    word-wrap: break-word;
+    @extend %posrelative;
+    @extend %widthAuto;
+    @extend %flexbox;
+    @extend %justify-between;
+    @extend %align-center;
+    p{
+    	display: inherit;
+    	i{	
+    		font-size: 25px;
+    		margin-right: 20px;
+    		color: $color-green;
+    	}
+    }
+	p{
+		@extend %heading-color;
+		margin: 0;
+	}
+	a{
+		@extend %primary-color;
+		margin-left: 5px;
+	}
+}
+
+
+/*-- Quantity --*/
+
+.quantity{
+	@extend %heading-color;
+	@extend %posrelative;
+	@extend %fontWeight500;
+	font-size: 20px;
+	width: 106px;
+	height: 43px;
+	line-height: 41px;
+	&-label{
+		@extend %marginBottom-0;
+		@extend %fontSize14;
+		@extend %fontWeight600;
+		@extend %heading-color;
+		margin-right: 20px;
+	}
+	&-input{
+	    background-color: $color-white;
+		@extend %border;
+	    @extend %width100;
+	    @extend %height100;
+	    @extend %fontSize14;
+	    @extend %textAcenter;
+	    @extend %heading-color;
+		@include appearance(none);
+		@include placeholder(){
+			color: $heading-color;
+		}
+	}
+	.qtybutton {
+	    @extend %posabsolute;
+	    @extend %height100;
+	    @extend %cursorPointer;
+	    @extend %textAcenter;
+	    @extend %fontWeight600;
+	    @extend %heading-color;
+	    @extend %top-0;
+	    line-height: 43px;
+	    width: 14px;
+	    font-size: 14px;
+	    font-family: sans-serif;
+		@include transition(all .3s ease-in);
+	    &.inc{
+			right: 20px;
+	    }
+	    &.dec{
+		    left: 20px;	
+	    }
+	}
+}
+
+
+/*-- Social --*/
+
+.social{
+	&__link{
+		@extend %displayInlineBlock;
+		@extend %fontSize24;
+		@extend %heading-color;
+		&:not(:last-child){
+			margin-right: 5px;
+		}
+	}
+}
+
+/*-- Error Text --*/
+
+.error{
+	h1{
+	    font-size: 25rem;
+	    font-weight: 900;
+	    letter-spacing: 1rem;
+	    line-height: 1.1;
+	    margin-bottom: 30px; 
+	    padding: 0;
+	    @extend %primary-color;
+	}
+	h2{
+		font-size: 25px;
+		margin-bottom: 31px;
+	}
+	p{
+		margin-bottom: 36px;
+	}
+}
+
+@keyframes HTfadeInUp{
+    from {
+        @include transform(translateY(100px));
+    }
+    to {
+        @include transform(translateY(0px));
+    }
+}
+@-webkit-keyframes ft-bouncedelay {
+  0%, 80%, 100% {
+    @include transform(scale(0));
+  }
+  40% {
+    @include transform(scale(1)); 
+  } 
+}
+
+@keyframes ft-bouncedelay {
+  0%, 80%, 100% {
+    @include transform(scale(0));
+  }
+  40% {
+    @include transform(scale(1)); 
+  } 
+}
+
+
+.HTfadeInUp{
+  @include animation(HTfadeInUp .3s linear 0s);
+}

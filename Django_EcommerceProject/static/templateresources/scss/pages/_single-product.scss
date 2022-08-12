@@ -1,0 +1,155 @@
+/*****************************
+43 - Pages - Single Product
+*****************************/
+
+
+.product-gallery{
+	&.vertical-slide-nav{
+		@extend %flexbox;
+		@extend %flex-wrap;
+		.product-gallery{
+			&__nav-image{
+				@include flex-basis(155px);
+				max-width: 155px;
+				@include order(1);
+				@include breakpoint(large){
+					@include flex-basis(165px);
+					max-width: 165px;
+				}
+				@include breakpoint(medium){
+					@include flex-basis(157px);
+					max-width: 157px;
+				}
+				@include breakpoint(small){
+					@include flex-basis(100%);
+					max-width: 100%;
+					@include order(2);
+				}
+			}
+			&__large-image{
+				@include flex-basis(calc(100% - 155px));
+				max-width: calc(100% - 155px);
+				padding-left: 30px;
+				@include order(2);
+				@include breakpoint(large){
+					@include flex-basis(calc(100% - 165px));
+					max-width: calc(100% - 165px);
+				}
+				@include breakpoint(medium){
+					@include flex-basis(calc(100% - 157px));
+					max-width: calc(100% - 157px);
+				}
+				@include breakpoint(small){
+					@include flex-basis(100%);
+					max-width: 100%;
+					padding-left: 0;
+					@include order(1);
+				}
+			}
+		}
+		&.flex-row-reverse{
+			.product-gallery{
+				&__large-image{
+					padding-right: 30px;
+					padding-left: 0;
+				}
+			}
+		}
+	}
+	&__nav-image{
+		&--single{
+			img{
+				@extend %width100;
+			}
+		}
+	}
+	&__large-image{
+		@extend %posrelative;
+		img{
+			@extend %width100;
+		}
+	}
+	&__image{
+		@extend %posrelative;
+	}
+	&__actions{
+		@extend %posabsolute;
+		right: 30px;
+		bottom: 30px;
+		z-index: 9;
+		.action-btn{
+			&:not(:last-child){
+				margin-bottom: 10px;
+			}
+		}
+	}
+}
+.product-main-image{
+	.product-image{
+		margin-bottom: 0;
+	}
+}
+
+// Reviews
+
+.product-reviews{
+	.review{
+		&__title{
+			@extend %displayBlock;
+			@extend %fontWeight400;
+			font-size: 36px;
+			letter-spacing: -2px;
+		    margin-bottom: 30px;
+		    @include breakpoint(small){
+		    	font-size: 25px;
+		    	margin-bottom: 15px;
+		    	letter-spacing: 0px;
+		    }
+		    @include breakpoint(xsmall){
+		    	font-size: 20px;
+		    }
+		}
+		&__item{
+		    padding-bottom: 20px;
+		    padding-top: 20px;
+		    border-top: 1px solid #DEDEDE;
+		}
+		&__container{
+			@extend %flexbox;
+			@extend %flex-wrap;
+		}
+		&__avatar{
+			@include flex-basis(60px);
+			max-width: 60px;
+			height: 60px;
+		}
+		&__text{
+			@include flex-basis(calc(100% - 60px));
+			max-width: calc(100% - 60px);
+			padding-left: 20px;
+			@include breakpoint(xxsmall){
+				@include flex-basis(100%);
+				max-width: 100%;
+				padding-left: 0;
+				padding-top: 10px;
+			}
+			.star-rating{
+				@extend %marginLeft-0;
+			}
+		}
+		&__meta{
+			margin-bottom: 10px;
+		}
+		&__author{
+			@extend %heading-color;
+		}
+		&__published-date{
+			@extend %fontSize12;
+		}
+		&__description{
+			@include breakpoint(xsmall){
+				margin-top: 10px;
+			}
+		}
+	}	
+}

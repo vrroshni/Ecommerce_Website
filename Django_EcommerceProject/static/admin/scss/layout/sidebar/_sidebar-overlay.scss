@@ -1,0 +1,135 @@
+[data-sidebar-style="overlay"] {
+	&[data-layout="vertical"]{
+		.deznav {
+			border-radius:0 0 0 0!important;
+			@include respond ('phone-land'){
+				border-radius:0 0 0 0!important;
+			}
+		}
+		.nav-header {
+			border-radius:0;
+		}
+		.menu-toggle{
+			.nav-header {
+				border-radius: 0 0 0 0;
+			}
+		}
+	}
+    .deznav {
+        left: -100%;
+        @include transitionMedium;
+		box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.2);
+		.metismenu{
+			& > li {
+				padding: 0.625rem 0.625rem;
+				& > a {
+					font-size: 1rem;
+					padding: 1.25rem 1.25rem;
+					color: #7f7184;
+					border-radius: 1rem;
+					-webkit-transition: all 0.5s;
+					-ms-transition: all 0.5s;
+					transition: all 0.5s;
+					i{
+						height:auto;
+						width:auto;
+						line-height:1;
+					}
+				}
+				&:hover > a{
+					color:var(--primary);
+					i{
+						color:var(--primary);
+					}
+				}
+				&.mm-active > a {
+					background: var(--primary);
+					color:$white;
+					box-shadow:none;
+					i{
+						color:$white;
+					}
+				}
+				@include respond ('phone'){
+					padding:0rem 0.9375rem;
+				}
+				
+			}
+			ul a{
+			    padding-top: .5rem;
+				padding-bottom: .5rem;
+				position: relative;
+				font-size: 0.9375rem;
+				padding-left: 4rem;
+				&:before{
+					left:1.5625rem;
+				}
+			}
+			
+			
+		}
+		
+		
+		@at-root [direction="rtl"]#{&} {
+            left: auto;
+            right: -100%;
+        }
+		
+		@include respond ('phone-land'){
+			.metismenu{
+				&>li{
+					&>a{
+						font-size: 0.875rem;
+						padding: 0.75rem 0.875rem;
+						i{
+							font-size:1.125rem;
+						}
+					}
+				}
+				ul li a{
+					padding-left:3.4rem;
+				}
+			}
+		}
+    }
+    .content-body {
+        margin-left: 0;
+    }
+    .nav-header {
+        position: absolute;
+        .hamburger.is-active {
+            left: 0;
+            .line {
+                background-color: var(--primary);
+            }
+        }
+    }
+    .menu-toggle {
+        .nav-header {
+            position: absolute;
+            left: auto;
+        }
+        .deznav {
+            left: 0;
+            @at-root [direction="rtl"]#{&} {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+    .footer {
+        padding-left: 0;
+    }
+}
+
+[data-sidebar-style="overlay"][data-header-position="fixed"] {
+    .nav-header {
+        position: fixed;
+    }
+}
+
+[data-sidebar-position="fixed"][data-header-position="fixed"] {
+    .nav-header {
+        position: fixed;
+    }
+}

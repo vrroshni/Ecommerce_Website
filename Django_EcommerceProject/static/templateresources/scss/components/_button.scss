@@ -1,0 +1,154 @@
+/*****************************
+22 - Components - Button
+*****************************/
+
+/*-- 22.00 - Global Button --*/
+
+.btn{
+	@extend %fontSize18;
+	@extend %textTupper;
+	@extend %displayInlineBlock;
+	@extend %borderRadius;
+	@extend %basetransition;
+	@extend %fontWeight300;
+	color: $color-white;
+	background-color: $primary-color;
+	padding: 20px 40px;
+	@include breakpoint(large){
+		padding: 16px 36px;
+	}
+	@include breakpoint(medium){
+		padding: 12px 30px;
+	}
+	@include breakpoint(small){
+		padding: 10px 25px;
+	}
+	&-size{
+		&-md{
+			padding: 16px 30px;
+			@include breakpoint(large){
+				padding: 12px 28px;
+			}
+			@include breakpoint(medium){
+				padding: 10px 25px;
+			}
+		}
+		&-sm{
+			padding: 10px 18px;
+			font-size: 14px;
+		}
+	}
+	&-fullwidth{
+		display: block;
+		width: 100%;
+	}
+	&-outline{
+		color: #010225;
+		background-color: transparent;
+		border-width: 1px;
+		border-style: solid;
+		border-color: currentColor;
+	}
+	&-white{
+		border-color: $color-white;
+	}
+	&-shape{
+		&-round{
+			@include border-radius(500px);
+		}
+		&-square{
+			@include border-radius(0);
+		}
+	}
+	&-brw{
+		&-2{
+			border-width: 2px;
+		}
+	}
+	&-brc{
+		&-primary{
+			border-color: $primary-color;
+		}
+		&-2{
+			border-color: $border-color-2;
+		}
+	}
+	&-color{
+		&-primary{
+			color: $primary-color;
+		}
+	}
+	&-bg{
+		&-primary{
+			background-color: $primary-color;
+			border-color: $primary-color;
+			color: $color-white;
+		}
+	}
+	&:hover{
+		background-color: transparent;
+		border-color: $primary-color;
+		color: $primary-color;
+	}
+	&-hover{
+		&-1{
+			&:hover{
+				background-color: $color-white;
+				border-color: $color-white;
+				color: $primary-color;
+			}
+		}
+		&-2{
+			&:hover{
+				background-color: $primary-color;
+				border-color: $primary-color;
+				color: $color-white;
+			}
+		}
+	}
+} 
+
+/*-- 22.01 - Action Button --*/
+
+.action-btn{
+	@include borderIconCenter(40, 1);
+	border: 1px solid #e6e6e6;
+	@extend %borderRadius50;
+	@extend %displayInlineBlock;
+	@extend %textAcenter;
+	@extend %white-bg-color;
+	color: #737373;
+	font-size: 22px;
+	i{
+		@extend %linheightInherit;
+		@extend %fontSizeInherit;
+	}
+}
+
+/*-- 22.02 - Close Button --*/
+
+.btn-close {
+    font-size: 30px; 
+    z-index: 5;
+    line-height: 40px;
+    height: 40px;
+    opacity: 1;
+	background: none;
+    @extend %displayBlock;
+    @extend %posabsolute;
+    @extend %heading-color;
+    &:hover{
+    	@extend %primary-color;
+    }
+}
+
+/*-- 22.03 - Read More Button --*/
+
+.read-more-btn{
+	line-height: 1.571;
+	@extend %fontSize14;
+	@extend %textDunder;
+	&:hover{
+		@extend %textDunder;
+	}
+}

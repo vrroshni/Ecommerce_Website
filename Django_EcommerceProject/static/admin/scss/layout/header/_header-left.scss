@@ -1,0 +1,28 @@
+.header-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+	.breadcrumb{
+		margin-bottom:0;
+	}
+	.dashboard_bar {
+		font-size: 1.875rem;
+		font-weight: 600;
+		color:$black;
+		@include respond('tab-land') {
+			font-size: 2.125rem;
+		}
+		@include respond('phone-land') {
+			display:none;
+		}
+		&.sub-bar{
+			font-size:1.875rem;
+		}
+	}
+}
+
+[data-sidebar-style="compact"] {
+    .header-left {
+        margin-left: 0;
+    }
+}
