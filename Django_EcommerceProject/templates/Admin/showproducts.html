@@ -1,0 +1,60 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Products
+{% endblock %}
+{% block pagetitle %}
+Products List							
+{% endblock  %}
+{% block body %}
+<div class="container-fluid">
+     <div class="row">
+        {% if products %}
+        {% for value in products %}
+         <div class=" col-4">
+            
+            
+             <div class="card">
+                 <div class="card-body">
+                     <div class="row m-b-30">
+                         <div class="col-md-5 col-xxl-12">
+                             <div class="new-arrival-product mb-4 mb-xxl-4 mb-md-0">
+                                 <div class="new-arrivals-img-content">
+                                     <img class="img-fluid" src="{{value.Product_image.url}}" alt="">
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-7 col-xxl-12">
+                             <div class="new-arrival-content position-relative">
+                                 <h4><a href="#">{{value.product_name}}</a></h4>
+                                 <div class="comment-review star-rating">
+                                     <ul>
+                                         <li><i class="fa fa-star"></i></li>
+                                         <li><i class="fa fa-star"></i></li>
+                                         <li><i class="fa fa-star"></i></li>
+                                         <li><i class="fa fa-star-half-empty"></i></li>
+                                         <li><i class="fa fa-star-half-empty"></i></li>
+                                     </ul>
+                                     <span class="review-text">(34 reviews) / </span><a class="product-review" href=""  data-bs-toggle="modal" data-bs-target="#reviewModal">Write a review?</a>
+                                     <p class="price">{{value.price}}Rs</p>
+                                 </div>
+                                 <p>Availability: <span class="item"> In stock <i class="fa fa-check-circle text-success"></i></span></p>
+                                 <p>Category: <span class="badge badge-pill badge-dark"> {{value.category}}</span>
+                                    </p>
+                                 <p>SubCategory: <span class="badge light badge-dark">{{value.subcategories}}</span></p>
+                                 <p >Description:<span class="item">{{value.product_description}}</span></p>
+                                 <p >More About Product:<span class="item">{{value.product_long_description}}</span></p>
+
+                             </div>
+                             <a href="{% url 'EditProducts' value.id %}"><button type="button" class="btn light btn-secondary btn-xs ">Edit</button></a>
+                             <a href="{% url 'DeleteProducts' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Delete</button></a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             
+         </div>
+         {% endfor %}
+         {% endif %}
+     </div>
+         {% endblock %}

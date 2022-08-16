@@ -1,0 +1,90 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block pagetitle %}
+Edit Category {{product.product_name}}					
+{% endblock  %}
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+<div class="col-6 " style="margin-top: 100px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Edit Product</h4>
+        </div>
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label">Category</label>
+                            <select id="inputState" class="default-select form-control wide" name="category">
+                                <option selected>{{product.category}}</option>
+                                {% for value in category %}
+                                <option value="{{ value.id }}">{{ value.title }}</option>
+                                {% endfor %}
+                                
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label">SubCategory</label>
+                            <select id="inputState" class="default-select form-control wide" name="subcategories">
+                                <option selected>{{product.subcategories}}</option>
+                                {% for value in subcategory %}
+                                <option value="{{ value.id }}">{{ value.title }}</option>
+                                {% endfor %}
+                                
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label">Product Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="product_name" class="form-control" placeholder="Product Name" value="{{product.product_name}}">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="product_description" placeholder="Description"
+                            rows="4" id="comment" value="{{product.product_description}}"></input>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">More About Product</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="product_long_description" placeholder="More About Product"
+                             id="comment" value="{{product.product_long_description}}"></input>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-file">
+                            <input type="file" multiple class="form-file-input form-control" name="Product_image" value="{{product.Product_image}}">
+                        </div>
+                        <span class="input-group-text">Change</span>
+                    </div>
+                                     
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Price</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="price" class="form-control" placeholder="Price" value="{{product.price}}">
+                            </div>
+                        </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

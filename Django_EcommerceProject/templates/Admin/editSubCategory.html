@@ -1,0 +1,70 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Edit SubCategory
+{% endblock %}
+{% block pagetitle %}
+Edit SubCategory {{subcategory.title}}					
+{% endblock  %}
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+<div class="col-6 " style="margin-top: 100px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Edit SubCategory</h4>
+        </div>
+        
+        <div class="card-body">
+            <div class="basic-form">
+                
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label">Category</label>
+                            <select id="inputState" class="default-select form-control wide" name="category">
+                                <option selected >Choose...</option>
+                                {% for value in category %}
+                                <option value="{{ value.id }}">{{ value.title }}</option>
+                                {% endfor %}
+                                
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label">SubCategory Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="title" class="form-control" placeholder="SubCategory Name" value="{{subcategory.title}}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="description" placeholder="Description"
+                            rows="4" id="comment" value="{{subcategory.description}}"></input>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-file">
+                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" value="{{subcategory.Subcategory_Image.url}}">
+                        </div>
+                        <span class="input-group-text">Change</span>
+                    </div>
+  
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

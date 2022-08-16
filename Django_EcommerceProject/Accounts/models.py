@@ -3,11 +3,13 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 # Create your models here.
-# the function defined inside this will manage the whole usercreation and superusercreation 
-
+# -------------------------------------------------------------------------------------------------------------------- #
+#               the function defined inside this will manage the whole usercreation and superusercreation   
+#               made this function for adding phone number field overriding default user table in django
+# -------------------------------------------------------------------------------------------------------------------- #                            
+#  to create/Register user                        
 class MyAccountManager(BaseUserManager):
-    #to create/Register user
-    def create_user(self, first_name, last_name, username, email, password=None):
+    def create_user(self, first_name, last_name, username, email,phone_number, password=None):
         if not email:
             raise ValueError('User must have an e-mail address')
         
@@ -18,7 +20,8 @@ class MyAccountManager(BaseUserManager):
             email       = self.normalize_email(email),
             username    = username,
             first_name  = first_name,
-            last_name   = last_name
+            last_name   = last_name,
+            phone_number=phone_number
         )
         #password will be hashed in database
         user.set_password(password)
@@ -32,7 +35,8 @@ class MyAccountManager(BaseUserManager):
             username   = username,
             password   = password,
             first_name = first_name,
-            last_name  = last_name
+            last_name  = last_name,
+            
         )
         user.is_admin   = True
         user.is_active  = True
@@ -45,7 +49,7 @@ class MyAccountManager(BaseUserManager):
 
 
 #Using AbstractBaseUser,build from scratch
-#Changes is not possible after making first makemigrations
+#Changes is (bit dufficult)not possible after making first makemigrations
 class Account(AbstractBaseUser):
     first_name      = models.CharField(max_length=50)
     last_name       = models.CharField(max_length=50)
@@ -58,7 +62,6 @@ class Account(AbstractBaseUser):
  
 
     #Required fields
-
     date_joined     = models.DateTimeField(auto_now_add=True)  
     last_login      = models.DateTimeField(auto_now_add=True)  
     is_admin        = models.BooleanField(default=False)
@@ -70,8 +73,10 @@ class Account(AbstractBaseUser):
    
 
 
-    '''username will be a credential to login,
-    we cant change it by providing email field instead of username and then add username in required fields and remove email the same'''
+    # -------------------------------------------------------------------------------------------------------------------- #
+    #                                        username will be a credential to login,
+    #    we cant change it by providing email field instead of username and then add username in required fields and remove email the same#
+    # -------------------------------------------------------------------------------------------------------------------- #
 
     USERNAME_FIELD      = 'username'
     REQUIRED_FIELDS     = ['email', 'first_name', 'last_name']

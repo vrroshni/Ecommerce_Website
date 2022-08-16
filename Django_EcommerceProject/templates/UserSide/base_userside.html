@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>
+    {% block title %}
+    {% endblock %}
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'templateresources/assets/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'templateresources/assets/img/icon.png ' %}">
+
+    <!-- ************************* CSS Files ************************* -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/bootstrap.css ' %}">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/vendor.css ' %}">
+
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/main.css ' %}">
+    <!-- custom links -->
+    {% block externalLinks %}
+    {% endblock %}
+</head>

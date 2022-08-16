@@ -1,0 +1,640 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>sweets</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{% static 'templateresources/assets/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'templateresources/assets/img/icon.png ' %}">
+    
+
+    <!-- ************************* CSS Files ************************* -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/bootstrap.css ' %}">
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/vendor.css ' %}">
+
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'templateresources/assets/css/main.css ' %}">
+    <script src="https://unpkg.com/js-image-zoom@0.7.0/js-image-zoom.js" type="application/javascript"></script>
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <!-- <div class="ft-preloader active">
+        <div class="ft-preloader-inner h-100 d-flex align-items-center justify-content-center">
+            <div class="ft-child ft-bounce1"></div>
+            <div class="ft-child ft-bounce2"></div>
+            <div class="ft-child ft-bounce3"></div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+
+    <!-- Main Wrapper Start -->
+    <div class="wrapper">
+        <!-- Header Start -->
+        <header class="header">
+            <div class="header__inner fixed-header">
+                <div class="header__main">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="header__main-inner">
+                                    <div class="header__main-left">
+                                        <div class="logo">
+                                            <a href="index.html" class="logo--normal">
+                                                <img src="{% static 'templateresources/assets/img/logo/logo.png' %}" alt="Logo">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="header__main-center">
+                                        <nav class="main-navigation text-center d-none d-lg-block">
+                                            <ul class="mainmenu">
+                                                <li class="mainmenu__item menu-item-has-children">
+                                                    <a href="index.html" class="mainmenu__link">
+                                                        <span class="mm-text">Home</span>
+                                                    </a>
+                                                    <!-- <ul class="sub-menu">
+                                                        <li>
+                                                            <a href="index.html">
+                                                                <span class="mm-text">Home One</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="index-02.html">
+                                                                <span class="mm-text">Home Two</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul> -->
+                                                </li>
+                                                <li class="mainmenu__item menu-item-has-children megamenu-holder">
+                                                    <a href="shop.html" class="mainmenu__link">
+                                                        <span class="mm-text">Shop</span>
+                                                    </a>
+                                                    <ul class="megamenu">
+                                                        <li>
+                                                            <a class="megamenu-title" href="#">
+                                                                <span class="mm-text">Shop Grid</span>
+                                                            </a>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="shop-fullwidth.html">
+                                                                        <span class="mm-text">Full Width</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop.html">
+                                                                        <span class="mm-text">Left Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-right-sidebar.html">
+                                                                        <span class="mm-text">Right Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-three-columns.html">
+                                                                        <span class="mm-text">Three Columns</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-four-columns.html">
+                                                                        <span class="mm-text">Four Columns</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a class="megamenu-title" href="#">
+                                                                <span class="mm-text">Shop List</span>
+                                                            </a>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="shop-list.html">
+                                                                        <span class="mm-text">Full Width</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-list-sidebar.html">
+                                                                        <span class="mm-text">Left Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-list-right-sidebar.html">
+                                                                        <span class="mm-text">Right Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a class="megamenu-title" href="#">
+                                                                <span class="mm-text">Product Details</span>
+                                                            </a>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="product-details.html">
+                                                                        <span class="mm-text">Tab Style 1</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-tab-style-2.html">
+                                                                        <span class="mm-text">Tab Style 2</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-tab-style-3.html">
+                                                                        <span class="mm-text">Tab Style 3</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-gallery-left.html">
+                                                                        <span class="mm-text">Gallery Left</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-gallery-right.html">
+                                                                        <span class="mm-text">Gallery Right</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-sticky-left.html">
+                                                                        <span class="mm-text">Sticky Left</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a class="megamenu-title" href="#">
+                                                                <span class="mm-text">Product Details</span>
+                                                            </a>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="product-details-sticky-right.html">
+                                                                        <span class="mm-text">Sticky Right</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-slider-box.html">
+                                                                        <span class="mm-text">Slider Box</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-slider-full-width.html">
+                                                                        <span class="mm-text">Slider Box Full Width</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-affiliate.html">
+                                                                        <span class="mm-text">Affiliate Proudct</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-variable.html">
+                                                                        <span class="mm-text">Variable Proudct</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="product-details-group.html">
+                                                                        <span class="mm-text">Group Product</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="mainmenu__item menu-item-has-children">
+                                                    <a href="blog.html" class="mainmenu__link">
+                                                        <span class="mm-text">Blog</span>
+                                                    </a>
+                                                    <ul class="sub-menu">
+                                                        <li class="menu-item-has-children">
+                                                            <a href="#">
+                                                                <span class="mm-text">Blog Grid</span>
+                                                            </a>
+                                                            <ul class="sub-menu">
+                                                                <li>
+                                                                    <a href="blog-left-sidebar.html">
+                                                                        <span class="mm-text">Left Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog.html">
+                                                                        <span class="mm-text">Right Sidebar</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-01-column.html">
+                                                                        <span class="mm-text">One Column</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-02-columns.html">
+                                                                        <span class="mm-text">Two Columns</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-03-columns.html">
+                                                                        <span class="mm-text">Three Columns</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="menu-item-has-children">
+                                                            <a href=""><span class="mm-text">Blog Details</span></a>
+                                                            <ul class="sub-menu">
+                                                                <li>
+                                                                    <a href="blog-details-image.html">
+                                                                        <span class="mm-text">Image Post</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-details-audio.html">
+                                                                        <span class="mm-text">Audio Post</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-details-video.html">
+                                                                        <span class="mm-text">Video Post</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="blog-details-gallery.html">
+                                                                        <span class="mm-text">Gallery Post</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="mainmenu__item menu-item-has-children">
+                                                    <a href="#" class="mainmenu__link">
+                                                        <span class="mm-text">Pages</span>
+                                                    </a>
+                                                    <ul class="sub-menu">
+                                                        <li>
+                                                            <a href="my-account.html">
+                                                                <span class="mm-text">My Account</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="checkout.html">
+                                                                <span class="mm-text">Checkout</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cart.html">
+                                                                <span class="mm-text">Cart</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="compare.html">
+                                                                <span class="mm-text">Compare</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="order-tracking.html">
+                                                                <span class="mm-text">Track Order</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="wishlist.html">
+                                                                <span class="mm-text">Wishlist</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="mainmenu__item">
+                                                    <a href="{% url 'Userlogout'%}" class="mainmenu__link">
+                                                        <span class="mm-text">Logout</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="header__main-right">
+                                        <div class="header-toolbar-wrap">
+                                            <div class="header-toolbar">
+                                                <div class="header-toolbar__item header-toolbar--search-btn">
+                                                    <a href="#searchForm" class="header-toolbar__btn toolbar-btn">
+                                                        <i class="la la-search"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="header-toolbar__item header-toolbar--minicart-btn">
+                                                    <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
+                                                        <i class="la la-shopping-cart"></i>
+                                                        <span>01</span>
+                                                    </a>
+                                                </div>
+                                                <div class="header-toolbar__item d-block d-lg-none">
+                                                    <a href="#offcanvasMenu" class="header-toolbar__btn toolbar-btn menu-btn">
+                                                        <div class="hamburger-icon">
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header End -->
+
+        <!-- Main Content Wrapper Start -->
+        <main class="main-content-wrapper">
+            <!-- Slider area Start -->
+            <!-- <section class="homepage-slider mb--75 mb-md--55">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="element-carousel slick-right-bottom"
+                            data-slick-options='{
+                                "slidesToShow": 1,
+                                "arrows": true,
+                                "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-arrow-left" },
+                                "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-arrow-right" }
+                            }'
+                            data-slick-responsive='[{"breakpoint": 768, "settings": {"arrows": false}}]'>
+                                <div class="item">
+                                    <div class="single-slide d-flex align-items-center bg-color" data-bg-color="#dbf3f2">
+                                        <div class="row align-items-center g-0 w-100">
+                                            <div class="col-xl-7 col-md-6 mb-sm--50">
+                                                <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="plr--15">
+                                                    <img src="{% static 'templateresources/assets/img/slider/slider-01-img-01.png' %}" alt="Slider O1 image" class="mx-auto">
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-6 col-lg-5 offset-lg-1 offset-xl-0">
+                                                <div class="slider-content">
+                                                    <div class="slider-content__text mb--40 mb-md--30">
+                                                        <p class="mb--15" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">#New Treand</p>
+                                                        <p class="mb--20" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Enlight your world. Make yourself more bright.</p>
+                                                        <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Abotar Lighting</h1>
+                                                    </div>
+                                                    <div class="slider-content__btn">
+                                                        <a href="#" class="btn btn-outline btn-brw-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="single-slide d-flex align-items-center bg-color" data-bg-color="#dbf3f2">
+                                        <div class="row align-items-center g-0 w-100">
+                                            <div class="col-xl-6 col-md-6 mb-sm--50 order-md-2">
+                                                <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="pl-15 pr--60">
+                                                    <img src="{% static 'templateresources/assets/img/slider/slider-02-img-01.png' %}" alt="Slider O1 image" class="mx-auto">
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-5 col-lg-5 offset-md-1 order-md-1">
+                                                <div class="slider-content">
+                                                    <div class="slider-content__text border-color-2 mb--40 mb-md--30">
+                                                        <p class="mb--15" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">#New Treand</p>
+                                                        <p class="mb--20" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Enlight your world. Make yourself more bright.</p>
+                                                        <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Abotar Lighting</h1>
+                                                    </div>
+                                                    <div class="slider-content__btn">
+                                                        <a href="#" class="btn btn-outline btn-brw-2 btn-brc-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+            <!-- Slider area End -->
+            <div class="main-content-wrapper">
+                <div class="page-content-inner pt--80 pt-md--60">
+                    <div class="container">
+                        <div class="row g-0 mb--80 mb-md--57">
+                            <div class="col-lg-7 product-main-image">
+                                <div class="product-image">
+                                    <div class="product-gallery vertical-slide-nav">
+                                        <div class="product-gallery__large-image mb-sm--30">
+                                            <div class="product-gallery__wrapper">
+                                                <div class="element-carousel main-slider image-popup"
+                                                data-slick-options='{
+                                                    "slidesToShow": 1,
+                                                    "slidesToScroll": 1,
+                                                    "infinite": true,
+                                                    "arrows": false, 
+                                                    "asNavFor": ".nav-slider"
+                                                }'>
+                                                     <figure class="product-gallery__image zoom">
+                                                    <div id="image_zoom_container">
+                                                        <img src="{{product.Product_image.url}}" alt="Product">
+                                                    </div>
+                                                        <span class="product-badge sale">Sale</span>
+                                                        <div class="product-gallery__actions">
+                                                            <button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
+                                                            <a href="https://www.youtube.com/watch?v=Rp19QD2XIGM" class="action-btn video-popup"><i class="la la-play"></i></a>
+                                                        </div>
+                                                    </figure>
+                                                    <!--
+                                                    <figure class="product-gallery__image zoom">
+                                                        <img src="#" alt="Product">
+                                                        <span class="product-badge sale">Sale</span>
+                                                        <div class="product-gallery__actions">
+                                                            <button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
+                                                            <a href="https://www.youtube.com/watch?v=Rp19QD2XIGM" class="action-btn video-popup"><i class="la la-play"></i></a>
+                                                        </div>
+                                                    </figure>
+                                                    <figure class="product-gallery__image zoom">
+                                                        <img src="#" alt="Product">
+                                                        <span class="product-badge sale">Sale</span>
+                                                        <div class="product-gallery__actions">
+                                                            <button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
+                                                            <a href="https://www.youtube.com/watch?v=Rp19QD2XIGM" class="action-btn video-popup"><i class="la la-play"></i></a>
+                                                        </div>
+                                                    </figure>
+                                                    <figure class="product-gallery__image zoom">
+                                                        <img src="#" alt="Product">
+                                                        <span class="product-badge sale">Sale</span>
+                                                        <div class="product-gallery__actions">
+                                                            <button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
+                                                            <a href="https://www.youtube.com/watch?v=Rp19QD2XIGM" class="action-btn video-popup"><i class="la la-play"></i></a>
+                                                        </div>
+                                                    </figure> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-gallery__nav-image">
+                                            <div class="element-carousel nav-slider product-slide-nav slick-center-bottom" 
+                                            data-slick-options='{
+                                                "spaceBetween": 10,
+                                                "slidesToShow": 3,
+                                                "slidesToScroll": 1,
+                                                "vertical": true,
+                                                "swipe": true,
+                                                "verticalSwiping": true,
+                                                "infinite": true,
+                                                "focusOnSelect": true,
+                                                "asNavFor": ".main-slider",
+                                                "arrows": true, 
+                                                "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-angle-up" },
+                                                "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-angle-down" }
+                                            }'
+                                            data-slick-responsive='[
+                                                {
+                                                    "breakpoint":1200, 
+                                                    "settings": {
+                                                        "slidesToShow": 2
+                                                    } 
+                                                },
+                                                {
+                                                    "breakpoint":992, 
+                                                    "settings": {
+                                                        "slidesToShow": 3
+                                                    } 
+                                                },
+                                                {
+                                                    "breakpoint":767, 
+                                                    "settings": {
+                                                        "slidesToShow": 4,
+                                                        "vertical": false
+                                                    } 
+                                                },
+                                                {
+                                                    "breakpoint":575, 
+                                                    "settings": {
+                                                        "slidesToShow": 3,
+                                                        "vertical": false
+                                                    } 
+                                                },
+                                                {
+                                                    "breakpoint":480, 
+                                                    "settings": {
+                                                        "slidesToShow": 2,
+                                                        "vertical": false
+                                                    } 
+                                                }
+                                            ]'>
+                                               <figure class="product-gallery__nav-image--single">
+                                                    <img src="{{product.Product_image.url}}" alt="Products">
+                                                </figure>
+                                                  
+                                                <figure class="product-gallery__nav-image--single">
+                                                    <img src="{{product.Product_image.url}}" alt="Products">
+                                                </figure>
+                                                <figure class="product-gallery__nav-image--single">
+                                                    <img src="{{product.Product_image.url}}" alt="Products">   
+                                                 </figure>
+                                                <figure class="product-gallery__nav-image--single">
+                                                    <img src="{{product.Product_image.url}}" alt="Products">                                                
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 offset-xl-1 col-lg-5 product-main-details mt-md--50">
+                                <div class="product-summary pl-lg--30 pl-md--0">
+                                    <div class="product-navigation text-right mb--20">
+                                        <a href="#" class="prev"><i class="la la-angle-double-left"></i></a>
+                                        <a href="#" class="next"><i class="la la-angle-double-right"></i></a>
+                                    </div>
+                                    <div class="product-rating d-flex mb--20">
+                                        <!-- <div class="star-rating star-four">
+                                            <span>Rated <strong class="rating">5.00</strong> out of 5</span>
+                                        </div> -->
+                                    </div>
+                                    <h3 class="product-title mb--20">{{product.product_name}}</h3>
+                                    <p class="product-short-description mb--20">{{product.product_description}}</p>
+                                    <div class="product-price-wrapper mb--25">
+                                        <span class="money">Price:{{product.price}} Rs</span>
+                                        <!-- <span class="price-separator">-</span>
+                                        <span class="money">$400.00</span> -->
+                                    </div>
+                                    <!-- <form action="#" class="variation-form mb--20">
+                                        <div class="product-size-variations d-flex align-items-center mb--15">
+                                            <p class="variation-label">Size:</p>   
+                                            <div class="product-size-variation variation-wrapper">
+                                                <div class="variation">
+                                                    <a class="product-size-variation-btn selected" data-bs-toggle="tooltip" data-bs-placement="top" title="S">
+                                                        <span class="product-size-variation-label">S</span>
+                                                    </a>
+                                                </div>
+                                                <div class="variation">
+                                                    <a class="product-size-variation-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="M">
+                                                        <span class="product-size-variation-label">M</span>
+                                                    </a>
+                                                </div>
+                                                <div class="variation">
+                                                    <a class="product-size-variation-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="L">
+                                                        <span class="product-size-variation-label">L</span>
+                                                    </a>
+                                                </div>
+                                                <div class="variation">
+                                                    <a class="product-size-variation-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="XL">
+                                                        <span class="product-size-variation-label">XL</span>
+                                                    </a>
+                                                </div>
+                                            </div>                                 
+                                        </div>
+                                        <a href="" class="reset_variations">Clear</a>
+                                    </form> -->
+                                    <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
+                                        <div class="quantity-wrapper d-flex align-items-center mr--30 mr-xs--0 mb-xs--30">
+                                            <!-- <label class="quantity-label" for="qty">Quantity:</label>
+                                            <div class="quantity">
+                                                <input type="number" class="quantity-input" name="qty" id="qty" value="1" min="1">
+                                            </div> -->
+                                        </div>
+                                        <button type="button" class="btn btn-shape-square btn-size-sm" onclick="window.location.href='cart.html'">
+                                            Add To Cart
+                                        </button>
+                                    </div>  
+                                    <div class="product-footer-meta">
+                                        <p><span>Category:</span> 
+                                            <a href="shop.html">{{product.category}}</a>
+                                            <!-- <a href="shop.html">SweatShirt</a>,
+                                            <a href="shop.html">Jacket</a>,
+                                            <a href="shop.html">Blazer</a> -->
+                                        </p>
+                                    </div>
+                                    <div class="product-footer-meta">
+                                        <p><span>SubCategory:</span> 
+                                            <a href="shop.html">{{product.subcategories}}</a>
+                                            <!-- <a href="shop.html">SweatShirt</a>,
+                                            <a href="shop.html">Jacket</a>,
+                                            <a href="shop.html">Blazer</a> -->
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </main>
+    </div>
+    <script>
+        var options={
+            width:600,
+            height:350,
+            zoomWidth:500,
+            offset:{vertical:0,horizontal:10},
+            scale:.75
+        }
+        new ImageZoom(document.getElementById("image_zoom_container"),options)
+    </script>
+</body>
+</html>

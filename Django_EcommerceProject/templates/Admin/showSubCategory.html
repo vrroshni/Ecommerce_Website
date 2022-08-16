@@ -1,0 +1,53 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+SubCategories
+{% endblock %}
+{% block pagetitle %}
+ SubCategory list 			
+{% endblock  %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)"></a></li>
+                
+            </ol>
+        </div>
+        {% if subcategory %}
+        <div class="row" >
+            {% for value in subcategory %}
+            <div class="col-xl-3 col-lg-6 col-sm-6" >
+                <div class="card">
+                    <div class="card-body">
+                        <div class="new-arrival-product">
+                             <div class="new-arrivals-img-contnent">
+                                <img class="img-fluid" src="{{value.Subcategory_Image.url}}" alt="">
+                            </div> 
+                            <div class="new-arrival-content text-center mt-3">
+                                <h4><a href="#">{{value.title}}</a></h4>
+                                <p class="text-content">{{value.description}}</p>
+                                <ul class="star-rating">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star-half-empty"></i></li>
+                                    <li><i class="fa fa-star-half-empty"></i></li>
+                                </ul>
+                                <a href="javascript:void(0)" class="badge badge-rounded badge-outline-warning">{{value.category}}</a><br><br>
+
+                                <a href="{% url 'EditSubCategory' value.id %}"><button type="button" class="btn light btn-secondary btn-xs ">Edit</button></a>
+                                <a href="{% url 'DeleteSubCategory' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Delete</button></a>
+
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

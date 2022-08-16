@@ -1,0 +1,66 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Add SubCategory
+{% endblock %}
+{% block pagetitle %}
+Add Subcategory						
+{% endblock  %}
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+<div class="col-6 " style="margin-top: 100px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"></h4>
+        </div>
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label">Category</label>
+                            <select class="default-select form-control wide" name="category">
+                                <option selected>Choose...</option>
+                                {% for value in category %}
+                                <option value="{{ value.id }}">{{ value.title }}</option>
+                                {% endfor %}
+                                
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-4 col-form-label">SubCategory Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="title" class="form-control" placeholder="SubCategory Name">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="description" placeholder="Description"
+                            rows="4" ></textarea>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-file">
+                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image">
+                        </div>
+                        <span class="input-group-text">Upload</span>
+                    </div>
+  
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Add SubCategory</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
