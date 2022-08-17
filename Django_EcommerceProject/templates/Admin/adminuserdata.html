@@ -4,120 +4,134 @@
 User's Details
 {% endblock %}
 {% block pagetitle %}
-User's Data					
-{% endblock  %}
+User's Data
+{% endblock %}
 {% block body %}
 
-    <div class="container-fluid" style="padding-top: 0">
-        
-        <div class="row page-titles" style="margin-bottom: 0">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Registerd</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Users</a></li>
-            </ol>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        
-                        <div class="table-responsive">
-                            {% if datas %}
-                            <table class="table table-sm mb-0 table-striped">
-                                <thead>
-                                    <tr>
-                                        <!-- <th class=" pe-3">
+<div class="container-fluid" style="padding-top: 0">
+
+    <div class="row page-titles" style="margin-bottom: 0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Registerd</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Users</a></li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    {% if datas %}
+
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm mb-0 table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- <th class=" pe-3">
                                             <div class="form-check custom-checkbox mx-2">
                                                 <input type="checkbox" class="form-check-input" id="checkAll">
                                                 <label class="form-check-label" for="checkAll"></label>
                                             </div>
                                         </th> -->
-                                        <th>S No.</th>
-                                        <th>Username</th>
-                                        <th>first_name</th>
-                                        <th>last_name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Status</th>
-                                        <th>Role</th>
-                                        <th>Registered On</th>
-                                        <th>Action</th>
-                                       
-                                    </tr>
-                                </thead>
-                                
-                                <tbody id="customers">
-                                    {% for data in datas %}
-                                    <tr class="btn-reveal-trigger">
-                                        <!-- <td class="py-2">
+                                    <th>S No.</th>
+                                    <th>Username</th>
+                                    <th>first_name</th>
+                                    <th>last_name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Role</th>
+                                    <th>Registered On</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody id="customers">
+                                {% for data in datas %}
+                                {% if data.is_admin %}
+                                {% else %}
+                                <tr class="btn-reveal-trigger">
+                                    <!-- <td class="py-2">
                                             <div class="form-check custom-checkbox mx-2">
                                                 <input type="checkbox" class="form-check-input" id="checkbox1">
                                                 <label class="form-check-label" for="checkbox1"></label>
                                             </div>
                                         </td> -->
-                                        <td>{{ data.id}}</td>
-                                        <td class="py-3">
-                                            <a href="#">
-                                                <div class="media d-flex align-items-center">
-                                                    <div class="avatar avatar-xl me-2">
-                                                        <div class=""><img class="rounded-circle img-fluid"
-                                                                src="{% static 'admin/images/avatar/1.png' %}" width="30" alt="" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="mb-0 fs--1">{{ data.username}}</h5>
+                                    <td>{{ data.id}}</td>
+                                    <td class="py-3">
+                                        <a href="#">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="avatar avatar-xl me-2">
+                                                    <div class=""><img class="rounded-circle img-fluid"
+                                                            src="{% static 'admin/images/avatar/1.png' %}" width="30"
+                                                            alt="" />
                                                     </div>
                                                 </div>
-                                            </a>
-                                        </td>
-                                        <td class="py-2">{{ data.first_name}}</td>
-                                        <td class="py-2">{{ data.last_name}}</td>
-                                        <td class="py-2">{{ data.email}}</td>
-                                        <td class="py-2">{{ data.phone_number}}</td>
-                                        <td class="py-2">
-                                            {% if data.is_active %}
-                                            Active
-                                            {% else %}
-                                            Not Active
-                                            {% endif %}
-                              
-                                          </td>
-                                        <td class="py-2">
-                                            {% if data.is_superadmin %}
-                                            <span class="badge light badge-success">Admin</span>
-                                            
-                                            {% else %}
-                                            <span class="badge light badge-danger">User</span>
-                  
-                                            {% endif %}
-                                        </td>
-                                        <td class="py-2">{{ data.date_joined}}</td>
-                                        <td>{% if data.is_active %}
-                                            <a href="{% url 'BlockUser' data.id %}" class="btn btn-success btn-xs" style="border-radius: 16px;" onclick="return confirm('Are you sure, you  want to block user {{data.username}} ?')">BLOCK</a>
-                              
-                                            {% else %}
-                                            <a href="{% url 'UnBlockUser' data.id %}" class="btn btn-danger btn-xs" style="border-radius: 16px;" onclick="return confirm('Are you sure, you  want to Unblock user  {{data.username}} ?')">UNBLOCK</a>
-                                            {% endif %}
-                              
-                                          </td>
-                                        
-                                        <td class="py-2 text-end">
-                                            <div class="dropdown"><button class="btn btn-primary tp-btn-light sharp" type="button" data-bs-toggle="dropdown"><span class="fs--1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></span></button>
-                                                <div class="dropdown-menu dropdown-menu-end border py-0">
-                                                    <div class="py-2"><a class="dropdown-item"  href="#!">Edit</a><a class="dropdown-item text-danger" href="">Delete</a></div>
+                                                <div class="media-body">
+                                                    <h5 class="mb-0 fs--1">{{ data.username}}</h5>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% endif %}
-                        </div>
+                                        </a>
+                                    </td>
+                                    <td class="py-2">{{ data.first_name}}</td>
+                                    <td class="py-2">{{ data.last_name}}</td>
+                                    <td class="py-2">{{ data.email}}</td>
+                                    <td class="py-2">{{ data.phone_number}}</td>
+                                    <td class="py-2">
+                                        {% if data.is_active %}
+                                        Active
+                                        {% else %}
+                                        Not Active
+                                        {% endif %}
+
+                                    </td>
+                                    <td class="py-2">
+                                        {% if data.is_superadmin %}
+                                        <span class="badge light badge-success">Admin</span>
+
+                                        {% else %}
+                                        <span class="badge light badge-danger">User</span>
+
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-2">{{ data.date_joined}}</td>
+                                    <td>{% if data.is_active %}
+                                        <a href="{% url 'BlockUser' data.id %}" class=" btn btn-success btn-xs "
+                                            
+                                            onclick="return confirm('Are you sure, you  want to block user  {{data.username}} ?)">BLOCK</a>
+                                            
+                                                
+
+                                        {% else %}
+                                        <a href="{% url 'UnBlockUser' data.id %}" class="btn btn-danger btn-xs"
+                                            
+                                            onclick="return confirm('Are you sure, you  want to Unblock user  {{data.username}} ?')">UNBLOCK</a>
+                                        {% endif %}
+
+                                    </td>
+
+                                   
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+<script src="{% static 'admin/vendor/sweetalert2/dist/sweetalert2.min.js' %}"></script>
+    <script src="{% static 'admin/js/plugins-init/sweetalert.init.js' %}"></script>
+
+	<script src="{% static 'admin/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+
 
 {% endblock %}
