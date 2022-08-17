@@ -2,13 +2,13 @@
 #
 # Translators:
 # Jannis Leidel <jannis@leidel.info>, 2011
-# Ramiro Morales, 2014-2016,2020-2022
+# Ramiro Morales, 2014-2016,2020-2021
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-17 05:26-0500\n"
-"PO-Revision-Date: 2022-07-25 07:59+0000\n"
+"POT-Creation-Date: 2021-01-15 09:00+0100\n"
+"PO-Revision-Date: 2021-03-21 12:54+0000\n"
 "Last-Translator: Ramiro Morales\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/django/django/"
 "language/es_AR/)\n"
@@ -158,40 +158,40 @@ msgid "Tomorrow"
 msgstr "Mañana"
 
 msgid "January"
-msgstr "enero"
+msgstr "Enero"
 
 msgid "February"
-msgstr "febrero"
+msgstr "Febrero"
 
 msgid "March"
-msgstr "marzo"
+msgstr "Marzo"
 
 msgid "April"
-msgstr "abril"
+msgstr "Abril"
 
 msgid "May"
-msgstr "mayo"
+msgstr "Mayo"
 
 msgid "June"
-msgstr "junio"
+msgstr "Junio"
 
 msgid "July"
-msgstr "julio"
+msgstr "Julio"
 
 msgid "August"
-msgstr "agosto"
+msgstr "Agosto"
 
 msgid "September"
-msgstr "setiembre"
+msgstr "Setiembre"
 
 msgid "October"
-msgstr "octubre"
+msgstr "Octubre"
 
 msgid "November"
-msgstr "noviembre"
+msgstr "Noviembre"
 
 msgid "December"
-msgstr "diciembre"
+msgstr "Diciembre"
 
 msgctxt "abbrev. month January"
 msgid "Jan"
@@ -268,12 +268,6 @@ msgstr "V"
 msgctxt "one letter Saturday"
 msgid "S"
 msgstr "S"
-
-msgid ""
-"You have already submitted this form. Are you sure you want to submit it "
-"again?"
-msgstr ""
-"Ya ha enviado este formulario. ¿Está seguro de que desea enviarlo nuevamente?"
 
 msgid "Show"
 msgstr "Mostrar"

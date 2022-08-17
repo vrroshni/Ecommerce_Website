@@ -1,9 +1,7 @@
 # This file is distributed under the same license as the Django package.
 #
 # Translators:
-# Albin Larsson <albin.post@gmail.com>, 2022
 # Andreas Pelme <andreas@pelme.se>, 2011-2012,2014
-# Elias Johnstone <eli87as@gmail.com>, 2022
 # Jannis Leidel <jannis@leidel.info>, 2011
 # Johan Rohdin, 2021
 # Jonathan Lindén, 2014
@@ -13,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-07 14:40+0200\n"
-"PO-Revision-Date: 2022-07-24 18:40+0000\n"
-"Last-Translator: Elias Johnstone <eli87as@gmail.com>\n"
+"POT-Creation-Date: 2021-01-15 09:00+0100\n"
+"PO-Revision-Date: 2021-04-01 12:37+0000\n"
+"Last-Translator: Johan Rohdin\n"
 "Language-Team: Swedish (http://www.transifex.com/django/django/language/"
 "sv/)\n"
 "MIME-Version: 1.0\n"
@@ -250,86 +248,86 @@ msgstr "om %(delta)s"
 #. Translators: 'naturaltime-past' strings will be included in '%(delta)s ago'
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d year"
-msgid_plural "%(num)d years"
-msgstr[0] "%(num)d år"
-msgstr[1] "%(num)d år"
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d år"
+msgstr[1] "%d år"
 
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d month"
-msgid_plural "%(num)d months"
-msgstr[0] "%(num)d månad"
-msgstr[1] "%(num)d månader"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d månad"
+msgstr[1] "%d månader"
 
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d week"
-msgid_plural "%(num)d weeks"
-msgstr[0] "%(num)d vecka"
-msgstr[1] "%(num)d veckor"
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d vecka"
+msgstr[1] "%d veckor"
 
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d day"
-msgid_plural "%(num)d days"
-msgstr[0] "%(num)d dag"
-msgstr[1] "%(num)d dagar"
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
 
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d hour"
-msgid_plural "%(num)d hours"
-msgstr[0] "%(num)d timme"
-msgstr[1] "%(num)d timmar"
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d timme"
+msgstr[1] "%d timmar"
 
 #, python-format
 msgctxt "naturaltime-past"
-msgid "%(num)d minute"
-msgid_plural "%(num)d minutes"
-msgstr[0] "%(num)d minut"
-msgstr[1] "%(num)d minuter"
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minut"
+msgstr[1] "%d minuter"
 
 #. Translators: 'naturaltime-future' strings will be included in '%(delta)s
 #. from now'
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d year"
-msgid_plural "%(num)d years"
-msgstr[0] "%(num)d år"
-msgstr[1] "%(num)d år"
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d år"
+msgstr[1] "%d år"
 
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d month"
-msgid_plural "%(num)d months"
-msgstr[0] "%(num)d månad"
-msgstr[1] "%(num)d månader"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d månad"
+msgstr[1] "%d månader"
 
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d week"
-msgid_plural "%(num)d weeks"
-msgstr[0] "%(num)d vecka"
-msgstr[1] "%(num)d veckor"
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d vecka"
+msgstr[1] "%d veckor"
 
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d day"
-msgid_plural "%(num)d days"
-msgstr[0] "%(num)d dag"
-msgstr[1] "%(num)d dagar"
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
 
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d hour"
-msgid_plural "%(num)d hours"
-msgstr[0] "%(num)d timme"
-msgstr[1] "%(num)d timmar"
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d timme"
+msgstr[1] "%d timmar"
 
 #, python-format
 msgctxt "naturaltime-future"
-msgid "%(num)d minute"
-msgid_plural "%(num)d minutes"
-msgstr[0] "%(num)d minut"
-msgstr[1] "%(num)d minuter"
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuter"
+msgstr[1] "%d minuter"

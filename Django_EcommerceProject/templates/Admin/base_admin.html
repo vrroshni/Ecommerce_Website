@@ -19,7 +19,8 @@
 	<!-- PAGE TITLE HERE -->
 	<title>{% block title %}
 
-		{% endblock %}</title>
+		{% endblock %}
+	</title>
 
 	<!-- FAVICONS ICON -->
 	<link rel="shortcut icon" type="image/png" href="images/favicon.png" />
@@ -33,6 +34,10 @@
 		rel="stylesheet">
 	<!-- Style css -->
 	<link href="{% static 'admin/css/style.css' %}" rel="stylesheet">
+	{% block styles %}
+	{% endblock %}
+
+
 
 </head>
 

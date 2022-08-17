@@ -3,6 +3,25 @@
 {% block title %}
 Add SubCategory
 {% endblock %}
+{% block styles %}
+<style>
+    .image-preview{
+        border: 2px solid #dddddd;
+        min-width: 100px;
+
+        /* default text */
+        display: flex;
+        align-items: center;
+        justify-content:center ;
+        font-weight: bold;
+        color: #cccccc;
+        }
+        .image-preview__image{
+            display: none;
+            width: 100%;
+        }
+</style>
+{% endblock %}
 {% block pagetitle %}
 Add Subcategory						
 {% endblock  %}
@@ -46,11 +65,23 @@ Add Subcategory
                     </div>
                     <div class="input-group mb-3">
                         <div class="form-file">
-                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image">
+                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" id="inpFile" onchange="getImagePreview(event)">
                         </div>
                         <span class="input-group-text">Upload</span>
+                        
                     </div>
-  
+                    <div class=" col-lg-12">
+                        <div class="card">
+                            
+                            <div class="card-body image-preview" id="imagePreview">
+                                <!-- <img src=""  alt="Image Preview" id="image-preview__image"> -->
+                                <span id="image-preview__default-text">Image Preview</span>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                     <div class="mb-3 row">
                         <div class="col-sm-10">
                             <button type="submit" class="btn btn-primary">Add SubCategory</button>
@@ -62,5 +93,18 @@ Add Subcategory
     </div>
 </div>
 </div>
+<script>
 
+function getImagePreview(event){
+   var image=URL.createObjectURL(event.target.files[0]) ;
+   var imagediv=document.getElementById("imagePreview");
+   var neWImage=document.createElement('img');
+//    imagediv.innerHTML='';
+   neWImage.src=image;
+   neWImage.width="300";
+   imagediv.appendChild(neWImage);
+
+
+}
+</script>
 {% endblock %}

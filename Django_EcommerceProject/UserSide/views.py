@@ -2,9 +2,11 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth.models import auth
+from django.contrib.auth import login,authenticate,logout
 from Accounts.models import* 
 from Admin.models import *
-
+from django.conf import settings
+from twilio.rest import Client
 from django.views.decorators.cache import cache_control
 
 
@@ -61,20 +63,86 @@ def Signin(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
+        if password=="":
+           
+            phone=Account.objects.get(username=request.POST.get('username'))
+            phone_number=phone.phone_number
+
+            
+            account_sid     = settings.ACCOUNT_SID
+            auth_token      = settings.AUTH_TOKEN
+            client = Client(account_sid, auth_token)
+
+            verification = client.verify \
+                                .v2 \
+                                .services('VAc12c6e4cb51d209c8c32816197a67b44') \
+                                .verifications \
+                                .create(to=phone_number, channel='sms')
+            print(verification.status)
+            return redirect(f'loginotp/{phone.id}/')
+                # account_sid     = settings.ACCOUNT_SID
+                # auth_token      = settings.AUTH_TOKEN
+
+                # client      = Client(account_sid, auth_token)
+                # global otp
+                # otp         = str(random.randint(1000, 9999))
+                # message     = client.messages.create(
+                #     to      ='+919388816916',
+                #     from_    ='+16413296602',
+                #     body    ='Your OTP code is'+ otp)
+                # messages.success(request, 'OTP has been sent to 9388816916')
+                # print(otp)
+                # print('OTP SENT SUCCESSFULLY')
+                # return redirect(f'otp/{phone.id}/')
+            
         user = authenticate(username=username, password=password)
+
+
         if user is not None:
-            auth.login(request, user)
+            login(request, user)
             request.session['username'] = username
             messages.success(request, 'You have succesfully logged in', )
-            return redirect(loginotp)
+            return redirect(index)
 
         else:
             messages.error(request, "Invalid Credentials")
             print('NOT ABLE TO SIGNIN')
-            return redirect(Signin)
-    return render(request, 'UserSide/Userlogin-register.html')
+    return render(request,'UserSide/Userlogin-register.html')
+    # if request.method == "POST":
+    #     username = request.POST.get('username')
+    #     password = request.POST.get('password')
+    #     user = authenticate(username=username, password=password)
+    #     if user is not None:
+    #         auth.login(request, user)
+    #         request.session['username'] = username
+    #         messages.success(request, 'You have succesfully logged in', )
+    #         return redirect(loginotp)
 
-def loginotp(request):
+    #     else:
+    #         messages.error(request, "Invalid Credentials")
+    #         print('NOT ABLE TO SIGNIN')
+    #         return redirect(Signin)
+    
+    
+def loginotp(request,id):
+    if request.method == 'POST':
+        user      = Account.objects.get(id=id)
+        phone_number=user.phone_number
+        otpvalue  = request.POST.get('otp')
+        account_sid     = settings.ACCOUNT_SID
+        auth_token      = settings.AUTH_TOKEN
+        client = Client(account_sid, auth_token)
+
+        verification_check = client.verify \
+                                .v2 \
+                                .services('VAc12c6e4cb51d209c8c32816197a67b44') \
+                                .verification_checks \
+                                .create(to=phone_number, code=otpvalue)
+
+        print(verification_check.status)
+        auth.login(request,user)
+        request.session['username'] = user.username
+        return redirect(index)
     return render(request,'UserSide/loginotp.html')
 
 
@@ -83,10 +151,11 @@ def loginotp(request):
 def showParticularproducts(request,id):
     product=Products.objects.get(id=id)
     return render(request,'UserSide/showParticularproducts.html',{'product':product})
+    
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Userlogout(request):
-    if 'username' in request.session:
-       request.session.flush()
-    # auth.logout(request)
+    # if 'username' in request.session:
+    #    request.session.flush()
+    auth.logout(request)
     return redirect(index)

@@ -6,7 +6,7 @@ urlpatterns = [
 
     # ----------------------------- Authorizing User ----------------------------- #
     path('login',views.Signin,name='Login'),
-    path('loginotp',views.loginotp,name='loginOtp'),
+    path('loginotp/<int:id>/',views.loginotp,name='loginOtp'),
     path('logout',views.Userlogout,name='Userlogout'),
 
 

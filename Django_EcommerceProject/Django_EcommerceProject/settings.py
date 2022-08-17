@@ -75,7 +75,6 @@ WSGI_APPLICATION = 'Django_EcommerceProject.wsgi.application'
 AUTH_USER_MODEL = 'Accounts.Account'
 
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -135,3 +134,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#twilio
+ACCOUNT_SID='AC583a7012e6b01e1fcb5e6f7eb407831f'
+AUTH_TOKEN='9a6858f82c83bc878ca5812a86754e8a'

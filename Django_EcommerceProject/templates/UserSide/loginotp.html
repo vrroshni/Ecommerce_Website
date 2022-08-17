@@ -37,10 +37,11 @@
 										<a href="index.html"><img src="{% static 'admin/images/logo-full.png' %}" alt=""></a>
 									</div>
                                     <h4 class="text-center mb-4">Enter Your Otp</h4>
-                                    <form action="{% url 'Index' %}">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>OTP</strong></label>
-                                            <input type="text" class="form-control" value="Enter your OTP">
+                                            <input type="text" class="form-control" value="Enter your OTP" name="otp">
                                         </div>
                                        
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
