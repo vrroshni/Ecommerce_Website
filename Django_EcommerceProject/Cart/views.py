@@ -1,0 +1,148 @@
+from django.shortcuts import render,redirect,get_object_or_404
+from Admin.models import*
+from Accounts.models import*
+from Cart.models import*
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
+# Create your views here.
+
+
+
+
+
+# ----------------- creating separate sessions for each user----------------- #
+def create_cart_id(request):
+    cartlist_id=request.session.session_key
+    if not  cartlist_id:
+        cartlist_id=request.session.create()
+    return cartlist_id
+
+
+
+
+# ---------------------- funtionality for adding to cart --------------------- #
+def add_ToCart(request,id):
+    #product is adding with its id 
+    product=Products.objects.get(id=id)
+    #if there is chance to have error
+    try:
+        cart__id=Cart.objects.get(cart_id=create_cart_id(request))#took sessionkeyif it is exists
+    except Cart.DoesNotExist:
+        cart__id=Cart.objects.create(cart_id=create_cart_id(request))#created sessionkey if it doesnot exists  
+        cart__id.save()
+    # to take objects from Cart_Products
+    try:
+        cart_items=Cart_Products.objects.get(product=product,cart=cart__id)
+        if cart_items.quantity<cart_items.product.stock:#checking quantity with stock
+            cart_items.quantity+=1#increasing the quantity 
+        cart_items.save()
+    except Cart_Products.DoesNotExist:#not available,create one
+        cart_items=Cart_Products.objects.create(product=product,quantity=1,cart=cart__id)
+        cart_items.save()
+    return redirect('ViewCart')
+
+
+
+#------------------------ list the items in the cart ------------------------ #
+def view_cart(request,total=0,count=0,cartlist_items=None):
+    try:
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
+        for i in cartlist_items:
+                    total+=(i.product.price*i.quantity)
+                    count+=i.quantity
+    except ObjectDoesNotExist:
+           pass
+    tax = (2 * total)/100
+    total=tax+total
+    return render(request,'Cart/carttest.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax})
+
+
+
+
+# ----------------------- decrease the quantity in cart ---------------------- #
+def decrease_quantity_cart(request,id):
+    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+    if cart_items.quantity>1:
+        cart_items.quantity-=1
+        cart_items.save()
+    else:
+        cart_items.delete()
+    return redirect(view_cart)
+
+
+
+
+# ------------------------- delete product from cart ------------------------- #
+def delete_product_cart(request,id):
+    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+    cart_items.delete()
+    return redirect(view_cart)
+
+
+
+
+def checkout_products(request,total=0,quantity=0,cars_items=None,):
+    pass
+
+#     try:
+#         if request.user.is_authenticated:
+#             addressdetails = Address.objects.filter(user=request.user)
+#             carts_item = Cart_Products.objects.filter(user=request.user, is_active=True)
+
+#         else:
+#             return render(request,"Login")
+#         for item in carts_item:
+#             total += item.product.price * item.quantity
+#             quantity += item.quantity
+#     except:
+#         if request.user.is_authenticated:
+#             pass
+#         else:
+#             return render(request,"UserSide/Userlogin-register.html")
+#     tax = (2 * total)/100 
+#     total=tax+total
+#     values = {
+#             "Tax":tax,
+#             "Total": total,
+#             "Quantity": quantity,
+#             "Carts_item": carts_item,
+#             "Addressdetails": addressdetails,
+#         }
+
+#     return render(request, "checkout.html",values)
+
+
+# def address_Save(request):
+#     address_data = Address()
+#     if request.method == "POST":
+#             print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+#             address_data.Buyername = request.POST["Buyername"]
+#             address_data.email = request.POST["email"]
+#             address_data.phone_number = request.POST["phone_number"]
+#             address_data.Buyers_Address = request.POST["Buyers_Address"]
+#             address_data.country = request.POST["country"]
+#             address_data.city = request.POST["city"]
+#             address_datastate = request.POST["state"]
+#             address_data.pincode = request.POST["pincode"]
+#             address_data.save()
+#             return redirect('/')
+
+        
+#     return render(request, "add_address.html") 
+
+
+
+
+    
+
+
+
+
+
+
+

@@ -6,6 +6,29 @@ Edit SubCategory
 {% block pagetitle %}
 Edit SubCategory {{subcategory.title}}					
 {% endblock  %}
+{% block styles %}
+<style>
+    .image-preview{
+        border: 2px solid #dddddd;
+        min-width: 100px;
+
+        /* default text */
+        display: flex;
+        align-items: center;
+        justify-content:center ;
+        font-weight: bold;
+        color: #cccccc;
+        }
+        .image-preview__image{
+            display: none;
+            width: 100%;
+        }
+        .image-preview__default-text{
+            font-weight: bold;
+            color: #cccccc;   
+        }
+</style>
+{% endblock %}
 {% block body %}
 <div class="row">
     <div class="col-2"></div>
@@ -13,20 +36,20 @@ Edit SubCategory {{subcategory.title}}
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Edit SubCategory</h4>
-        </div>
+        </div> 
         
         <div class="card-body">
             <div class="basic-form">
                 
-                <form method="POST" autocomplete="off">
+                <form method="POST" autocomplete="off" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 col-md-12">
                             <label class="form-label">Category</label>
-                            <select id="inputState" class="default-select form-control wide" name="category">
-                                <option selected >Choose...</option>
+                            <select id="inputState" class="default-select form-control wide"  name="category">
+                               
                                 {% for value in category %}
-                                <option value="{{ value.id }}">{{ value.title }}</option>
+                                <option data-display="{{ subcategory.title }}" value="{{ value.id }}">{{ value.title }}</option>
                                 {% endfor %}
                                 
                                
@@ -49,9 +72,20 @@ Edit SubCategory {{subcategory.title}}
                     </div>
                     <div class="input-group mb-3">
                         <div class="form-file">
-                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" value="{{subcategory.Subcategory_Image.url}}">
+                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" value="{{subcategory.Subcategory_Image.url}}" onchange="getImagePreview(event)">
                         </div>
                         <span class="input-group-text">Change</span>
+                    </div>
+                    <div class=" col-lg-12">
+                        <div class="card">
+                            
+                            <div class="card-body image-preview" id="imagePreview">
+                                <!-- <img src=""  alt="Image Preview" id="image-preview__image"> -->
+                                
+                            </div>
+                            <span class="image-preview__default-text text-center">Image Preview</span>
+
+                        </div>
                     </div>
   
                     <div class="mb-3 row">
@@ -66,5 +100,18 @@ Edit SubCategory {{subcategory.title}}
     </div>
 </div>
 </div>
+<script>
 
+    function getImagePreview(event){
+       var image=URL.createObjectURL(event.target.files[0]) ;
+       var imagediv=document.getElementById("imagePreview");
+       var neWImage=document.createElement('img');
+    //    imagediv.innerHTML='';
+       neWImage.src=image;
+       neWImage.width="300";
+       imagediv.appendChild(neWImage);
+    
+    
+    }
+    </script>
 {% endblock %}

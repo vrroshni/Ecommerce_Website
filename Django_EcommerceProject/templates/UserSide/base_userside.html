@@ -327,6 +327,11 @@
                                                     </a>
                                                 </li>
                                                 {% endif %}
+                                                <li class="mainmenu__item">
+                                                    <a href="{% url 'ViewCart'%}" class="mainmenu__link">
+                                                        <span class="mm-text">Cart {% if Products_count %}{{Products_count}}{% endif %}</span>
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </nav>
                                     </div>

@@ -601,9 +601,9 @@
                                                 <input type="number" class="quantity-input" name="qty" id="qty" value="1" min="1">
                                             </div> -->
                                         </div>
-                                        <button type="button" class="btn btn-shape-square btn-size-sm" onclick="window.location.href='cart.html'">
+                                       <a href="{% url 'AddToCart' product.id %}"><button type="button" class="btn btn-shape-square btn-size-sm" onclick="window.location.href='cart.html'">
                                             Add To Cart
-                                        </button>
+                                        </button></a>
                                     </div>  
                                     <div class="product-footer-meta">
                                         <p><span>Category:</span> 

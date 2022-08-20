@@ -6,6 +6,29 @@ Add Product
 {% block pagetitle %}
 Add Products							
 {% endblock  %}
+{% block styles %}
+<style>
+    .image-preview{
+        border: 2px solid #dddddd;
+        min-width: 100px;
+
+        /* default text */
+        display: flex;
+        align-items: center;
+        justify-content:center ;
+        font-weight: bold;
+        color: #cccccc;
+        }
+        .image-preview__image{
+            display: none;
+            width: 100%;
+        }
+        .image-preview__default-text{
+            font-weight: bold;
+            color: #cccccc;   
+        }
+</style>
+{% endblock %}
 {% block body %}
 <div class="row">
     <div class="col-2"></div>
@@ -66,15 +89,71 @@ Add Products
                     </div>
                     <div class="input-group mb-3">
                         <div class="form-file">
-                            <input type="file" multiple class="form-file-input form-control" name="Product_image">
+                            <input type="file" multiple class="form-file-input form-control" name="Product_image" id="productImage1" onchange="getImagePreview1(event)">
                         </div>
                         <span class="input-group-text">Upload</span>
                     </div>
-                                     
+                    <div class="input-group mb-3">
+                        <div class="form-file">
+                            <input type="file" multiple class="form-file-input form-control" name="Productimage_two" id="productImage2" onchange="getImagePreview2(event)" >
+                        </div>
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="form-file">
+                            <input type="file" multiple class="form-file-input form-control" name="Productimage_three" id="productImage3" onchange="getImagePreview3(event)">
+                        </div>
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="row d-flex justify-content-between">
+                        <div class=" col-5 ">
+                            <div class="card">
+                                
+                                <div class="card-body image-preview"   id="imagePreview1">
+                                    <!-- <img src=""  alt="Image Preview" id="image-preview__image"> -->
+                                    
+                                </div>
+                                <span class="image-preview__default-text">Image One Preview</span>
+
+                            </div>
+                        </div>
+                    
+                        <div class=" col-5 ">
+                            <div class="card">
+                                
+                                <div class="card-body image-preview"  id="imagePreview2">
+                                    <!-- <img src=""  alt="Image Preview" id="image-preview__image"> -->
+                                    
+                                </div>
+                                <span class="image-preview__default-text">Image Two Preview</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class=" col-5">
+                            <div class="card">
+                                
+                                <div class="card-body image-preview" id="imagePreview3">
+                                    <!-- <img src=""  alt="Image Preview" id="image-preview__image"> -->
+                                    
+                                </div>
+                                <span class="image-preview__default-text">Image  Three Preview</span>
+
+                            </div>
+                        </div>
+                    </div>             
                         <div class="mb-3 row">
                             <label class="col-sm-4 col-form-label">Price</label>
                             <div class="col-sm-8">
                                 <input type="text" name="price" class="form-control" placeholder="Price">
+                            </div>
+                        </div>
+ 
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Available Stock</label>
+                            <div class="col-sm-8">
+                                <input type="number" name="stock" class="form-control" placeholder="Available Stock">
                             </div>
                         </div>
                     <div class="mb-3 row">
@@ -88,5 +167,40 @@ Add Products
     </div>
 </div>
 </div>
+<script>
 
+    function getImagePreview1(event){
+       var image=URL.createObjectURL(event.target.files[0]) ;
+       var imagediv=document.getElementById("imagePreview1");
+       var neWImage=document.createElement('img');
+    //    imagediv.innerHTML='';
+       neWImage.src=image;
+       neWImage.width="200";
+       imagediv.appendChild(neWImage);
+    
+    
+    }
+    function getImagePreview2(event){
+       var image=URL.createObjectURL(event.target.files[0]) ;
+       var imagediv=document.getElementById("imagePreview2");
+       var neWImage=document.createElement('img');
+    //    imagediv.innerHTML='';
+       neWImage.src=image;
+       neWImage.width="200";
+       imagediv.appendChild(neWImage);
+    
+    
+    }
+    function getImagePreview3(event){
+       var image=URL.createObjectURL(event.target.files[0]) ;
+       var imagediv=document.getElementById("imagePreview3");
+       var neWImage=document.createElement('img');
+    //    imagediv.innerHTML='';
+       neWImage.src=image;
+       neWImage.width="200";
+       imagediv.appendChild(neWImage);
+    
+    
+    }
+    </script>
 {% endblock %}

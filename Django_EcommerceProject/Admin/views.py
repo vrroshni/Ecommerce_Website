@@ -1,3 +1,4 @@
+from turtle import title
 from unicodedata import category
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
@@ -175,7 +176,7 @@ def EditSubCategory(request, id):
         subcategory.Subcategory_Image=Subcategory_Image
         if subcategory.title =='' or subcategory.description =='' :
                 messages.error(request, "SubCategory fields cannot be blank")
-                print('Filed blank')
+                print('Field blank')
                 return redirect(AddSubCategory)
         subcategory.save()
         messages.success(request, 'SubCategory is   Updated Successfully')
@@ -184,8 +185,8 @@ def EditSubCategory(request, id):
 
 # --------------------------- Deleting the Subcategory -------------------------- #
 def DeleteSubCategory(request,id):
-    category=SubCategories.objects.get(id=id)
-    category.delete()
+    subcategory=SubCategories.objects.get(id=id)
+    subcategory.delete()
     messages.success(request,"Subcategory is deleted  succesfully")
     return redirect(ShowSubCategory)    
 # ---------------------------------------------------------------------------- #
@@ -202,12 +203,15 @@ def AddProducts(request):
             print(cat_id.id)
             print(subcat_id.id)
             Product_image=request.FILES['Product_image']
+            Productimage_two=request.FILES['Productimage_two']
+            Productimage_three=request.FILES['Productimage_three']
             product_name = request.POST['product_name']
             description = request.POST['product_description']
             product_long_description= request.POST['product_long_description']
             price=request.POST['price']
+            stock=request.POST['stock']
             AddedProduct = Products.objects.create(category_id=cat_id.id,subcategories_id=subcat_id.id,
-                        product_name=product_name,Product_image=Product_image, product_description=description,product_long_description=product_long_description,price=price)
+                        product_name=product_name,Product_image=Product_image,Productimage_two=Productimage_two,Productimage_three=Productimage_three, product_description=description,product_long_description=product_long_description,price=price,stock=stock)
             AddedProduct.save()
             messages.success(request, 'Product has been Added Succesfully')
             return redirect(ShowProducts)
@@ -236,6 +240,8 @@ def EditProduct(request, id):
         subcat_id=SubCategories.objects.get(id=request.POST['subcategories'])
         product_name = request.POST['product_name']
         Product_image=request.FILES['Product_image']
+        Productimage_two=request.FILES['Productimage_two']
+        Productimage_three=request.FILES['Productimage_three']
         product_description = request.POST['product_description']
         product_long_description=request.POST['product_long_description']
         product.category=cat_id
@@ -244,6 +250,8 @@ def EditProduct(request, id):
         product.product_description=product_description
         product.product_long_description=product_long_description
         product.Product_image=Product_image
+        product.Productimage_two=Productimage_two
+        product.Productimage_three=Productimage_three
         
         product.save()
         print('saved')
@@ -252,7 +260,7 @@ def EditProduct(request, id):
     return render(request, 'Admin/editProduct.html', {'product': product,'category':category,'subcategory':subcategory})
 
 # ---------------------------------------------------------------------------- #
-#                           admin logout here. session is deleted                         #
+#                           admin logout here. session is deleted              #
 # ---------------------------------------------------------------------------- #
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adminlogout(request):

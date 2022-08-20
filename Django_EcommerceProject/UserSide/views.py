@@ -14,7 +14,6 @@ from django.views.decorators.cache import cache_control
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
-    user=Account()
     product=Products.objects.all()
     return render(request,'UserSide/index.html',{'products':product})
 
@@ -71,29 +70,17 @@ def Signin(request):
             
             account_sid     = settings.ACCOUNT_SID
             auth_token      = settings.AUTH_TOKEN
+
             client = Client(account_sid, auth_token)
 
             verification = client.verify \
                                 .v2 \
-                                .services('VAc12c6e4cb51d209c8c32816197a67b44') \
+                                .services(settings.SERVICE_ID) \
                                 .verifications \
-                                .create(to=phone_number, channel='sms')
+                                .create(to=f'{settings.COUNTRY_CODE}{phone_number}', channel='sms')
             print(verification.status)
             return redirect(f'loginotp/{phone.id}/')
-                # account_sid     = settings.ACCOUNT_SID
-                # auth_token      = settings.AUTH_TOKEN
 
-                # client      = Client(account_sid, auth_token)
-                # global otp
-                # otp         = str(random.randint(1000, 9999))
-                # message     = client.messages.create(
-                #     to      ='+919388816916',
-                #     from_    ='+16413296602',
-                #     body    ='Your OTP code is'+ otp)
-                # messages.success(request, 'OTP has been sent to 9388816916')
-                # print(otp)
-                # print('OTP SENT SUCCESSFULLY')
-                # return redirect(f'otp/{phone.id}/')
             
         user = authenticate(username=username, password=password)
 
@@ -135,9 +122,9 @@ def loginotp(request,id):
 
         verification_check = client.verify \
                                 .v2 \
-                                .services('VAc12c6e4cb51d209c8c32816197a67b44') \
+                                .services(settings.SERVICE_ID) \
                                 .verification_checks \
-                                .create(to=phone_number, code=otpvalue)
+                                .create(to=f'{settings.COUNTRY_CODE}{phone_number}', code=otpvalue)
 
         print(verification_check.status)
         auth.login(request,user)

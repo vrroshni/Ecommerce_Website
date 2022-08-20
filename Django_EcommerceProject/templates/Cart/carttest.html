@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for i in Cart_items %}
+    {{i.product.product_name}}
+    {{i.product.price}}
+    {{i.sub_total}}
+    {{i.product.product_description}}
+    <a href="{% url 'DecreaseQty' i.product.id %}">-</a>{{i.quantity}}<a href="{% url 'AddToCart' i.product.id %}">+</a>
+    <br>
+    {% endfor %}
+    tax:{{Tax}}  
+    total:{{Total}}
+    <a href=""><button>Proceed to checkout</button></a>
+</ul>
+
+</body>
+</html>
+

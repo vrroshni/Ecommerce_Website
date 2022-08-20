@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'Admin',
     'Accounts',
     'UserSide',
+    'Cart',
+    'Order',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Cart.context_processor.count',
             ],
         },
     },
@@ -137,4 +140,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #twilio
 ACCOUNT_SID='AC583a7012e6b01e1fcb5e6f7eb407831f'
-AUTH_TOKEN='9a6858f82c83bc878ca5812a86754e8a'
+AUTH_TOKEN='1f889d321e3ffff88194ad4f8b11923f'
+SERVICE_ID='VAc12c6e4cb51d209c8c32816197a67b44'
+COUNTRY_CODE='+91'
