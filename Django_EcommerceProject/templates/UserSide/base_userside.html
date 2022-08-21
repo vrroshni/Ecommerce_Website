@@ -346,7 +346,7 @@
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
                                                         <i class="la la-shopping-cart"></i>
-                                                        <span>01</span>
+                                                        <span>{{Products_count}}</span>
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none">
@@ -371,6 +371,26 @@
                 </div>
             </div>
         </header>
+        <div >
+			{% if messages %}
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-6">
+						
+						{% for message in messages %}
+						{% if message.tags == 'error' %}
+						<div class="alert alert-danger ">{{message}}</div>
+						{% else%}
+						<div class="alert alert-{{message.tags}}">{{message}}</div>
+						{% endif %}
+						{% endfor %}
+						
+					</div>
+				</div>
+			</div>
+        </div>
+			{% endif %}
         <!-- Header End -->
         {% block contentbody %}
         {% endblock %}
@@ -897,10 +917,18 @@
     <!-- ************************* JS Files ************************* -->
 
     <!-- jQuery JS -->
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 1500);
+    </script>
     <script src="{% static 'templateresources/assets/js/vendor.js' %}"></script>
 
     <!-- Main JS -->
     <script src="{% static 'templateresources/assets/js/main.js' %}"></script>
+    
     {% block CustomScripts %}
     {% endblock %}
     

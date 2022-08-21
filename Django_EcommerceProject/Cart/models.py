@@ -82,7 +82,7 @@ class Cart_Products(models.Model):
 class Address(models.Model):
     user                        = models.ForeignKey(Account, on_delete=models.CASCADE)
     Buyername                   = models.CharField(max_length=50, blank=True)
-    phone_number                       = models.CharField(max_length=25)
+    phone_number                = models.CharField(max_length=25)
     email                       = models.EmailField(max_length=50, null=True)
     Buyers_Address                = models.CharField(max_length=100, blank=True)      
     pincode                     = models.IntegerField(null=True)
@@ -91,4 +91,4 @@ class Address(models.Model):
     country                     = models.CharField( max_length=20)
 
     def __str__(self):
-        return self.name
+        return self.user.username

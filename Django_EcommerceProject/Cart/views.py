@@ -4,6 +4,8 @@ from Accounts.models import*
 from Cart.models import*
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.contrib import messages
+
 # Create your views here.
 
 
@@ -53,9 +55,10 @@ def view_cart(request,total=0,count=0,cartlist_items=None):
                     count+=i.quantity
     except ObjectDoesNotExist:
            pass
+    subtotal=total
     tax = (2 * total)/100
     total=tax+total
-    return render(request,'Cart/carttest.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax})
+    return render(request,'Cart/ViewCart.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax,'Subtotal':subtotal})
 
 
 
@@ -86,8 +89,8 @@ def delete_product_cart(request,id):
 
 
 
-def checkout_products(request,total=0,quantity=0,cars_items=None,):
-    pass
+# def checkout_products(request,total=0,quantity=0,cars_items=None,):
+#     pass
 
 #     try:
 #         if request.user.is_authenticated:
@@ -117,23 +120,125 @@ def checkout_products(request,total=0,quantity=0,cars_items=None,):
 #     return render(request, "checkout.html",values)
 
 
-# def address_Save(request):
-#     address_data = Address()
-#     if request.method == "POST":
-#             print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-#             address_data.Buyername = request.POST["Buyername"]
-#             address_data.email = request.POST["email"]
-#             address_data.phone_number = request.POST["phone_number"]
-#             address_data.Buyers_Address = request.POST["Buyers_Address"]
-#             address_data.country = request.POST["country"]
-#             address_data.city = request.POST["city"]
-#             address_datastate = request.POST["state"]
-#             address_data.pincode = request.POST["pincode"]
-#             address_data.save()
-#             return redirect('/')
+def checkout_products(request):
+    # if request.user.is_authenticated:
+    #     address_data = Address()
+    #     if request.method == "POST":
+    #         address_data.Buyername = request.POST["Buyername"]
+    #         address_data.email = request.POST["email"]
+    #         address_data.phone_number = request.POST["phone_number"]
+    #         address_data.Buyers_Address = request.POST["Buyers_Address"]
+    #         address_data.country = request.POST["country"]
+    #         address_data.city = request.POST["city"]
+    #         address_data.state = request.POST["state"]
+    #         address_data.pincode = request.POST["pincode"]
+    #         address_data.save()
 
+    # try:
+    #     if request.user.is_authenticated:
+    #         Addressdetails = Address.objects.filter(user=request.user)
+    #         carts_item = Cart_Products.objects.filter(user=request.user, is_active=True)
+
+    #     else:
+    #         return render(request,"UserSide/Userlogin-register.html")
+    #     for item in carts_item:
+    #         total += item.product.price * item.quantity
+    #         quantity += item.quantity
+    # except:
+    #     if request.user.is_authenticated:
+    #         pass
+    #     else:
+    #         return render(request,"UserSide/Userlogin-register.html")
+    # tax = (2 * total)/100 
+    # total=tax+total
+    # values = {
+    #         "Tax":tax,
+    #         "Total": total,
+    #         "Quantity": quantity,
+    #         "Carts_item": carts_item,
+    #         "Addressdetails": Addressdetails,
+    #     }
+
+    return render(request, "Cart/CheckOut.html")  
+
+
+
+def add_address(request):
+        total=0
+        count=0
+        cartlist_items=None
+    
+
+        if request.user.is_authenticated:
+            try:
+                cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+                cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
+                for i in cartlist_items:
+                            total+=(i.product.price*i.quantity)
+                            count+=i.quantity
+            except ObjectDoesNotExist:
+                pass
+            subtotal=total
+            tax = (2 * total)/100
+            total=tax+total
+            addressDetails = Address.objects.filter(user=request.user)
+            if request.method == "POST":
+                    Buyername = request.POST["Buyername"]
+                    Buyers_Address = request.POST["Buyers_Address"]
+                    email = request.POST["email"]
+                    phone_number = request.POST["phone_number"]
+                    country = request.POST["country"]
+                    city = request.POST["city"]
+                    state = request.POST["state"]
+                    pincode = request.POST["pincode"]
+                
+
+                    if Buyername == "":
+                        messages.error(request, "NameField is empty")
+                        return render(request, "Cart/AddressAdd.html")
+                        
+
+                    elif len(Buyername) < 2:
+                        messages.error(request, "name is too short")
+                        return render(request, "Cart/AddressAdd.html")
+
+
+                    elif not Buyername.isalpha():
+                        messages.error(request, "name must contain alphabets")
+                        return render(request, "Cart/AddressAdd.html")
+
+
+                    elif not Buyername.isidentifier():
+                        messages.error(request, "name start must start with alphabets")
+                        return render(request, "Cart/AddressAdd.html")
+                    
+                    elif email == "":
+                        messages.error(request, "email field is empty")
+                        return render(request, "Cart/AddressAdd.html")
+                    elif len(email) < 2:
+                        messages.error(request, "email is too short")
+                        return render(request, "Cart/AddressAdd.html")
+
+                    
+
+                    elif Address.objects.filter(email=email):
+                        messages.error(request, "email already exist try another")
+                        return render(request, "Cart/AddressAdd.html")
+                    address_data = Address(
+                            Buyername=Buyername,
+                            email=email,
+                            phone_number=phone_number,
+                            Buyers_Address=Buyers_Address,
+                            city=city,
+                            state=state,
+                            country=country,
+                            user=request.user,
+                        )
+                    address_data.save()
+                    return redirect(checkout_products)
         
-#     return render(request, "add_address.html") 
+        return render(request,'Cart/AddressAdd.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax,'Subtotal':subtotal,'AddressDetails':addressDetails})
+        
 
 
 

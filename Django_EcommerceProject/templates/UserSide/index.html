@@ -293,7 +293,7 @@
                                                     <div class="product-price-wrapper">
                                                         <span class="money">Price:{{product.price}} Rs</span>
                                                     </div>
-                                                    <a href="#" class="add-to-cart pr--15">
+                                                    <a href="{% url 'AddToCart' product.id %}" class="add-to-cart pr--15">
                                                         <i class="la la-plus"></i>
                                                         <span>Add To Cart</span>
                                                     </a>
