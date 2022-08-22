@@ -1,0 +1,15 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+Checkout
+{% endblock %}
+{% block externalLinks %}
+{% endblock %}
+{% block contentbody %}
+<div class=" text-center" >
+<h1>Your Order is confirmed</h1>
+<a href="{% url 'ViewOrderDetails' %}" class="btn">View order Details</a>
+</div>
+{% endblock %}
+
+

@@ -120,46 +120,6 @@ def delete_product_cart(request,id):
 #     return render(request, "checkout.html",values)
 
 
-def checkout_products(request):
-    # if request.user.is_authenticated:
-    #     address_data = Address()
-    #     if request.method == "POST":
-    #         address_data.Buyername = request.POST["Buyername"]
-    #         address_data.email = request.POST["email"]
-    #         address_data.phone_number = request.POST["phone_number"]
-    #         address_data.Buyers_Address = request.POST["Buyers_Address"]
-    #         address_data.country = request.POST["country"]
-    #         address_data.city = request.POST["city"]
-    #         address_data.state = request.POST["state"]
-    #         address_data.pincode = request.POST["pincode"]
-    #         address_data.save()
-
-    # try:
-    #     if request.user.is_authenticated:
-    #         Addressdetails = Address.objects.filter(user=request.user)
-    #         carts_item = Cart_Products.objects.filter(user=request.user, is_active=True)
-
-    #     else:
-    #         return render(request,"UserSide/Userlogin-register.html")
-    #     for item in carts_item:
-    #         total += item.product.price * item.quantity
-    #         quantity += item.quantity
-    # except:
-    #     if request.user.is_authenticated:
-    #         pass
-    #     else:
-    #         return render(request,"UserSide/Userlogin-register.html")
-    # tax = (2 * total)/100 
-    # total=tax+total
-    # values = {
-    #         "Tax":tax,
-    #         "Total": total,
-    #         "Quantity": quantity,
-    #         "Carts_item": carts_item,
-    #         "Addressdetails": Addressdetails,
-    #     }
-
-    return render(request, "Cart/CheckOut.html")  
 
 
 
@@ -199,12 +159,12 @@ def add_address(request):
                         
 
                     elif len(Buyername) < 2:
-                        messages.error(request, "name is too short")
+                        messages.error(request, "Name is too short")
                         return render(request, "Cart/AddressAdd.html")
 
 
                     elif not Buyername.isalpha():
-                        messages.error(request, "name must contain alphabets")
+                        messages.error(request, "Name must contain alphabets")
                         return render(request, "Cart/AddressAdd.html")
 
 
@@ -235,7 +195,7 @@ def add_address(request):
                             user=request.user,
                         )
                     address_data.save()
-                    return redirect(checkout_products)
+                    return redirect(add_address)
         
         return render(request,'Cart/AddressAdd.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax,'Subtotal':subtotal,'AddressDetails':addressDetails})
         

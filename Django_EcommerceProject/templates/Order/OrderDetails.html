@@ -1,0 +1,86 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+Checkout
+{% endblock %}
+{% block externalLinks %}
+{% endblock %}
+{% block contentbody %}
+<section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">Order Details</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li class="current"><span>Order Details</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb area End -->
+
+<!-- Main Content Wrapper Start -->
+<div class="main-content-wrapper">
+    <div class="page-content-inner ptb--80 ptb-md--60">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-content table-responsive">
+                        <table class="table table-style-2 wishlist-table text-center">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>Product Image</th>
+                                    <th >OrderId</th>
+                                    <th>Products</th>
+                                    <th>Total Price</th>
+                                    <th>Order Status</th>
+                                    <th>Cancel</th>
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                {% for i  in OrderProductDetails %}
+                                <tr>
+                                    <td class="product-remove text-start"><a href=""><i class="la la-remove"></i></a></td>
+                                    <td class="product-thumbnail text-start">
+                                        <img src="{{i.product.Product_image.url}}" alt="Product Thumnail">
+                                    </td>
+                                    <td class="product-stock">
+                                       ID:{{i.order.order_id}}
+                                    </td>
+                                    <td class="product-name  ">
+                                        <h3>
+                                            <a href="#">{{i.product.product_name}}</a>
+                                            
+
+                                        </h3>
+                                    </td>
+                                    
+                                    <td class="product-price">
+                                        <span class="product-price-wrapper">
+                                            <span class="money">₹{{i.order.total}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="product-action-btn">
+                                        <a href="#" class=" ">{{i.order.status}}</a>
+                                    </td>
+                                    <td class="product-action-btn">
+                                        <a href="{% url 'Cancelorder' i.id %}" class="btn-danger btn ">Cancel</a>
+                                    </td>
+                                </tr>
+                                
+                                {% endfor %} 
+                            </tbody>
+                            
+                        </table>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

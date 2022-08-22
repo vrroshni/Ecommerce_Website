@@ -11,8 +11,8 @@ urlpatterns = [
   
   # ----------------------------- checkout happens ----------------------------- #
 
-    path('checkout',views.checkout_products,name='CheckOut'),
     path('address',views.add_address,name='AddressAdd'),
+    
       
 
 
