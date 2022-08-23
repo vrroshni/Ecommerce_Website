@@ -33,6 +33,10 @@ urlpatterns = [
         path('DeleteProducts/<int:id>',views.DeleteProducts,name='DeleteProducts'),
         path('EditProducts/<int:id>',views.EditProduct,name='EditProducts'),
 
+# ------------------------------ ordermanagement(adminside) ----------------------------- #
+        # path('Adminvieworder_Details',views.Adminvieworder_Details,name='Adminvieworder_Details'),
+
+
 
         
 

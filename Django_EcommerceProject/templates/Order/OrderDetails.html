@@ -36,13 +36,15 @@ Checkout
                                     <th >OrderId</th>
                                     <th>Products</th>
                                     <th>Total Price</th>
+                                    <th>Quantity</th>
+
                                     <th>Order Status</th>
                                     <th>Cancel</th>
                                 </tr>
                             </thead>
                            
                             <tbody>
-                                {% for i  in OrderProductDetails %}
+                                {% for i in OrderProductDetails %}
                                 <tr>
                                     <td class="product-remove text-start"><a href=""><i class="la la-remove"></i></a></td>
                                     <td class="product-thumbnail text-start">
@@ -62,6 +64,11 @@ Checkout
                                     <td class="product-price">
                                         <span class="product-price-wrapper">
                                             <span class="money">₹{{i.order.total}}</span>
+                                        </span>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="product-price-wrapper">
+                                            <span class="money">{{i.quantity}}</span>
                                         </span>
                                     </td>
                                     <td class="product-action-btn">

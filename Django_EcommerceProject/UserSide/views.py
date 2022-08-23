@@ -21,7 +21,6 @@ def Register(request):
     if 'username' in request.session:
         return redirect(index)
     if request.method == 'POST':
-        mobile      = request.POST["phone_number"]
         username = request.POST["username"]
         first_name = request.POST["first_name"]
         last_name = request.POST["last_name"]
@@ -34,11 +33,15 @@ def Register(request):
                 messages.error(request, "username is empty")
                 return redirect(Register)
             elif Account.objects.filter(username=username):
-                messages.error(request, "username exits")
+                messages.error(request, "username exists")
                 return redirect(Register)
             elif email == "":
                 messages.error(request, "email field is empty")
                 return redirect(Register)
+            elif Account.objects.filter(email=email):
+                messages.error(request, "Email exists")
+                return redirect(Register)
+            
         
             user = Account.objects.create_user(
                     username=username,
@@ -94,7 +97,7 @@ def Signin(request):
         else:
             messages.error(request, "Invalid Credentials")
             print('NOT ABLE TO SIGNIN')
-    return render(request,'UserSide/Userlogin-register.html')
+    return render(request,'UserSide/login.html')
     # if request.method == "POST":
     #     username = request.POST.get('username')
     #     password = request.POST.get('password')

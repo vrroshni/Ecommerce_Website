@@ -89,35 +89,7 @@ def delete_product_cart(request,id):
 
 
 
-# def checkout_products(request,total=0,quantity=0,cars_items=None,):
-#     pass
 
-#     try:
-#         if request.user.is_authenticated:
-#             addressdetails = Address.objects.filter(user=request.user)
-#             carts_item = Cart_Products.objects.filter(user=request.user, is_active=True)
-
-#         else:
-#             return render(request,"Login")
-#         for item in carts_item:
-#             total += item.product.price * item.quantity
-#             quantity += item.quantity
-#     except:
-#         if request.user.is_authenticated:
-#             pass
-#         else:
-#             return render(request,"UserSide/Userlogin-register.html")
-#     tax = (2 * total)/100 
-#     total=tax+total
-#     values = {
-#             "Tax":tax,
-#             "Total": total,
-#             "Quantity": quantity,
-#             "Carts_item": carts_item,
-#             "Addressdetails": addressdetails,
-#         }
-
-#     return render(request, "checkout.html",values)
 
 
 

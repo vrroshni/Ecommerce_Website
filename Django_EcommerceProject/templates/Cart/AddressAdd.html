@@ -49,7 +49,7 @@ Checkout
                                                     <label for="billing_fname" class="form__label">Name <span
                                                             class="required">*</span></label>
                                                     <input type="text" name="Buyername" id="billing_fname"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
 
                                             </div>
@@ -58,7 +58,7 @@ Checkout
                                                     <label for="billing_company" class="form__label">Delivery
                                                         Address</label>
                                                     <input type="text" name="Buyers_Address" id="billing_company"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
 
@@ -68,7 +68,7 @@ Checkout
                                                     <label for="billing_city" class="form__label">Town / City <span
                                                             class="required">*</span></label>
                                                     <input type="text" name="city" id="billing_city"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -76,7 +76,7 @@ Checkout
                                                     <label for="billing_phone" class="form__label">pincode <span
                                                             class="required">*</span></label>
                                                     <input type="text" name="pincode" id="billing_phone"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -84,7 +84,7 @@ Checkout
                                                     <label for="billing_state" class="form__label">State<span
                                                             class="required">*</span></label>
                                                     <input type="text" name="state" id="billing_state"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -92,7 +92,7 @@ Checkout
                                                     <label for="billing_phone" class="form__label">Phone <span
                                                             class="required">*</span></label>
                                                     <input type="text" name="phone_number" id="billing_phone"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -100,7 +100,7 @@ Checkout
                                                     <label for="billing_email" class="form__label">Email Address
                                                         <span class="required">*</span></label>
                                                     <input type="email" name="email" id="billing_email"
-                                                        class="form__input">
+                                                        class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -108,7 +108,7 @@ Checkout
                                                     <label for="billing_country" class="form__label">Country <span
                                                             class="required">*</span></label>
                                                     <input type="text" name="country" id="billing_email"
-                                                        class="form__input">
+                                                        class="form__input" required>
 
                                                 </div>
                                             </div>
@@ -193,9 +193,9 @@ Checkout
                                             {% for i in AddressDetails %}
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h5>{{i.Buyername}}</h5>
+                                                    <h3>{{i.Buyername}}</h3>
                                                     <p>{{i.Buyers_Address}}, {{i.city}}, {{i.state}}- {{i.pincode}}</p>
-                                                    <p>hello</p>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="form-check mt-2 mb-5">
@@ -215,8 +215,8 @@ Checkout
                                                     <div class="payment-radio">
                                                         <input type="radio" value="bank" name="payment-method" id="bank"
                                                             checked>
-                                                        <label class="payment-label" for="bank">Direct Bank
-                                                            Transfer</label>
+                                                        <label class="payment-label" for="bank">Other Payments
+                                                            </label>
                                                     </div>
                                                     <div class="payment-info" data-method="bank">
                                                         <p>Make your payment directly into our bank account. Please use
@@ -227,21 +227,7 @@ Checkout
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="payment-group mb--10">
-                                                    <div class="payment-radio">
-                                                        <input type="radio" value="cheque" name="payment-method"
-                                                            id="cheque">
-                                                        <label class="payment-label" for="cheque">
-                                                            cheque payments
-                                                        </label>
-                                                    </div>
-                                                    <div class="payment-info cheque hide-in-default"
-                                                        data-method="cheque">
-                                                        <p>Please send a check to Store Name, Store Street, Store Town,
-                                                            Store State
-                                                            / County, Store Postcode.</p>
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="payment-group mb--10">
                                                     <div class="payment-radio">
                                                         <input type="radio" value="cash" name="payment-method"
@@ -260,8 +246,8 @@ Checkout
                                                         your experience throughout this website, and for other purposes
                                                         described in
                                                         our privacy policy.</p>
-                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Place
-                                                        Order</button>
+                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Proceed to checkout
+                                        </button>
                                                 </div>
                                         </form>
                                     </div>

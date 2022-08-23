@@ -1,4 +1,51 @@
+{% extends 'UserSide/base_userside.html' %}
 {% load static %}
+{% block title %}
+Login Otp 
+{% endblock %}
+{% block externalLinks %}
+{% endblock %}
+{% block contentbody %}
+<div class="main-content-wrapper">
+    <div class="page-content-inner pt--75 pb--80">
+        <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-md-6 mb-sm--50">
+                    <div class="login-box">
+                        <h3 class="heading__tertiary mb--30">Login</h3>
+                        <form class="form form--login"  method="post"  autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form__group mb--20">
+                                <label class="form__label" for="username_email">OTP<span class="required">*</span></label>
+                                <input type="text" class="form__input"  name="otp">
+                            </div>
+                            <div class="d-flex align-items-center mb--20">
+                                <div class="form__group mr--30">
+                                    <input type="submit" value="Sign Me in " class="btn btn-size-sm">
+                                </div>
+                                
+                            </div>
+                                                  
+                          
+                            
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 

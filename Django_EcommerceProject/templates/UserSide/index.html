@@ -20,19 +20,20 @@
                     }'
                     data-slick-responsive='[{"breakpoint": 768, "settings": {"arrows": false}}]'>
                         <div class="item">
-                            <div class="single-slide d-flex align-items-center bg-color" data-bg-color="#dbf3f2">
+                            <div class="single-slide d-flex align-items-center " style="background-color: rgb(183 183 183);
+                        ">
                                 <div class="row align-items-center g-0 w-100">
                                     <div class="col-xl-7 col-md-6 mb-sm--50">
                                         <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="plr--15">
-                                            <img src="{% static 'templateresources/assets/img/slider/slider-01-img-01.png' %}" alt="Slider O1 image" class="mx-auto">
+                                            <img src="{% static 'project/main.png' %}" alt="Slider O1 image" class="mx-auto">
                                         </figure>
                                     </div>
                                     <div class="col-md-6 col-lg-5 offset-lg-1 offset-xl-0">
                                         <div class="slider-content">
                                             <div class="slider-content__text mb--40 mb-md--30">
-                                                <p class="mb--15" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">#New Treand</p>
-                                                <p class="mb--20" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Enlight your world. Make yourself more bright.</p>
-                                                <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Abotar Lighting</h1>
+                                                <p class="mb--15" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">#New Choice</p>
+                                                <p class="mb--20" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Enlight your Heath, Make yourself more Happier.</p>
+                                                <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Heavenly Bakes </h1>
                                             </div>
                                             <div class="slider-content__btn">
                                                 <a href="#" class="btn btn-outline btn-brw-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
@@ -47,7 +48,7 @@
                                 <div class="row align-items-center g-0 w-100">
                                     <div class="col-xl-6 col-md-6 mb-sm--50 order-md-2">
                                         <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="pl-15 pr--60">
-                                            <img src="{% static 'templateresources/assets/img/slider/slider-02-img-01.png' %}" alt="Slider O1 image" class="mx-auto">
+                                            <img src="{% static 'project/main.png' %}" alt="Slider O1 image" class="mx-auto">
                                         </figure>
                                     </div>
                                     <div class="col-md-5 col-lg-5 offset-md-1 order-md-1">
@@ -91,33 +92,35 @@
                         {"breakpoint": 768, "settings": {"slidesToShow": 2}},
                         {"breakpoint": 480, "settings": {"slidesToShow": 1}}
                     ]'>
+                    {% for product in products %}
+
                         <div class="item">
                             <div class="ft-product">
                                 <div class="product-inner">
                                     <div class="product-image">
                                         <figure class="product-image--holder">
-                                            <img src="{% static 'templateresources/assets/img/products/prod-01.jpg' %}" alt="Product">
+                                            <img src="{{product.Product_image.url}}" alt="Product">
                                         </figure>
-                                        <a href="product-details.html" class="product-overlay"></a>
+                                        <a href="{% url 'showParticularproducts' product.id %}" class="product-overlay"></a>
                                         <div class="product-action">
-                                            <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
+                                            <a href="{% url 'showParticularproducts' product.id %}" data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
                                                 <i class="la la-eye"></i>
                                             </a>
-                                            <a href="wishlist.html" class="action-btn">
+                                            <a href="#" class="action-btn">
                                                 <i class="la la-heart-o"></i>
                                             </a>
-                                            <a href="wishlist.html" class="action-btn">
+                                            <a href="#" class="action-btn">
                                                 <i class="la la-repeat"></i>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="product-info plr--20">
-                                        <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
+                                        <h3 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}</a></h3>
                                         <div class="product-info-bottom">
                                             <div class="product-price-wrapper">
-                                                <span class="money">$150</span>
+                                                <span class="money"> ₹{{product.price}}</span>
                                             </div>
-                                            <a href="cart.html" class="add-to-cart">
+                                            <a href="{% url 'AddToCart' product.id %}" class="add-to-cart">
                                                 <i class="la la-plus"></i>
                                                 <span>Add To Cart</span>
                                             </a>
@@ -126,76 +129,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="ft-product">
-                                <div class="product-inner">
-                                    <div class="product-image">
-                                        <figure class="product-image--holder">
-                                            <img src="{% static 'templateresources/assets/img/products/prod-02.jpg' %}" alt="Product">
-                                        </figure>
-                                        <a href="product-details.html" class="product-overlay"></a>
-                                        <div class="product-action">
-                                            <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                <i class="la la-eye"></i>
-                                            </a>
-                                            <a href="wishlist.html" class="action-btn">
-                                                <i class="la la-heart-o"></i>
-                                            </a>
-                                            <a href="wishlist.html" class="action-btn">
-                                                <i class="la la-repeat"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info plr--20">
-                                        <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                        <div class="product-info-bottom">
-                                            <div class="product-price-wrapper">
-                                                <span class="money">$150</span>
-                                            </div>
-                                            <a href="cart.html" class="add-to-cart">
-                                                <i class="la la-plus"></i>
-                                                <span>Add To Cart</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="ft-product">
-                                <div class="product-inner">
-                                    <div class="product-image">
-                                        <figure class="product-image--holder">
-                                            <img src="{% static 'templateresources/assets/img/products/prod-03.jpg' %}" alt="Product">
-                                        </figure>
-                                        <a href="product-details.html" class="product-overlay"></a>
-                                        <div class="product-action">
-                                            <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                <i class="la la-eye"></i>
-                                            </a>
-                                            <a href="wishlist.html" class="action-btn">
-                                                <i class="la la-heart-o"></i>
-                                            </a>
-                                            <a href="wishlist.html" class="action-btn">
-                                                <i class="la la-repeat"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info plr--20">
-                                        <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                        <div class="product-info-bottom">
-                                            <div class="product-price-wrapper">
-                                                <span class="money">$150</span>
-                                            </div>
-                                            <a href="cart.html" class="add-to-cart">
-                                                <i class="la la-plus"></i>
-                                                <span>Add To Cart</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+                        
                     </div>
                 </div>
             </div>
@@ -243,13 +178,13 @@
                                 <span class="nav-text">All</span>
                             </button>
                             <button type="button" class="nav-item nav-link" id="new-wooden-tab" data-bs-toggle="tab" data-bs-target="#new-wooden" role="tab" aria-controls="new-wooden" aria-selected="false">
-                                <span class="nav-text">wooden</span>
+                                <span class="nav-text">Fruits</span>
                             </button>
                             <button type="button" class="nav-item nav-link" id="new-furnished-tab" data-bs-toggle="tab" data-bs-target="#new-furnished" role="tab" aria-controls="new-furnished" aria-selected="false">
-                                <span class="nav-text">furnished</span>
+                                <span class="nav-text">Milk Products</span>
                             </button>
                             <button type="button" class="nav-item nav-link" id="new-table-tab" data-bs-toggle="tab" data-bs-target="#new-table" role="tab" aria-controls="new-table" aria-selected="false">
-                                <span class="nav-text">table</span>
+                                <span class="nav-text">Sweets</span>
                             </button>
                         </div>
                     </div>
@@ -269,7 +204,7 @@
                                                 <figure class="product-image--holder">
                                                     <img src="{{product.Product_image.url}}" alt="Product">
                                                 </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
+                                                <a href="{% url 'showParticularproducts' product.id %}" class="product-overlay"></a>
                                                 <div class="product-action">
                                                     <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn" href="#">
                                                         <i class="la la-eye"></i>
@@ -284,14 +219,14 @@
                                             </div>
                                             <div class="product-info">
                                                 <div class="product-category">
-                                                    <a href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}</a>
+                                                    <a href="{% url 'showParticularproducts' product.id %}"><b>{{product.product_name}}</b></a>
                                                 </div>
                                                 <h4 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_description}}</a></h4>
                                                 <p><a href="{% url 'showParticularproducts' product.id %}">{{product.product_long_description}}</a></p>
                                                 
                                                 <div class="product-info-bottom">
                                                     <div class="product-price-wrapper">
-                                                        <span class="money">Price:{{product.price}} Rs</span>
+                                                        <span class="money">Price:{{product.price}}</span>
                                                     </div>
                                                     <a href="{% url 'AddToCart' product.id %}" class="add-to-cart pr--15">
                                                         <i class="la la-plus"></i>

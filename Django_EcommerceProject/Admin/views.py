@@ -8,6 +8,8 @@ from Accounts.models import *
 from .models import *
 from django.views.decorators.cache import cache_control
 from .decorators import*
+from Order.models import *
+from Cart.models import *
 
 
 
@@ -44,7 +46,6 @@ def adminlogin(request):
 
 
 # ------------------- users data will be seen in this page ------------------- #
-@autheticatedfor_adminonly
 def userdata(request):
     data = Account.objects.all()
     return render(request, 'Admin/adminuserdata.html', {'datas': data})  
@@ -68,15 +69,15 @@ def UnBlockUser(request, id):
 
 # ---------------------------- CategoryManagement ---------------------------- #
 # --------------------------- Adding a new category -------------------------- #
-@autheticatedfor_adminonly
 def AddCategory(request):
     if request.method == 'POST':
             title = request.POST['title']
             description = request.POST['description']
-            if Categories.objects.filter(title=title).exists():
-                messages.error(request, "This Category already Exists")
+            if Categories.objects.filter(title__icontains=title).exists():
+                messages.error(request, "This Category  already Exists")
                 print('This category exits')
-                return redirect(AddCategory)
+                return redirect(ShowCategory)
+     
             if title =='' :
                 messages.error(request, "Category fields cannot be blank")
                 print('Filed blank')
@@ -92,13 +93,11 @@ def AddCategory(request):
     return render(request,'Admin/addCategory.html')
 
 # ------------------------- Showing Whole categories ------------------------- #
-@autheticatedfor_adminonly
 def ShowCategory(request):
     category=Categories.objects.all()
     return render(request,'Admin/showCategory.html',{'category':category})
 
 # ----------------------- Editing the category details ----------------------- #
-@autheticatedfor_adminonly
 def EditCategory(request, id):
     category=Categories.objects.get(id=id)
     if request.method == 'POST':
@@ -106,6 +105,9 @@ def EditCategory(request, id):
         description = request.POST['description']
         category.title=title
         category.description=description
+        if Categories.objects.exclude(id=id).filter(title__icontains=title).exists():
+                messages.error(request, "SubCategory Already Exists")
+                return redirect(AddCategory)
         if category.title =='' or category.description =='' :
                 messages.error(request, "Category fields cannot be blank")
                 print('Field blank')
@@ -114,6 +116,7 @@ def EditCategory(request, id):
         messages.success(request, 'Category is   Updated Successfully')
         return redirect(ShowCategory)
     return render(request, 'Admin/editCategory.html', {'category': category})
+
 
 # --------------------------- Deleting the category -------------------------- #
 def DeleteCategory(request,id):
@@ -124,7 +127,6 @@ def DeleteCategory(request,id):
 
 # ---------------------------------------------------------------------------- #
 # --------------------------- Adding a new Subcategory -------------------------- #
-@autheticatedfor_adminonly
 def AddSubCategory(request):
     CategoryObj=Categories.objects.all()
     if request.method == 'POST':
@@ -133,8 +135,8 @@ def AddSubCategory(request):
             title = request.POST['title']
             Subcategory_Image=request.FILES['Subcategory_Image']
             description = request.POST['description']
-            if SubCategories.objects.filter(title=title).exists():
-                messages.error(request, "This Category already Exists")
+            if SubCategories.objects.filter(title__icontains=title).exists():
+                messages.error(request, "This Subcategory  already Exists")
                 print('This Subcategory exits')
                 return redirect(ShowCategory)
             
@@ -154,14 +156,12 @@ def AddSubCategory(request):
     return render(request,'Admin/addSubCategory.html',{'category':CategoryObj})
 
 # ------------------------- Showing Whole Subcategories ------------------------- #
-@autheticatedfor_adminonly
 def ShowSubCategory(request):
     subcategory=SubCategories.objects.all()
     return render(request,'Admin/showSubcategory.html',{'subcategory':subcategory})
 
 
 # ----------------------- Editing the Subcategory details ----------------------- #
-@autheticatedfor_adminonly
 def EditSubCategory(request, id):
     category=Categories.objects.all()
     subcategory=SubCategories.objects.get(id=id)
@@ -174,6 +174,12 @@ def EditSubCategory(request, id):
         subcategory.category=category
         subcategory.description=description
         subcategory.Subcategory_Image=Subcategory_Image
+        if SubCategories.objects.exclude(id=id).filter(title__icontains=title).exists():
+                messages.error(request, "SubCategory Already Exists")
+                return redirect(AddSubCategory)
+
+        
+
         if subcategory.title =='' or subcategory.description =='' :
                 messages.error(request, "SubCategory fields cannot be blank")
                 print('Field blank')
@@ -190,8 +196,8 @@ def DeleteSubCategory(request,id):
     messages.success(request,"Subcategory is deleted  succesfully")
     return redirect(ShowSubCategory)    
 # ---------------------------------------------------------------------------- #
+
 # --------------------------- Adding a new Product -------------------------- #
-@autheticatedfor_adminonly
 def AddProducts(request):
     category=Categories.objects.all()
     subcategory=SubCategories.objects.all()
@@ -210,6 +216,14 @@ def AddProducts(request):
             product_long_description= request.POST['product_long_description']
             price=request.POST['price']
             stock=request.POST['stock']
+            if Products.objects.filter(product_name__icontains=product_name).exists():
+                messages.error(request, "This Product  already Exists")
+                print('This Product exists')
+                return redirect(ShowProducts)
+            if product_name =='' or description=='' :
+                messages.error(request, " fields cannot be blank")
+                print('Field blank')
+                return redirect(AddProducts)
             AddedProduct = Products.objects.create(category_id=cat_id.id,subcategories_id=subcat_id.id,
                         product_name=product_name,Product_image=Product_image,Productimage_two=Productimage_two,Productimage_three=Productimage_three, product_description=description,product_long_description=product_long_description,price=price,stock=stock)
             AddedProduct.save()
@@ -218,7 +232,6 @@ def AddProducts(request):
     return render(request,'Admin/addproduct.html',{'category':category,'subcategory':subcategory})
 
 # ------------------------- Showing Whole Products ------------------------- #
-@autheticatedfor_adminonly
 def ShowProducts(request):
      products=Products.objects.all()
      return render(request,'Admin/showproducts.html',{'products':products})
@@ -230,7 +243,6 @@ def DeleteProducts(request,id):
     return redirect(ShowProducts)   
 
 # ----------------------- Editing the Product details ----------------------- #
-@autheticatedfor_adminonly
 def EditProduct(request, id):
     product=Products.objects.get(id=id)
     category=Categories.objects.all()
@@ -244,6 +256,13 @@ def EditProduct(request, id):
         Productimage_three=request.FILES['Productimage_three']
         product_description = request.POST['product_description']
         product_long_description=request.POST['product_long_description']
+        if Products.objects.exclude(id=id).filter(product_name__icontains=product_name).exists():
+                messages.error(request, "Product Already Exists")
+                return redirect(ShowProducts)
+        if product_name =='' or product_description=='' :
+                messages.error(request, " fields cannot be blank")
+                print('Field blank')
+                return redirect(AddProducts)
         product.category=cat_id
         product.subcategories=subcat_id
         product.product_name=product_name
@@ -258,6 +277,14 @@ def EditProduct(request, id):
         messages.success(request, 'Product is   Updated Successfully')
         return redirect(ShowProducts)
     return render(request, 'Admin/editProduct.html', {'product': product,'category':category,'subcategory':subcategory})
+
+
+
+
+# def Adminvieworder_Details(request):
+#    if request.user.is_authenticated:
+#         orderproductdetails=Order_Product.objects.all()
+#         return render(request,'Admin/OrderList.html',{'OrderProductDetails':orderproductdetails})   
 
 # ---------------------------------------------------------------------------- #
 #                           admin logout here. session is deleted              #

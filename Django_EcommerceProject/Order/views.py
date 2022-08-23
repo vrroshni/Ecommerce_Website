@@ -17,9 +17,10 @@ def vieworder_Details(request):
         orderproductdetails=Order_Product.objects.filter(user=request.user)
         return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails})
 
+
 def Cancelorder(request,id):
    if request.user.is_authenticated:
-        orderproductdetails=Order_Product.objects.get(user=request.user,id=id)
+        orderproductdetails=Order_Product.objects.filter(user=request.user,id=id)
         orderproductdetails.order.status='cancelled'
         print('order cancelled')
         return redirect(vieworder_Details)
@@ -55,9 +56,9 @@ def CashOnDelivery(request):
         
 
         if request.user.is_authenticated:
-            carts_item = Cart_Products.objects.filter(
-                        user=request.user, is_active=True
-                    ).order_by("id")
+            # carts_item = Cart_Products.objects.filter(
+            #             user=request.user, is_active=True
+            #         ).order_by("id")
             total=0
             quantity=0
             count=0
