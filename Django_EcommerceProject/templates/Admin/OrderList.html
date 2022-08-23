@@ -21,22 +21,22 @@ Order List
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-sm mb-0">
-                            <thead>
+                            <thead class="text-primary">
                                 <tr>
                                     <!-- <th class="align-middle">
                                         <div class="form-check custom-checkbox">
                                             <p class="align-middle">Product Image</p>
                                         </div>
                                     </th> -->
-                                    <th class="align-middle">Products</th>
+                                    <th class="align-middle">Products&Order Details</th>
 
                                     <th class="align-middle">Order ID</th>
                                     <th class="align-middle pe-7">Date</th>
 
                                     <th class="align-middle" style="min-width: 12.5rem;">Ship To</th>
-
-                                    <th class="align-middle text-end">Amount</th>
-                                    <th class="align-middle text-end">Status</th>
+                                    <th class="align-middle ">Mode Of Payment</th>
+                                    <th class="align-middle ">Amount</th>
+                                    <th class="align-middle ">Status</th>
 
                                     <th class="no-sort"></th>
                                 </tr>
@@ -53,26 +53,29 @@ Order List
                                     </td> -->
                                     <td class="py-2">
                                         <a href="#">
-                                            <strong>{{i.product.product_name}}</strong></a> by <strong>{{i.user.username}}
-                                            </strong><br /><a href="mailto:ricky@example.com">{{i.user.email}}</a></td>
+                                            <strong>{{i.product.product_name}}</strong><br></a>Bought by <strong>{{i.user.username}}
+                                            </strong><br><a href="#" class="text-primary">{{i.user.email}}</a></td>
                                             <td class="py-2">ID:{{i.order.order_id}}</td>
 
                                     <td class="py-2">{{i.order.date}}</td>
-                                    <td class="py-2">{{i.order.address.Buyername}}
-                                        {{i.order.address.Buyers_Address}}
-                                        {{i.order.address.city}},{{i.order.address.state}}
-                                        <p class="mb-0 text-500">Via Flat Rate</p>
+                                    <td class="py-2"><p>{{i.order.address.Buyername}}</p>
+                                        <p>{{i.order.address.Buyers_Address}}</p>
+                                        <p>{{i.order.address.city}},{{i.order.address.state}}</p>
+                                        <p class="mb-0 text-500 text-primary">+{{i.order.address.phone_number}}</p>
                                     </td>
-                                    <td class="py-2 text-end"><span class="badge badge-success">{{i.order.status}}<span
-                                                class="ms-1 fa fa-check"></span></span>
+                                    <td class="py-2  ">{{i.payment.payment_method}}</td>
+                                    
+                                    <td class="py-2 ">₹{{i.order.total}}
                                     </td>
-                                    <td class="py-2 text-end">₹{{i.order.total}}
+                                    <td class="py-2 "><button class="btn-xxs btn-rounded btn-outline-dark">{{i.status}}</button>
+                                              
                                     </td>
                                     <td class="py-2 text-end">
                                         <div class="dropdown text-sans-serif"><button class="btn btn-primary tp-btn-light sharp" type="button" id="order-dropdown-0" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></span></button>
                                             <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="order-dropdown-0">
-                                                <div class="py-2"><a class="dropdown-item" href="javascript:void(0);">Completed</a><a class="dropdown-item" href="javascript:void(0);">Processing</a><a class="dropdown-item" href="javascript:void(0);">On Hold</a><a class="dropdown-item" href="javascript:void(0);">Pending</a>
-                                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                                                <div class="py-2"><a class="dropdown-item" href="{% url 'order_Shipped' i.id %}">Shipped</a><a class="dropdown-item" href="{% url 'order_Out_For_delivery' i.id %}">Out for delivery</a><a class="dropdown-item" href="{% url 'order_Delivered' i.id %}">Delivered</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="{% url 'order_Cancelled' i.id %}">Cancelled</a>
+                                                    <a class="dropdown-item text-danger" href="{% url 'order_Returned' i.id %}">Returned</a>
                                                 </div>
                                             </div>
                                         </div>

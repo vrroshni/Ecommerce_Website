@@ -150,6 +150,9 @@ def add_address(request):
                     elif len(email) < 2:
                         messages.error(request, "email is too short")
                         return render(request, "Cart/AddressAdd.html")
+                    elif len(phone_number) < 10:
+                        messages.error(request, "Mobile Number should be 10 Digits")
+                        return render(request, "Cart/AddressAdd.html")
 
                     
 
@@ -165,6 +168,7 @@ def add_address(request):
                             state=state,
                             country=country,
                             user=request.user,
+                            pincode=pincode
                         )
                     address_data.save()
                     return redirect(add_address)

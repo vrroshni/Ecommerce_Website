@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('UserSide.urls')),
     path('accounts/',include('Accounts.urls')),
     path('order/',include('Order.urls')),
+    path('wishlist/',include('Wishlist.urls')),
 
     path('adminsite/',include('Admin.urls')),
 

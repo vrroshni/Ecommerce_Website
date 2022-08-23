@@ -6,24 +6,23 @@ from datetime import date
 import datetime
 from Cart.views import *
 
-
-
-
 # Create your views here.
-
-
 def vieworder_Details(request):
-   if request.user.is_authenticated:
-        orderproductdetails=Order_Product.objects.filter(user=request.user)
-        return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails})
+   user=request.user
+   orderproductdetails=Order_Product.objects.filter(user=user)
+   return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails})
 
 
 def Cancelorder(request,id):
-   if request.user.is_authenticated:
-        orderproductdetails=Order_Product.objects.filter(user=request.user,id=id)
-        orderproductdetails.order.status='cancelled'
-        print('order cancelled')
-        return redirect(vieworder_Details)
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='cancelled'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(vieworder_Details)
 
     
 
@@ -104,6 +103,7 @@ def CashOnDelivery(request):
                 orderproduct = Order_Product()
 
                 orderproduct.user=request.user
+                orderproduct.order=Obj_Order
                 orderproduct.quantity =x.quantity
                 orderproduct.product=x.product
                 orderproduct.payment=payment_obj

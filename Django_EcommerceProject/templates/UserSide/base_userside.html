@@ -73,8 +73,9 @@
                                                     </a>
                                                     
                                                 </li>
-                                                
+                                                {% if user.is_authenticated%}
                                                 <li class="mainmenu__item menu-item-has-children">
+                                                    
                                                     <a href="#" class="mainmenu__link">
                                                         <span class="mm-text">Profile</span>
                                                     </a>
@@ -92,13 +93,21 @@
                                                         </li>
                                                         
                                                         
-                                                        <!-- <li>
-                                                            <a href="wishlist.html">
+                                                        <li>
+                                                            <a href="{% url 'ViewWishlist'%}">
                                                                 <span class="mm-text">Wishlist</span>
                                                             </a>
-                                                        </li> -->
+                                                        </li>
                                                     </ul>
                                                 </li>
+                                               
+                                           
+                                                <li class="mainmenu__item">
+                                                    <a href="{% url 'ViewWishlist'%}" class="mainmenu__link">
+                                                        <span class="mm-text">Cart </span>
+                                                    </a>
+                                                </li>
+                                                {% endif %}
                                                 {% if user.is_authenticated%}
                                                 <li class="mainmenu__item">
                                                     <a href="{% url 'Userlogout'%}" class="mainmenu__link">
@@ -112,11 +121,7 @@
                                                     </a>
                                                 </li>
                                                 {% endif %}
-                                                <li class="mainmenu__item">
-                                                    <a href="{% url 'ViewCart'%}" class="mainmenu__link">
-                                                        <span class="mm-text">Cart </span>
-                                                    </a>
-                                                </li>
+                                                
                                             </ul>
                                         </nav>
                                     </div>
@@ -312,32 +317,7 @@
                             <a href="shop.html">Shop</a>
                             
                         </li>
-                        <li class="menu-item-has-children">
-                            <a href="blog.html">Blog</a>
-                            <ul class="sub-menu">
-                                <li class="menu-item-has-children">
-                                    <a href="#">Blog</a>
-                                    <ul class="sub-menu">
-                                        <li>
-                                            <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog.html">Blog Right Sidebar</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-01-column.html">Blog 01 column</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-02-columns.html">Blog 02 columns</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-03-columns.html">Blog 03 columns</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                
-                            </ul>
-                        </li>
+                        {% if user.is_authenticated%}
                         <li class="menu-item-has-children">
                             <a href="#">Profile</a>
                             <ul class="sub-menu">
@@ -353,10 +333,12 @@
                                 
                                 
                                 <li>
-                                    <a href="#">Wishlist</a>
+                                    <a href="{% url 'ViewWishlist' %}">Wishlist</a>
                                 </li>
+                                
                             </ul>
                         </li>
+                        {% endif %}
                         {% if user.is_authenticated%}
                                                 <li class="mainmenu__item">
                                                     <a href="{% url 'Userlogout'%}" class="mainmenu__link">

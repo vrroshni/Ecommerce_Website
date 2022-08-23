@@ -39,7 +39,7 @@ Checkout
                                     <th>Quantity</th>
 
                                     <th>Order Status</th>
-                                    <th>Cancel</th>
+                                    <th>&nbsp;</th>
                                 </tr>
                             </thead>
                            
@@ -72,11 +72,14 @@ Checkout
                                         </span>
                                     </td>
                                     <td class="product-action-btn">
-                                        <a href="#" class=" ">{{i.order.status}}</a>
+
+                                        <a href="#" class=" ">{{i.status}}</a>
                                     </td>
+                                    {% if i.status == 'Order Confirmed' %}
                                     <td class="product-action-btn">
                                         <a href="{% url 'Cancelorder' i.id %}" class="btn-danger btn ">Cancel</a>
                                     </td>
+                                    {% endif %}
                                 </tr>
                                 
                                 {% endfor %} 

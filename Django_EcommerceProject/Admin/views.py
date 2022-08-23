@@ -281,10 +281,68 @@ def EditProduct(request, id):
 
 
 
-# def Adminvieworder_Details(request):
-#    if request.user.is_authenticated:
-#         orderproductdetails=Order_Product.objects.all()
-#         return render(request,'Admin/OrderList.html',{'OrderProductDetails':orderproductdetails})   
+def Adminvieworder_Details(request):
+   user=request.user
+   orderproductdetails=Order_Product.objects.filter(user=user)
+   return render(request,'Admin/OrderList.html',{'OrderProductDetails':orderproductdetails})  
+
+
+
+def order_Cancelled(request,id):
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Cancelled'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(Adminvieworder_Details)
+
+def order_Shipped(request,id):
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Shipped'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(Adminvieworder_Details)
+
+def order_Out_For_delivery(request,id):
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Out for delivery'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(Adminvieworder_Details)
+
+
+def order_Delivered(request,id):
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Delivered'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(Adminvieworder_Details)
+
+def order_Returned(request,id):
+    user=request.user
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Returned'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+
+    return redirect(Adminvieworder_Details)
 
 # ---------------------------------------------------------------------------- #
 #                           admin logout here. session is deleted              #

@@ -3,13 +3,7 @@
 {% block title %}
 {% endblock %}
 {% block externalLinks %}
-<style>
-    .cartempty{
-      font-size: larger;
-      font-weight: bolder;  
-      font-size: xx-large;
-    }
-</style>
+
 {% endblock %}
 {% block contentbody %}
 <section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
@@ -42,7 +36,7 @@
                                         <thead>
                                             <tr>
                                                 <th>&nbsp;</th>
-                                                <th>&nbsp;</th>
+                                                <th>Product Image </th>
                                                 <th class="text-start">Product</th>
                                                 <th>price</th>
                                                 <th>quantity</th>
@@ -58,7 +52,7 @@
                                                 </td>
                                                 <td class="product-name text-start wide-column">
                                                     <h3>
-                                                        <a href="{% url 'showParticularproducts' i.product.id  %}">{{i.product.product_name}}</a>
+                                                        <a href="{% url 'showParticularproducts' i.product.id  %}"> {{i.product.product_name}}</a>
                                                     </h3>
                                                 </td>
                                                 <td class="product-price">
@@ -74,7 +68,7 @@
                                                 </td>
                                                 <td class="product-total-price">
                                                     <span class="product-price-wrapper">
-                                                        <span class="money">₹{{Total}}</span>
+                                                        <span class="money">₹{{i.product.price}}×{{i.quantity}}</span>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -147,7 +141,10 @@
           
       {% else %} 
      
-      <h1 class="text-center cartempty">Your Cart is Empty </h1>
+      <div class="text-center m-4">
+        <h1>Your Cart is Empty</h1>
+        <a href="{% url 'Index'  %}"><button class="btn btn-size-md mt-2">Back to Home</button></a>
+    </div>
     
       {% endif %}
     </div>

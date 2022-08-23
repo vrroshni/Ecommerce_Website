@@ -75,7 +75,7 @@ Checkout
                                                 <div class="form__group col-12">
                                                     <label for="billing_phone" class="form__label">pincode <span
                                                             class="required">*</span></label>
-                                                    <input type="text" name="pincode" id="billing_phone"
+                                                    <input type="text" name="pincode" 
                                                         class="form__input" required>
                                                 </div>
                                             </div>
@@ -149,7 +149,7 @@ Checkout
                                         <th>{{i.product.product_name}}
                                             <strong><span>&#10005;</span>{{i.quantity}}</strong>
                                         </th>
-                                        <td class="text-right">₹{{i.product.price}}</td>
+                                        <td class="text-right">₹{{i.product.price}}×{{i.quantity}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -193,8 +193,10 @@ Checkout
                                             {% for i in AddressDetails %}
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h3>{{i.Buyername}}</h3>
-                                                    <p>{{i.Buyers_Address}}, {{i.city}}, {{i.state}}- {{i.pincode}}</p>
+                                                    <h2>{{i.Buyername}}</h2>
+                                                    <p>{{i.Buyers_Address}}</p>
+                                                    <p> {{i.city}}</p> 
+                                                    <p> {{i.state}}- {{i.pincode}}</p>
                                                     
                                                 </div>
                                             </div>

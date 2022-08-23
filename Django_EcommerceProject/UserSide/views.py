@@ -90,7 +90,7 @@ def Signin(request):
 
         if user is not None:
             login(request, user)
-            request.session['username'] = username
+            
             messages.success(request, 'You have succesfully logged in', )
             return redirect(index)
 
@@ -130,9 +130,14 @@ def loginotp(request,id):
                                 .create(to=f'{settings.COUNTRY_CODE}{phone_number}', code=otpvalue)
 
         print(verification_check.status)
-        auth.login(request,user)
-        request.session['username'] = user.username
-        return redirect(index)
+        if verification_check.status=='approved':
+            auth.login(request,user)
+            request.session['username'] = user.username
+            return redirect(index)
+        else:
+            messages.error(request, "Wrong otp")
+    
+        
     return render(request,'UserSide/loginotp.html')
 
 
@@ -142,6 +147,7 @@ def showParticularproducts(request,id):
     product=Products.objects.get(id=id)
     return render(request,'UserSide/showParticularproducts.html',{'product':product})
     
+  
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Userlogout(request):
