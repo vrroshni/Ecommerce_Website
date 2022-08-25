@@ -1,3 +1,4 @@
+from multiprocessing import context
 from turtle import title
 from unicodedata import category
 from django.shortcuts import render,redirect
@@ -10,6 +11,7 @@ from django.views.decorators.cache import cache_control
 from .decorators import*
 from Order.models import *
 from Cart.models import *
+from django.core.paginator import Paginator
 
 
 
@@ -48,7 +50,19 @@ def adminlogin(request):
 # ------------------- users data will be seen in this page ------------------- #
 def userdata(request):
     data = Account.objects.all()
-    return render(request, 'Admin/adminuserdata.html', {'datas': data})  
+    paginator=Paginator(data,per_page=3)
+    print(paginator)
+    page_number=request.GET.get('page')
+    print(page_number)
+    datafinal=paginator.get_page(page_number)
+    print(datafinal)
+    totalpage=datafinal.paginator.num_pages
+    context={
+        'datas': datafinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+    }
+    return render(request, 'Admin/adminuserdata.html',context)  
 
 # --------------------------- for blocking User --------------------------- #
 def BlockUser(request, id):

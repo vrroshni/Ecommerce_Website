@@ -72,7 +72,7 @@ def decrease_quantity_cart(request,id):
         cart_items.quantity-=1
         cart_items.save()
     else:
-        cart_items.delete()
+        pass
     return redirect(view_cart)
 
 

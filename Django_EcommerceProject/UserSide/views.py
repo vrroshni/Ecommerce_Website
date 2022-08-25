@@ -28,6 +28,7 @@ def Register(request):
         phone_number = request.POST["phone_number"]
         password1 = request.POST["password1"]
         password2 = request.POST["password2"]
+
         if password1 == password2:
             if username == "":
                 messages.error(request, "username is empty")
@@ -65,39 +66,36 @@ def Signin(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        if password=="":
-           
-            phone=Account.objects.get(username=request.POST.get('username'))
-            phone_number=phone.phone_number
-
-            
-            account_sid     = settings.ACCOUNT_SID
-            auth_token      = settings.AUTH_TOKEN
-
-            client = Client(account_sid, auth_token)
-
-            verification = client.verify \
-                                .v2 \
-                                .services(settings.SERVICE_ID) \
-                                .verifications \
-                                .create(to=f'{settings.COUNTRY_CODE}{phone_number}', channel='sms')
-            print(verification.status)
-            return redirect(f'loginotp/{phone.id}/')
-
-            
-        user = authenticate(username=username, password=password)
-
-
-        if user is not None:
-            login(request, user)
-            
-            messages.success(request, 'You have succesfully logged in', )
-            return redirect(index)
-
+        usserblockstaus=Account.objects.get(username=request.POST.get('username'))
+        if usserblockstaus.is_active==True:
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                    phone=Account.objects.get(username=request.POST.get('username'))
+                    phone_number=phone.phone_number
+                    account_sid     = settings.ACCOUNT_SID
+                    auth_token      = settings.AUTH_TOKEN
+                    client = Client(account_sid, auth_token)
+                    verification = client.verify \
+                                            .v2 \
+                                            .services(settings.SERVICE_ID) \
+                                            .verifications \
+                                            .create(to=f'{settings.COUNTRY_CODE}{phone_number}', channel='sms')
+                    print(verification.status)
+                    messages.success(request, 'Otp sent Succesfully to your Registered Mobile number' )
+                    return redirect(f'loginotp/{phone.id}/')
+            else:
+                messages.error(request, "Invalid Credentials")
+                print('NOT ABLE TO SIGNIN')
         else:
-            messages.error(request, "Invalid Credentials")
-            print('NOT ABLE TO SIGNIN')
+            messages.error(request,'You are blocked!!')        
     return render(request,'UserSide/login.html')
+
+           
+            
+            
+        
+
+        
     # if request.method == "POST":
     #     username = request.POST.get('username')
     #     password = request.POST.get('password')
@@ -119,23 +117,26 @@ def loginotp(request,id):
         user      = Account.objects.get(id=id)
         phone_number=user.phone_number
         otpvalue  = request.POST.get('otp')
-        account_sid     = settings.ACCOUNT_SID
-        auth_token      = settings.AUTH_TOKEN
-        client = Client(account_sid, auth_token)
-
-        verification_check = client.verify \
-                                .v2 \
-                                .services(settings.SERVICE_ID) \
-                                .verification_checks \
-                                .create(to=f'{settings.COUNTRY_CODE}{phone_number}', code=otpvalue)
-
-        print(verification_check.status)
-        if verification_check.status=='approved':
-            auth.login(request,user)
-            request.session['username'] = user.username
-            return redirect(index)
+        if otpvalue=="":
+            messages.error(request,'Enter The Otp!!!')
         else:
-            messages.error(request, "Wrong otp")
+            account_sid     = settings.ACCOUNT_SID
+            auth_token      = settings.AUTH_TOKEN
+            client = Client(account_sid, auth_token)
+
+            verification_check = client.verify \
+                                    .v2 \
+                                    .services(settings.SERVICE_ID) \
+                                    .verification_checks \
+                                    .create(to=f'{settings.COUNTRY_CODE}{phone_number}', code=otpvalue)
+
+            print(verification_check.status)
+            if verification_check.status=='approved':
+                auth.login(request,user)
+                request.session['username'] = user.username
+                return redirect(index)
+            else:
+                messages.error(request, "Wrong otp")
     
         
     return render(request,'UserSide/loginotp.html')
