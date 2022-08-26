@@ -109,7 +109,20 @@ def AddCategory(request):
 # ------------------------- Showing Whole categories ------------------------- #
 def ShowCategory(request):
     category=Categories.objects.all()
-    return render(request,'Admin/showCategory.html',{'category':category})
+    paginator=Paginator(category,per_page=3)
+    page_number=request.GET.get('page')
+    categoryfinal=paginator.get_page(page_number)
+    totalpage=categoryfinal.paginator.num_pages
+    context={
+        'category':categoryfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+
+
+
+    return render(request,'Admin/showCategory.html',context)
 
 # ----------------------- Editing the category details ----------------------- #
 def EditCategory(request, id):
@@ -172,7 +185,18 @@ def AddSubCategory(request):
 # ------------------------- Showing Whole Subcategories ------------------------- #
 def ShowSubCategory(request):
     subcategory=SubCategories.objects.all()
-    return render(request,'Admin/showSubcategory.html',{'subcategory':subcategory})
+    paginator=Paginator(subcategory,per_page=2)
+    page_number=request.GET.get('page')
+    subcategoryfinal=paginator.get_page(page_number)
+    totalpage=subcategoryfinal.paginator.num_pages
+    context={
+        'subcategory':subcategoryfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+
+    return render(request,'Admin/showSubcategory.html',context)
 
 
 # ----------------------- Editing the Subcategory details ----------------------- #
@@ -248,7 +272,17 @@ def AddProducts(request):
 # ------------------------- Showing Whole Products ------------------------- #
 def ShowProducts(request):
      products=Products.objects.all()
-     return render(request,'Admin/showproducts.html',{'products':products})
+     paginator=Paginator(products,per_page=3)
+     page_number=request.GET.get('page')
+     productsfinal=paginator.get_page(page_number)
+     totalpage=productsfinal.paginator.num_pages
+     context={
+        'products':productsfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+     return render(request,'Admin/showproducts.html',context)
 # ------------------------- Deleting the Product ------------------------- #
 def DeleteProducts(request,id):
     product=Products.objects.get(id=id)
@@ -296,9 +330,19 @@ def EditProduct(request, id):
 
 
 def Adminvieworder_Details(request):
-   user=request.user
-   orderproductdetails=Order_Product.objects.filter(user=user)
-   return render(request,'Admin/OrderList.html',{'OrderProductDetails':orderproductdetails})  
+   orderproductdetails=Order_Product.objects.all()
+   paginator=Paginator(orderproductdetails,per_page=2)
+   page_number=request.GET.get('page')
+   orderproductdetailsFinal=paginator.get_page(page_number)
+   totalpage=orderproductdetailsFinal.paginator.num_pages
+   context={
+        'OrderProductDetails':orderproductdetailsFinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+
+   return render(request,'Admin/OrderList.html',context)  
 
 
 

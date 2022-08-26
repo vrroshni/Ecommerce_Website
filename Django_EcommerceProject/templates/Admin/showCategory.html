@@ -50,6 +50,29 @@ Categories
             {% endfor %}
         </div>
         {% endif %}
+         <!-- ---------------------------------- Pagination ---------------------------------- -->
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if category.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowCategory?page={{category.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="ShowCategory?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if category.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowCategory?page={{category.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+     </nav>
     </div>
 
 {% endblock %}

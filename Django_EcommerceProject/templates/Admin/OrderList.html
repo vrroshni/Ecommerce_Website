@@ -89,5 +89,29 @@ Order List
             </div>
         </div>
     </div>
+    <!-- ---------------------------------- Pagination ---------------------------------- -->
+    <nav  class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if OrderProductDetails.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="Adminvieworder_Details?page={{OrderProductDetails.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="Adminvieworder_Details?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if OrderProductDetails.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="Adminvieworder_Details?page={{OrderProductDetails.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
 </div>
 {% endblock  %}

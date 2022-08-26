@@ -14,7 +14,7 @@ SubCategories
                 
             </ol>
         </div>
-        {% if subcategory %}
+     {% if subcategory %}
         <div class="row" >
             {% for value in subcategory %}
             <div class="col-xl-3 col-lg-6 col-sm-6" >
@@ -48,6 +48,31 @@ SubCategories
             {% endfor %}
         </div>
         {% endif %}
-    </div>
+       
+        <!-- ---------------------------------- Pagination ---------------------------------- -->
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if subcategory.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowSubCategory?page={{subcategory.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="ShowSubCategory?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if subcategory.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowSubCategory?page={{subcategory.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+     </nav>
+    
+</div>
 
 {% endblock %}

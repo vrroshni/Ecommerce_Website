@@ -57,20 +57,28 @@ Products List
          {% endfor %}
          {% endif %}
      </div>
-     <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
+     <!-- ---------------------------------- Pagination ---------------------------------- -->
+     <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if products.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowProducts?page={{products.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="ShowProducts?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if products.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="ShowProducts?page={{products.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
         </ul>
-      </nav>
+    </nav>
 </div>
          {% endblock %}

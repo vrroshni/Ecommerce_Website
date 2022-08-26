@@ -72,7 +72,7 @@ Edit SubCategory {{subcategory.title}}
                     </div>
                     <div class="input-group mb-3">
                         <div class="form-file">
-                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" value="{{subcategory.Subcategory_Image.url}}" onchange="getImagePreview(event)">
+                            <input type="file" multiple class="form-file-input form-control" name="Subcategory_Image" value="{{subcategory.Subcategory_Image.url}}"  onchange="getImagePreview(event)">
                         </div>
                         <span class="input-group-text">Change</span>
                     </div>
@@ -106,7 +106,7 @@ Edit SubCategory {{subcategory.title}}
        var image=URL.createObjectURL(event.target.files[0]) ;
        var imagediv=document.getElementById("imagePreview");
        var neWImage=document.createElement('img');
-    //    imagediv.innerHTML='';
+       imagediv.innerHTML='';
        neWImage.src=image;
        neWImage.width="300";
        imagediv.appendChild(neWImage);
