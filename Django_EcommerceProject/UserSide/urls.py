@@ -8,6 +8,8 @@ urlpatterns = [
     path('login',views.Signin,name='Login'),
     path('loginotp/<int:id>/',views.loginotp,name='loginOtp'),
     path('logout',views.Userlogout,name='Userlogout'),
+    path('Profile',views.userProfileInfo,name='UserProfile'),
+    # path('EditProfile',views.EditProfile,name='EditUserProfile'),
 
 
     # ----------------------------- Registering User ----------------------------- #

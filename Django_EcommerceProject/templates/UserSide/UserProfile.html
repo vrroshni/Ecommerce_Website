@@ -1,0 +1,238 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block externalLinks %}
+{% endblock %}
+{% block contentbody %}
+<!-- Breadcrumb area Start -->
+<section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">My Account</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><span>My Account</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb area End -->
+<!-- Main Content Wrapper Start -->
+<div class="main-content-wrapper">
+    <div class="page-content-inner ptb--80 ptb-md--60 pb-sm--55">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="user-dashboard-tab flex-column flex-md-row">
+                        <div class="user-dashboard-tab__head nav flex-md-column" role="tablist" aria-orientation="vertical">
+                            <button type="button" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#dashboard" aria-controls="dashboard" aria-selected="true">Dashboard</button>
+                            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#orders" aria-controls="orders" aria-selected="true">Orders</button>
+                            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#downloads" aria-controls="downloads" aria-selected="true">Downloads</button>
+                            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#addresses" aria-controls="addresses" aria-selected="true">Addresses</button>
+                            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#accountdetails" aria-controls="accountdetails" aria-selected="true">Account Details</button>
+                            <button type="button" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#EditaccountDetails" aria-controls="EditaccountDetails" aria-selected="true">Edit Profile</button>
+                            <a type="button" class="nav-link" href="login-register.html">Logout</a>
+                        </div>
+                        <div class="user-dashboard-tab__content tab-content">
+                            <div class="tab-pane fade show active" id="dashboard">
+                                <p>Hello <strong>John</strong> (not <strong>John</strong>? <a href="login-register.html">Log out</a>)</p>
+                                <p>From your account dashboard. you can easily check &amp; view your <a href="">recent orders</a>, manage your <a href="">shipping and billing addresses</a> and <a href="">edit your password and account details</a>.</p>
+                            </div>
+                            <div class="tab-pane fade" id="orders">
+                                <div class="message-box mb--30 d-none">
+                                    <p><i class="fa fa-check-circle"></i>No order has been made yet.</p>
+                                    <a href="shop.html">Go Shop</a>
+                                </div>
+                                <div class="table-content table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td class="wide-column">September 19, 2018</td>
+                                                <td>Processing</td>
+                                                <td class="wide-column">$49.00 for 1 item</td>
+                                                <td><a href="product-details.html" class="btn btn-size-md">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td class="wide-column">September 19, 2018</td>
+                                                <td>Processing</td>
+                                                <td class="wide-column">$49.00 for 1 item</td>
+                                                <td><a href="product-details.html" class="btn btn-size-md">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="downloads">
+                                <div class="message-box mb--30 d-none">
+                                    <p><i class="fa fa-exclamation-circle"></i>No downloads available yet.</p>
+                                    <a href="shop.html">Go Shop</a>
+                                </div>
+                                <div class="table-content table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Downloads</th>
+                                                <th>Expires</th>
+                                                <th>Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="wide-column">Furtrate</td>
+                                                <td>August 10, 2018 </td>
+                                                <td class="wide-column">Never</td>
+                                                <td><a href="#" class="btn btn-size-md">Download File</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="wide-column">Furtrate</td>
+                                                <td>August 10, 2018 </td>
+                                                <td class="wide-column">Never</td>
+                                                <td><a href="#" class="btn btn-size-md">Download File</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="addresses">
+                                <p class="mb--20">The following addresses will be used on the checkout page by default.</p>
+                                <div class="row">
+                                    <div class="col-md-6 mb-sm--20">
+                                        <div class="text-block">
+                                            <h4 class="mb--20">Billing address</h4>
+                                            <a href="">Edit</a>
+                                            <p>You have not set up this type of address yet.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-block">
+                                            <h4 class="mb--20">Shopping address</h4>
+                                            <a href="">Edit</a>
+                                            <p>You have not set up this type of address yet.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="accountdetails">
+                                <!-- -------------- ---------------------------------------- --------------- -->
+                                <div class="card mx-5" style="width: 30rem;">
+                                    <div class="card-body">
+                                      <h2 class="card-title"><b> Profile Details </b></h2>
+                                      <hr>
+                                      <p class="card-text"><b >Full Name: </b>{{user.first_name}}{{user.last_name}}</p>
+                                      <p class="card-text"><b>Username: </b>{{user.username}}</p>
+                                      <p class="card-text"><b>Email: </b>{{user.email}}</p>
+                                      <p class="card-text"><b>Phone Number: </b>{{user.phone_number}}</p>
+
+                                      <br>
+                                    </div>
+                                  </div>
+                                  <!-- --------------------------------- -- ---------------------------------- -->
+                            </div>
+                            
+                         
+                                <!-- -------------------- below can be used for editing Profile with coupon trick--------------------- -->
+                                <div class="tab-pane fade" id="EditaccountDetails">
+                               
+                                    <form action="" method="post" class="form form--account">
+                                        {% csrf_token %}
+                                        <div class="row mb--20">
+                                            <div class="col-md-5 mb-sm--20">
+                                                <div class="form__group">
+                                                    <label class="form__label" for="f_name">First name <span class="required">*</span></label>
+                                                    <input type="text" name="first_name" id="f_name" class="form__input" value="{{user.first_name}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form__group">
+                                                    <label class="form__label" for="l_name">Last name <span class="required">*</span></label>
+                                                    <input type="text" name="last_name" id="l_name" class="form__input" value="{{user.last_name}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb--20">
+                                            <div class="col-9">
+                                                <div class="form__group">
+                                                    <label class="form__label" for="d_name">Display name/Username<span class="required">*</span></label>
+                                                    <input type="text" name="username" id="d_name" class="form__input" value="{{user.username}}">
+                                                    <span class="form__notes"><em>This will be how your name will be displayed in the account section and in reviews</em></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb--20">
+                                            <div class="col-9">
+                                                <div class="form__group">
+                                                    <label class="form__label" for="email">Email Address <span class="required">*</span></label>
+                                                    <input type="email" name="email" id="email" class="form__input" value="{{user.email}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb--20">
+                                            <div class="col-9">
+                                                <div class="form__group">
+                                                    <label class="form__label" for="email">Phone Number<span class="required">*</span></label>
+                                                    <input type="email" name="phone_number" id="email" class="form__input" value="{{user.phone_number}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <fieldset class="form__fieldset mb--20">
+                                            <legend class="form__legend">Password change</legend>
+                                            <div class="row mb--20">
+                                                <div class="col-9">
+                                                    <div class="form__group">
+                                                        <label class="form__label" for="cur_pass">Current password (leave blank to leave unchanged)</label>
+                                                        <input type="password" name="cur_pass" id="cur_pass" class="form__input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb--20">
+                                                <div class="col-9">
+                                                    <div class="form__group">
+                                                        <label class="form__label" for="new_pass">New password (leave blank to leave unchanged)</label>
+                                                        <input type="password" name="new_pass" id="new_pass" class="form__input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <div class="form__group">
+                                                        <label class="form__label" for="conf_new_pass">Confirm new password</label>
+                                                        <input type="password" name="conf_new_pass" id="conf_new_pass" class="form__input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset> -->
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <div class="form__group">
+                                                    <input type="submit" value="Save Changes" data-bs-target="#accountDetails" class="btn btn-size-md">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Content Wrapper Start -->
+{% endblock %}
+
