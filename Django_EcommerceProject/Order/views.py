@@ -5,6 +5,7 @@ from Order.models import*
 from datetime import date
 import datetime
 from Cart.views import *
+import razorpay
 
 # Create your views here.
 def vieworder_Details(request):
@@ -115,6 +116,170 @@ def CashOnDelivery(request):
                 
             cartlist_items.delete()
             print('deleted from cart')
+            
+    if pay_mode=='RazorPay':
+        print("HI razor")
+        user = request.user
+        print(user)
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
+
+        # cartlist_items=Cart_Products.objects.get(user = user)
+        print(cart_itemsid)
+        print(cartlist_items)
+        # print(cartlist_items.cart )
+
+        cart_itemcount = cartlist_items.count()
+        print(cart_itemcount)
+        
+
+        if request.user.is_authenticated:
+            # carts_item = Cart_Products.objects.filter(
+            #             user=request.user, is_active=True
+            #         ).order_by("id")
+            total=0
+            quantity=0
+            count=0
+            
+            for i in cartlist_items:
+                    total+=(i.product.price*i.quantity)
+                    count+=i.quantity
+    
+            subtotal=total
+            
+            tax = ((2 * total)/100)
+            amount=tax+total
+            amount=int(amount)*100
+            
+            print(amount)
+            print('printed')
+            payment_obj=Payment()
+            payment_obj.user=request.user
+            payment_obj. payment_method="razorpay"
+            payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+            payment_obj.date =date.today()
+            payment_obj.amount=total
+            payment_obj.save()
+
+
+
+
+
+
+            Obj_Order=Order()
+            Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+            Obj_Order.date =date.today()
+            Obj_Order.user=request.user
+            Obj_Order.total=total
+            Obj_Order.address=addressdetails
+            Obj_Order.payment=payment_obj
+            Obj_Order.save()
+            
+            
+            
+            print("hello")
+           
+            for x in cartlist_items:
+                orderproduct = Order_Product()
+
+                orderproduct.user=request.user
+                orderproduct.order=Obj_Order
+                orderproduct.quantity =x.quantity
+                orderproduct.product=x.product
+                orderproduct.payment=payment_obj
+                orderproduct.product_price=x.product.price
+                orderproduct.save() 
+                product = Products.objects.get(id = x.product.id)
+                product.stock -= x.quantity
+                product.save()
+                
+            cartlist_items.delete()
+            print('deleted from cart')
+
+            client = razorpay.Client(auth=("rzp_test_RV5Uxxh0BXft8f", "2GRvYpYuO1fCOMF2P2IzrLCf"))
+            payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
+            print(payment)
+            return render(request,'Cart/razorpay.html',{'payment': payment})
+    if pay_mode=='PayPal':
+        print("HI paypal")
+        user = request.user
+        print(user)
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
+
+        # cartlist_items=Cart_Products.objects.get(user = user)
+        print(cart_itemsid)
+        print(cartlist_items)
+        # print(cartlist_items.cart )
+
+        cart_itemcount = cartlist_items.count()
+        print(cart_itemcount)
+        
+
+        if request.user.is_authenticated:
+            # carts_item = Cart_Products.objects.filter(
+            #             user=request.user, is_active=True
+            #         ).order_by("id")
+            total=0
+            quantity=0
+            count=0
+            
+            for i in cartlist_items:
+                    total+=(i.product.price*i.quantity)
+                    count+=i.quantity
+    
+            subtotal=total
+            
+            tax = (2 * total)/100
+            total=tax+total
+            
+            print(total)
+            print('printed')
+            payment_obj=Payment()
+            payment_obj.user=request.user
+            payment_obj. payment_method="paypal"
+            payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+            payment_obj.date =date.today()
+            payment_obj.amount=total
+            payment_obj.save()
+
+
+
+
+
+
+            Obj_Order=Order()
+            Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+            Obj_Order.date =date.today()
+            Obj_Order.user=request.user
+            Obj_Order.total=total
+            Obj_Order.address=addressdetails
+            Obj_Order.payment=payment_obj
+            Obj_Order.save()
+            
+            
+            
+            print("hello")
+           
+            for x in cartlist_items:
+                orderproduct = Order_Product()
+
+                orderproduct.user=request.user
+                orderproduct.order=Obj_Order
+                orderproduct.quantity =x.quantity
+                orderproduct.product=x.product
+                orderproduct.payment=payment_obj
+                orderproduct.product_price=x.product.price
+                orderproduct.save() 
+                product = Products.objects.get(id = x.product.id)
+                product.stock -= x.quantity
+                product.save()
+                
+            cartlist_items.delete()
+            print('deleted from cart')
+            return render (request,'Cart/paypal.html',{'total':total})
+
+
 
 
             
