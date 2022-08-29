@@ -1,0 +1,179 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Admin Dashboard
+{% endblock %}
+{% block pagetitle %}
+Admin Dashboard
+{% endblock  %}
+{% block body %}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-7">
+          <div>
+            <h2 class="text-center "> <u> Orders Per Month</u></h2>
+           </div>
+        
+        
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>           
+        </div>
+        <hr class="mt-5"> 
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
+        <div>
+          <h2 class="text-center my-4"> <u> Orders Per Year</u></h2>
+         </div>
+        
+        <div>
+            <canvas id="myChart1"></canvas>
+        </div>           
+    </div>
+    <hr class="mt-5"> 
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-7">
+           <div>
+            <h2 class="text-center my-4"><u> Orders Placed On Today</u></h2>
+           </div>
+        
+            <div>
+                <canvas id="myChart2"></canvas>
+            </div>           
+        </div>
+        <hr class="mt-5"> 
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
+        <div>
+            <h2 class="text-center my-4" > <u> Payment Methods Usage %</u></h2>
+           </div>
+      
+          <div>
+              <canvas id="myChart3"></canvas>
+          </div>           
+      </div>
+
+      <hr class="mt-5"> 
+                  
+    </div> 
+  
+</div>
+
+
+
+
+{% endblock  %}
+{% block CustomScripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+const labels = {{ MonthNumber | safe }};
+
+const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Orders Per Month',
+      backgroundColor: 'rgb(255, 0, 0)',
+      borderColor: 'rgb(0, 0, 0)',
+      borderWidth:2,
+      data: {{ TotalOrders }},
+    }]
+  };
+
+const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+
+const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+
+// year  chart
+const labels1 = {{ YearNumber | safe }};
+
+const data1 = {
+    labels: labels1,
+    datasets: [{
+      label: 'Orders Per year',
+      backgroundColor: ['rgba(255, 205, 86)',
+      'rgba(153, 102, 255, 0.5)',
+      'rgba(54, 162, 235, 0.2)',
+    ],
+      borderColor: 'rgb(0, 0, 0)',
+      borderWidth: 2,
+      data: {{ totaltyearorders }},
+    }]
+  };
+
+const config1 = {
+    type: 'pie',
+    data: data1,
+    options: {}
+  };
+
+const myChart1 = new Chart(
+    document.getElementById('myChart1'),
+    config1
+  );
+//perday
+const labels2 = {{ DayNumber | safe }};
+
+const data2 = {
+    labels: labels2,
+    datasets: [{
+      label: 'Orders Per Day(Today)',
+      backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: {{ totaldayorder }},
+    }]
+  };
+
+const config2 = {
+    type: 'bar',
+    data: data2,
+    options: {}
+  };
+
+const myChart2 = new Chart(
+    document.getElementById('myChart2'),
+    config2
+  );
+  //payment
+  const labels3 = ['COD', 'Paypal', 'Razorpay'];
+
+const data3 = {
+    labels: labels3,
+    datasets: [{
+      label: 'Payment Methods Usage %',
+      backgroundColor: [
+      
+      'rgb(255, 205, 86)',
+      
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      
+    ],
+      borderColor: 'rgb(0, 0, 0)',
+      data:[{{ cod}},{{ paypal}},{{ raz}}]
+    }]
+  };
+
+const config3 = {
+    type: 'doughnut',
+    data: data3,
+    options: {}
+  };
+
+const myChart3 = new Chart(
+    document.getElementById('myChart3'),
+    config3
+  );
+
+</script>
+{% endblock %}

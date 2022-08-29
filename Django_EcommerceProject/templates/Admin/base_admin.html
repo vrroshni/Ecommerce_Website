@@ -377,17 +377,13 @@
 	<div class="deznav">
 		<div class="deznav-scroll">
 			<ul class="metismenu" id="menu">
-				<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+				<li><a class="has-arrow ai-icon" href="{% url 'AdminDashboard' %}" aria-expanded="false">
 						<i class="flaticon-025-dashboard"></i>
 						<span class="nav-text">Dashboard</span>
 					</a>
 					<ul aria-expanded="false">
-						<!-- <li><a href="index.html">Dashboard Light</a></li>
-						<li><a href="index-2.html">Dashboard Dark</a></li> -->
-						<!-- <li><a href="{% url 'UserManagement' %}">Users</a></li>
-						<li><a href="{% url 'ShowCategory' %}">Category</a></li>
-						<li><a href="{% url 'ShowSubCategory' %}">SubCategory</a></li>
-						<li><a href="{% url 'ShowProducts' %}">Products</a></li> -->
+						<li><a href="{% url 'AdminDashboard'%}">Dashboard</a></li>
+
 
 					</ul>
 
@@ -555,6 +551,8 @@
 
 
 <script defer src="https://cdn.crop.guide/loader/l.js?c=DRVZXC"></script>
+{% block CustomScripts %}
+{% endblock %}
 </body>
 
 </html>

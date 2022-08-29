@@ -1,3 +1,4 @@
+from itertools import count
 from multiprocessing import context
 from turtle import title
 from unicodedata import category
@@ -12,6 +13,11 @@ from .decorators import*
 from Order.models import *
 from Cart.models import *
 from django.core.paginator import Paginator
+from django.db.models.functions import ExtractMonth,ExtractYear,ExtractDay
+from django.db.models import Max,Min,Count,Avg,Sum
+import calendar
+from datetime import date
+import datetime
 
 
 
@@ -45,6 +51,73 @@ def adminlogin(request):
                 return redirect(adminlogin)
        
     return render(request,'Admin/adminlogin.html')
+
+# ------------------------------ Admin Dashboard ----------------------------- #
+def adminDashboard(request):
+
+    orders=Order.objects.annotate(month=ExtractMonth('date')).values('month').annotate(count=Count('id')).values('month','count')
+    yearorders=Order.objects.annotate(year=ExtractYear('date')).values('year').annotate(count=Count('id')).values('year','count')
+    Dayorders=Order.objects.annotate(day=ExtractDay('date')).filter(date=date.today()).values('day').annotate(count=Count('id')).values('day','count')
+
+    
+    print(Dayorders)
+    DayNumber=[]
+    YearNumber=[]
+    monthNumber=[]
+    totalOrders=[]
+    totaltyearorders=[]
+    totaldayorder=[]
+    for d in orders:
+        monthNumber.append(calendar.month_name[d['month']])
+        totalOrders.append(d['count'])
+
+    for d in yearorders:
+        YearNumber.append([d['year']])
+        totaltyearorders.append(d['count'])
+    
+    for d in Dayorders:
+        DayNumber.append([d['day']])
+        totaldayorder.append(d['count'])
+
+    # ---------------------------------- payment --------------------------------- #
+    Allorders = Order.objects.all()
+    # orderproduct = OrderProduct.objects.filter(product__category_name = 1)
+    
+
+    # codtotal = Payment.objects.filter(payment_method = 'cashondelivery').aggregate(Sum('amount')).get('amount__sum')
+    cod = Payment.objects.filter(payment_method = 'cashondelivery').aggregate(Count('id')).get('id__count')
+       
+    # raztotal = Payment.objects.filter(payment_method = 'razorpay').aggregate(Sum('amount')).get('amount__sum')
+    raz = Payment.objects.filter(payment_method = 'razorpay').aggregate(Count('id')).get('id__count')
+
+    # paypaltotal = Payment.objects.filter(payment_method = 'Paypal').aggregate(Sum('amount')).get('amount__sum')
+    pay = Payment.objects.filter(payment_method = 'Paypal').aggregate(Count('id')).get('id__count')
+
+    # ordertotal = Payment.objects.all().aggregate(Sum('amount')).get('amount__sum')
+
+    # --------------------------------- StockLeft -------------------------------- #
+    
+
+    
+    context={
+        'Order':orders,
+        'MonthNumber':monthNumber,
+        'TotalOrders':totalOrders,
+        'YearNumber':YearNumber,
+        'totaltyearorders':totaltyearorders,
+        'DayNumber':DayNumber,
+        'totaldayorder':totaldayorder,
+        'Allorders':Allorders,
+        # 'codtotal':codtotal,
+        # 'paypaltotal':paypaltotal,
+        # 'raztotal':raztotal,
+        # 'total':ordertotal,
+        'paypal':pay,
+        'raz':raz,
+        'cod':cod
+
+    }
+    return render(request,'Admin/dashboard.html',context)
 
 
 # ------------------- users data will be seen in this page ------------------- #

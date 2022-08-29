@@ -7,6 +7,12 @@ urlpatterns = [
         path('adminlogout',views.adminlogout,name='AdminLogout'),
 
 
+
+# ------------------------------ Admin Dashboard ----------------------------- #
+        path('dashboard',views.adminDashboard,name='AdminDashboard'),
+
+
+
 # ------------------------- usermangement(adminside) ------------------------- #
         path('usermanagement',views.userdata,name='UserManagement'),
         path('blockuser/<int:id>',views.BlockUser,name='BlockUser'),
