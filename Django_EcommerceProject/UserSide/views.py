@@ -5,6 +5,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import login,authenticate,logout
 from Accounts.models import* 
 from Admin.models import *
+from Order.models import *
 from django.conf import settings
 from twilio.rest import Client
 from django.views.decorators.cache import cache_control
@@ -123,17 +124,29 @@ def loginotp(request,id):
 
 def userProfileInfo(request):
     user=request.user
+    orderproductdetails=Order_Product.objects.filter(user=user)
+    addressDetails = Address.objects.filter(user=request.user)
+
+
+ 
     if request.method == 'POST':
 
         user.first_name=request.POST['first_name']
         user.last_name=request.POST['last_name']
         user.username=request.POST['username']
         user.email=request.POST['email']
+
         user.phone_number=request.POST['phone_number']
+        if user.first_name =="" or  user.last_name =="" or  user.username =="" or user.email =="":
+            messages.error(request,"Fields Can't be Empty") 
+            return redirect(userProfileInfo)
+
         user.save()
         return redirect(userProfileInfo)
     context={
-        'user':user
+        'user':user,
+        'OrderProductDetails':orderproductdetails,
+        'AddressDetails':addressDetails
     }
     return render(request,'UserSide/UserProfile.html',context)
 

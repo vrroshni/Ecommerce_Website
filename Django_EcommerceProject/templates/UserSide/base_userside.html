@@ -76,12 +76,12 @@
                                                 {% if user.is_authenticated%}
                                                 <li class="mainmenu__item menu-item-has-children">
                                                     
-                                                    <a href="#" class="mainmenu__link">
+                                                    <a href="{% url 'UserProfile' %}" class="mainmenu__link">
                                                         <span class="mm-text">Profile</span>
                                                     </a>
                                                     <ul class="sub-menu">
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="{% url 'UserProfile' %}">
                                                                 <span class="mm-text">My Account</span>
                                                             </a>
                                                         </li>
@@ -104,7 +104,12 @@
                                            
                                                 <li class="mainmenu__item">
                                                     <a href="{% url 'ViewWishlist'%}" class="mainmenu__link">
-                                                        <span class="mm-text">Cart </span>
+                                                        <span class="mm-text">Wishlist </span>
+                                                    </a>
+                                                </li>
+                                                <li class="mainmenu__item">
+                                                    <a href="{% url 'ViewCart'%}" class="mainmenu__link">
+                                                        <span class="mm-text">Cart</span>
                                                     </a>
                                                 </li>
                                                 {% endif %}

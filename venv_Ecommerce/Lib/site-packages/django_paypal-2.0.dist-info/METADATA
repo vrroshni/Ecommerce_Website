@@ -1,0 +1,39 @@
+Metadata-Version: 2.1
+Name: django-paypal
+Version: 2.0
+Summary: A pluggable Django application for integrating PayPal Payments Standard or Payments Pro
+Home-page: https://github.com/spookylukey/django-paypal
+Author: John Boxall
+Author-email: john@handimobility.ca
+Maintainer: Luke Plant
+Maintainer-email: L.Plant.98@cantab.net
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 2.1
+Classifier: Framework :: Django :: 2.2
+Classifier: Framework :: Django :: 3.0
+Classifier: Framework :: Django :: 3.1
+Classifier: Framework :: Django :: 4.0
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.6
+License-File: LICENSE
+Requires-Dist: Django (>=2.2)
+Requires-Dist: requests (>=2.5.3)
+Requires-Dist: pytz (>=2015.4)
+
+A pluggable Django application for integrating PayPal Payments Standard or Payments Pro
+
+Home page: https://github.com/spookylukey/django-paypal
+
+Docs: https://django-paypal.readthedocs.org
+
+

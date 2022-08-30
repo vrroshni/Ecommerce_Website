@@ -1,5 +1,7 @@
 {% extends 'UserSide/base_userside.html' %}
 {% load static %}
+{% load mathfilters %}
+
 {% block title %}
 Checkout
 {% endblock %}
@@ -149,7 +151,7 @@ Checkout
                                         <th>{{i.product.product_name}}
                                             <strong><span>&#10005;</span>{{i.quantity}}</strong>
                                         </th>
-                                        <td class="text-right">₹{{i.product.price}}×{{i.quantity}}</td>
+                                        <td class="text-right">₹{{i.product.price|mul:i.quantity}} (₹{{i.product.price}}×{{i.quantity}})</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -188,7 +190,7 @@ Checkout
 
                                     <p>choose from Address from Given Below.</p>
                                     <div class="form__group d-sm-flex">
-                                    <form action="{% url 'CashOnDelivery' %}" method="POST" class="form">
+                                    <form action="{% url 'PlaceOrder' %}" method="POST" class="form">
                                         {% csrf_token %}
                                             {% for i in AddressDetails %}
                                             <div class="card">

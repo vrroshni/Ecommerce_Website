@@ -1,5 +1,6 @@
 {% extends 'UserSide/base_userside.html' %}
 {% load static %}
+{% load mathfilters %}
 {% block title %}
 {% endblock %}
 {% block externalLinks %}
@@ -68,7 +69,7 @@
                                                 </td>
                                                 <td class="product-total-price">
                                                     <span class="product-price-wrapper">
-                                                        <span class="money">₹{{i.product.price}}×{{i.quantity}}</span>
+                                                        <span class="money">₹{{i.product.price|mul:i.quantity}}</span>
                                                     </span>
                                                 </td>
                                             </tr>

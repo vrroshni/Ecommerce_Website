@@ -6,8 +6,10 @@ urlpatterns = [
 
     
     # --------------------------- OrderManagement -------------------------- #
-    path('cashondelivery',views.CashOnDelivery,name='CashOnDelivery'),
+    path('placeorder',views.PlaceOrder,name='PlaceOrder'),
+    path('orderconfirmed',views.orderConfirmed,name='OrderConfirmed'),
     path('vieworderdetails',views.vieworder_Details,name='ViewOrderDetails'),
+
     path('cancelorder/<int:id>',views.Cancelorder,name='Cancelorder'),
 
 

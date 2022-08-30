@@ -6,12 +6,18 @@ from datetime import date
 import datetime
 from Cart.views import *
 import razorpay
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 # Create your views here.
+@csrf_exempt
 def vieworder_Details(request):
    user=request.user
+   addressDetails = Address.objects.filter(user=request.user)
+
    orderproductdetails=Order_Product.objects.filter(user=user)
-   return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails})
+   return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails,'AddressDetails':addressDetails})
 
 
 def Cancelorder(request,id):
@@ -30,10 +36,17 @@ def Cancelorder(request,id):
 
 
 
-def CashOnDelivery(request):
+def PlaceOrder(request):
     if request.method=='POST':
         pay_mode=request.POST['payment-method']
         address_buyer=request.POST['addressUsed']
+        if pay_mode=="":
+            messages.error(request,"Choosing A Payment Method is Mandatory")
+            return redirect(PlaceOrder)
+        if address_buyer=="":
+            messages.error(request,"Please Choose Your Address")
+            return redirect(PlaceOrder)
+
         print(address_buyer)
         addressdetails=Address.objects.get(id=address_buyer)
         print(addressdetails.Buyername)
@@ -46,19 +59,16 @@ def CashOnDelivery(request):
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
 
-        # cartlist_items=Cart_Products.objects.get(user = user)
         print(cart_itemsid)
         print(cartlist_items)
-        # print(cartlist_items.cart )
+     
 
         cart_itemcount = cartlist_items.count()
         print(cart_itemcount)
         
 
         if request.user.is_authenticated:
-            # carts_item = Cart_Products.objects.filter(
-            #             user=request.user, is_active=True
-            #         ).order_by("id")
+         
             total=0
             quantity=0
             count=0
@@ -94,6 +104,7 @@ def CashOnDelivery(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
+            Obj_Order.is_ordered="True"
             Obj_Order.save()
             
             
@@ -124,19 +135,15 @@ def CashOnDelivery(request):
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
 
-        # cartlist_items=Cart_Products.objects.get(user = user)
         print(cart_itemsid)
         print(cartlist_items)
-        # print(cartlist_items.cart )
 
         cart_itemcount = cartlist_items.count()
         print(cart_itemcount)
         
 
         if request.user.is_authenticated:
-            # carts_item = Cart_Products.objects.filter(
-            #             user=request.user, is_active=True
-            #         ).order_by("id")
+        
             total=0
             quantity=0
             count=0
@@ -173,6 +180,7 @@ def CashOnDelivery(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
+            Obj_Order.is_ordered="True"
             Obj_Order.save()
             
             
@@ -207,19 +215,15 @@ def CashOnDelivery(request):
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
 
-        # cartlist_items=Cart_Products.objects.get(user = user)
         print(cart_itemsid)
         print(cartlist_items)
-        # print(cartlist_items.cart )
 
         cart_itemcount = cartlist_items.count()
         print(cart_itemcount)
         
 
         if request.user.is_authenticated:
-            # carts_item = Cart_Products.objects.filter(
-            #             user=request.user, is_active=True
-            #         ).order_by("id")
+       
             total=0
             quantity=0
             count=0
@@ -255,6 +259,7 @@ def CashOnDelivery(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
+            Obj_Order.is_ordered="True"
             Obj_Order.save()
             
             
@@ -284,6 +289,13 @@ def CashOnDelivery(request):
 
             
     return render (request,"Order/Order_Confirm.html")
+
+
+@csrf_exempt
+def orderConfirmed(request):
+        return render (request,"Order/Order_Confirm.html")
+
+
    
     
    
