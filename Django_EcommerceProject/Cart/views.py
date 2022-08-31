@@ -5,6 +5,10 @@ from Cart.models import*
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from UserSide.views import *
+
 
 # Create your views here.
 
@@ -23,6 +27,7 @@ def create_cart_id(request):
 
 
 # ---------------------- funtionality for adding to cart --------------------- #
+@login_required(login_url='Index')
 def add_ToCart(request,id):
     #product is adding with its id 
     product=Products.objects.get(id=id)
@@ -41,11 +46,12 @@ def add_ToCart(request,id):
     except Cart_Products.DoesNotExist:#not available,create one
         cart_items=Cart_Products.objects.create(product=product,quantity=1,cart=cart__id)
         cart_items.save()
-    return redirect('ViewCart')
+    return redirect(index)
 
 
 
 #------------------------ list the items in the cart ------------------------ #
+@login_required(login_url='Index')
 def view_cart(request,total=0,count=0,cartlist_items=None):
     try:
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
@@ -94,7 +100,7 @@ def delete_product_cart(request,id):
 
 
 
-
+@login_required(login_url='Index')
 def add_address(request):
         total=0
         count=0

@@ -1,4 +1,5 @@
 from ast import Pass
+from pickle import FALSE
 from django.shortcuts import render,redirect
 from Cart.models import*
 from Order.models import*
@@ -7,10 +8,13 @@ import datetime
 from Cart.views import *
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 
 
 # Create your views here.
+@login_required(login_url='Index')
 @csrf_exempt
 def vieworder_Details(request):
    user=request.user
@@ -35,7 +39,7 @@ def Cancelorder(request,id):
 
 
 
-
+@login_required(login_url='Index')
 def PlaceOrder(request):
     if request.method=='POST':
         pay_mode=request.POST['payment-method']
@@ -204,10 +208,11 @@ def PlaceOrder(request):
             cartlist_items.delete()
             print('deleted from cart')
 
-            client = razorpay.Client(auth=("rzp_test_RV5Uxxh0BXft8f", "2GRvYpYuO1fCOMF2P2IzrLCf"))
+            client = razorpay.Client(auth=("rzp_test_u6wVuQH1CZfo2w", "exxRBF8nxJAEPS7EWtytlLCk"))
             payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
             print(payment)
             return render(request,'Cart/razorpay.html',{'payment': payment})
+            
     if pay_mode=='PayPal':
         print("HI paypal")
         user = request.user

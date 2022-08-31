@@ -1,0 +1,3 @@
+<!-- <a type="button" hx-delete="{% url 'DecreaseQty' i.product.id  %}" hx-target="#cat_htmx" hx-swap="outerhtml">-&nbsp;</a>{{i.quantity}}
+<a  type="button" hx-delete="{% url 'AddToCart' i.product.id %}" hx-target="#cat_htmx" hx-swap="outerhtml">&nbsp;+</a> -->
+{% include 'Cart/htmx-cart.html' %}

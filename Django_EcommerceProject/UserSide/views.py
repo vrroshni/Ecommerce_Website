@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth.decorators import login_required
 from Accounts.models import* 
 from Admin.models import *
 from Order.models import *
@@ -121,7 +122,8 @@ def loginotp(request,id):
     
         
     return render(request,'UserSide/loginotp.html')
-
+    
+@login_required(login_url='Index')
 def userProfileInfo(request):
     user=request.user
     orderproductdetails=Order_Product.objects.filter(user=user)

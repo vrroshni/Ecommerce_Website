@@ -26,19 +26,21 @@
     <!-- style css -->
     <link rel="stylesheet" href="{% static 'templateresources/assets/css/main.css ' %}">
     <!-- custom links -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     {% block externalLinks %}
     {% endblock %}
 </head>
 <body>
 
     <!-- Preloader Start -->
-    <div class="ft-preloader active">
+    <!-- <div class="ft-preloader active">
         <div class="ft-preloader-inner h-100 d-flex align-items-center justify-content-center">
             <div class="ft-child ft-bounce1"></div>
             <div class="ft-child ft-bounce2"></div>
             <div class="ft-child ft-bounce3"></div>
         </div>
-    </div>
+    </div> -->
     <!-- Preloader End -->
 
     <!-- Main Wrapper Start -->
@@ -596,6 +598,9 @@
     <!-- jQuery JS -->
     <script src="{% static 'templateresources/assets/js/vendor.js' %}"></script>
     <script src="{% static 'templateresources/assets/js/main.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
     <script>

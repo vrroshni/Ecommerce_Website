@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Django_EcommerceProject.urls'
@@ -145,5 +146,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #twilio
 ACCOUNT_SID='AC583a7012e6b01e1fcb5e6f7eb407831f'
 AUTH_TOKEN='1f889d321e3ffff88194ad4f8b11923f'
-SERVICE_ID='VAc12c6e4cb51d209c8c32816197a67b44'
+SERVICE_ID='VA78cf30eb6c1ad646d9104682313dff03'
 COUNTRY_CODE='+91'

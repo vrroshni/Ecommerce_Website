@@ -15,6 +15,7 @@ from Cart.models import *
 from django.core.paginator import Paginator
 from django.db.models.functions import ExtractMonth,ExtractYear,ExtractDay
 from django.db.models import Max,Min,Count,Avg,Sum
+from django.contrib.auth.decorators import login_required
 import calendar
 from datetime import date
 import datetime
@@ -53,11 +54,14 @@ def adminlogin(request):
     return render(request,'Admin/adminlogin.html')
 
 # ------------------------------ Admin Dashboard ----------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def adminDashboard(request):
 
     orders=Order.objects.annotate(month=ExtractMonth('date')).values('month').annotate(count=Count('id')).values('month','count')
     yearorders=Order.objects.annotate(year=ExtractYear('date')).values('year').annotate(count=Count('id')).values('year','count')
     Dayorders=Order.objects.annotate(day=ExtractDay('date')).filter(date=date.today()).values('day').annotate(count=Count('id')).values('day','count')
+    # print(request.user.is_admin)
 
     
     print(Dayorders)
@@ -121,6 +125,8 @@ def adminDashboard(request):
 
 
 # ------------------- users data will be seen in this page ------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def userdata(request):
     data = Account.objects.all()
     paginator=Paginator(data,per_page=3)
@@ -156,6 +162,8 @@ def UnBlockUser(request, id):
 
 # ---------------------------- CategoryManagement ---------------------------- #
 # --------------------------- Adding a new category -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def AddCategory(request):
     if request.method == 'POST':
             title = request.POST['title']
@@ -180,6 +188,8 @@ def AddCategory(request):
     return render(request,'Admin/addCategory.html')
 
 # ------------------------- Showing Whole categories ------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def ShowCategory(request):
     category=Categories.objects.all()
     paginator=Paginator(category,per_page=3)
@@ -198,6 +208,8 @@ def ShowCategory(request):
     return render(request,'Admin/showCategory.html',context)
 
 # ----------------------- Editing the category details ----------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def EditCategory(request, id):
     category=Categories.objects.get(id=id)
     if request.method == 'POST':
@@ -219,6 +231,8 @@ def EditCategory(request, id):
 
 
 # --------------------------- Deleting the category -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def DeleteCategory(request,id):
     category=Categories.objects.get(id=id)
     category.delete()
@@ -227,6 +241,8 @@ def DeleteCategory(request,id):
 
 # ---------------------------------------------------------------------------- #
 # --------------------------- Adding a new Subcategory -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def AddSubCategory(request):
     CategoryObj=Categories.objects.all()
     if request.method == 'POST':
@@ -256,6 +272,8 @@ def AddSubCategory(request):
     return render(request,'Admin/addSubCategory.html',{'category':CategoryObj})
 
 # ------------------------- Showing Whole Subcategories ------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def ShowSubCategory(request):
     subcategory=SubCategories.objects.all()
     paginator=Paginator(subcategory,per_page=2)
@@ -273,6 +291,8 @@ def ShowSubCategory(request):
 
 
 # ----------------------- Editing the Subcategory details ----------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def EditSubCategory(request, id):
     category=Categories.objects.all()
     subcategory=SubCategories.objects.get(id=id)
@@ -301,6 +321,8 @@ def EditSubCategory(request, id):
     return render(request, 'Admin/editsubCategory.html', {'subcategory': subcategory,'category': category})
 
 # --------------------------- Deleting the Subcategory -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def DeleteSubCategory(request,id):
     subcategory=SubCategories.objects.get(id=id)
     subcategory.delete()
@@ -309,6 +331,8 @@ def DeleteSubCategory(request,id):
 # ---------------------------------------------------------------------------- #
 
 # --------------------------- Adding a new Product -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def AddProducts(request):
     category=Categories.objects.all()
     subcategory=SubCategories.objects.all()
@@ -343,6 +367,8 @@ def AddProducts(request):
     return render(request,'Admin/addproduct.html',{'category':category,'subcategory':subcategory})
 
 # ------------------------- Showing Whole Products ------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def ShowProducts(request):
      products=Products.objects.all()
      paginator=Paginator(products,per_page=3)
@@ -357,6 +383,8 @@ def ShowProducts(request):
     }
      return render(request,'Admin/showproducts.html',context)
 # ------------------------- Deleting the Product ------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def DeleteProducts(request,id):
     product=Products.objects.get(id=id)
     product.delete()
@@ -364,6 +392,8 @@ def DeleteProducts(request,id):
     return redirect(ShowProducts)   
 
 # ----------------------- Editing the Product details ----------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def EditProduct(request, id):
     product=Products.objects.get(id=id)
     category=Categories.objects.all()
@@ -402,9 +432,11 @@ def EditProduct(request, id):
 
 
 
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
 def Adminvieworder_Details(request):
-   orderproductdetails=Order_Product.objects.all()
-   paginator=Paginator(orderproductdetails,per_page=2)
+   orderproductdetails=Order_Product.objects.all().order_by('id')
+   paginator=Paginator(orderproductdetails,per_page=5)
    page_number=request.GET.get('page')
    orderproductdetailsFinal=paginator.get_page(page_number)
    totalpage=orderproductdetailsFinal.paginator.num_pages

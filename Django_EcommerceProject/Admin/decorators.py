@@ -4,7 +4,7 @@ from .models import*
 
 def autheticatedfor_adminonly(view_func):
     def wrapper_func(request,*args,**kwargs):
-        if request.user.is_superadmin:
+        if request.user.is_admin:
             return view_func(request,*args,**kwargs)
         else:
             return render(request,'Admin/restricted.html')

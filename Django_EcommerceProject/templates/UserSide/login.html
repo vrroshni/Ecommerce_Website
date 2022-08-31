@@ -5,6 +5,19 @@
 {% block externalLinks %}
 {% endblock %}
 {% block contentbody %}
+<section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">My Account</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><span>My Account</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="main-content-wrapper">
     <div class="page-content-inner pt--75 pb--80">
         <div class="container">
@@ -12,7 +25,7 @@
                 <div class="col-3"></div>
                 <div class="col-md-6 mb-sm--50">
                     <div class="login-box">
-                        <h3 class="heading__tertiary mb--30">Login</h3>
+                        <h1 class="heading__tertiary mb--30 text-center"><b>Login</b> </h1>
                         <form class="form form--login"  method="post" action="{% url 'Login' %}" autocomplete="off">
                             {% csrf_token %}
                             <div class="form__group mb--20">
@@ -32,7 +45,8 @@
                                 
                             </div>
                             
-                            <a class="forgot-pass" href="#">Lost your password?</a>
+                            <!-- <a class="forgot-pass" href="#">Lost your password?</a><br> -->
+                            <a class="forgot-pass" href="{% url 'Register' %}"><u>Don't have An Account?Register Here</u></a>
                         </form>
                     </div>
                 </div>
