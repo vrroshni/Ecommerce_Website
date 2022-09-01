@@ -18,27 +18,32 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 def vieworder_Details(request):
    user=request.user
-   addressDetails = Address.objects.filter(user=request.user)
-
+   addressDetails = Address.objects.filter(user=user)
    orderproductdetails=Order_Product.objects.filter(user=user)
    return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails,'AddressDetails':addressDetails})
 
 
+# --------------- User Manages order Here(Cancelling,Returning) -------------- #
 def Cancelorder(request,id):
-    user=request.user
     orderproductdetails=Order_Product.objects.get(id=id)
     print(orderproductdetails.status)
     orderproductdetails.status='cancelled'
     print('------------------')
     orderproductdetails.save()
     print(orderproductdetails.status)
-
     return redirect(vieworder_Details)
 
-    
+def order_Returned(request,id):
+    orderproductdetails=Order_Product.objects.get(id=id)
+    print(orderproductdetails.status)
+    orderproductdetails.status='Returned'
+    print('------------------')
+    orderproductdetails.save()
+    print(orderproductdetails.status)
+    return redirect(vieworder_Details)    
 
 
-
+# -------------------------- Choosing Payment method ------------------------- #
 @login_required(login_url='Index')
 def PlaceOrder(request):
     if request.method=='POST':
@@ -50,44 +55,36 @@ def PlaceOrder(request):
         if address_buyer=="":
             messages.error(request,"Please Choose Your Address")
             return redirect(PlaceOrder)
-
         print(address_buyer)
+        global addressdetails#to access it everywhere
         addressdetails=Address.objects.get(id=address_buyer)
         print(addressdetails.Buyername)
-        
     if pay_mode=='cash':
+        return redirect(CashonDelivery)
+    if pay_mode=='RazorPay':
+        return redirect(razorPayPayment)         
+    if pay_mode=='PayPal':
+        return redirect(payPalPayment)
+    return render (request,"Order/Order_Confirm.html")
 
-        print("HI")
+
+# ----------------------- CashonDelivery paymentMethod ----------------------- #
+def CashonDelivery(request):
         user = request.user
-        print(user)
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
-
-        print(cart_itemsid)
-        print(cartlist_items)
-     
-
         cart_itemcount = cartlist_items.count()
         print(cart_itemcount)
-        
-
         if request.user.is_authenticated:
-         
             total=0
             quantity=0
             count=0
-            
             for i in cartlist_items:
                     total+=(i.product.price*i.quantity)
                     count+=i.quantity
-    
-            subtotal=total
-            
             tax = (2 * total)/100
             total=tax+total
-            
-            print(total)
-            print('printed')
+            # ------------------ saving Whole Order Payment details of CashonDelivey ----------------- #
             payment_obj=Payment()
             payment_obj.user=request.user
             payment_obj. payment_method="cashondelivery"
@@ -95,12 +92,7 @@ def PlaceOrder(request):
             payment_obj.date =date.today()
             payment_obj.amount=total
             payment_obj.save()
-
-
-
-
-
-
+            # ------------------ saving Whole Order details of CashonDelivey ----------------- #
             Obj_Order=Order()
             Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             Obj_Order.date =date.today()
@@ -108,16 +100,11 @@ def PlaceOrder(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
-            Obj_Order.is_ordered="True"
-            Obj_Order.save()
-            
-            
-            
-            print("hello")
-           
+            Obj_Order.is_ordered=True
+            Obj_Order.save() 
+            # ------------------ saving each product Order details of CashonDelivey ----------------- #
             for x in cartlist_items:
                 orderproduct = Order_Product()
-
                 orderproduct.user=request.user
                 orderproduct.order=Obj_Order
                 orderproduct.quantity =x.quantity
@@ -128,42 +115,37 @@ def PlaceOrder(request):
                 product = Products.objects.get(id = x.product.id)
                 product.stock -= x.quantity
                 product.save()
-                
             cartlist_items.delete()
-            print('deleted from cart')
-            
-    if pay_mode=='RazorPay':
+            return redirect(orderConfirmed)
+
+
+
+@csrf_exempt
+def orderConfirmed(request):
+        return render (request,"Order/Order_Confirm.html")
+
+
+ # -----------------------RazorPay paymentMethod ----------------------- #
+def razorPayPayment(request):
         print("HI razor")
-        user = request.user
-        print(user)
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
-
         print(cart_itemsid)
         print(cartlist_items)
-
         cart_itemcount = cartlist_items.count()
         print(cart_itemcount)
-        
-
         if request.user.is_authenticated:
-        
             total=0
             quantity=0
-            count=0
-            
+            count=0            
             for i in cartlist_items:
                     total+=(i.product.price*i.quantity)
-                    count+=i.quantity
-    
-            subtotal=total
-            
+                    count+=i.quantity    
+            subtotal=total            
             tax = ((2 * total)/100)
             amount=tax+total
-            amount=int(amount)*100
-            
+            amount=int(amount)*100           
             print(amount)
-            print('printed')
             payment_obj=Payment()
             payment_obj.user=request.user
             payment_obj. payment_method="razorpay"
@@ -184,16 +166,11 @@ def PlaceOrder(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
-            Obj_Order.is_ordered="True"
+            Obj_Order.is_ordered=True
             Obj_Order.save()
-            
-            
-            
-            print("hello")
-           
+
             for x in cartlist_items:
                 orderproduct = Order_Product()
-
                 orderproduct.user=request.user
                 orderproduct.order=Obj_Order
                 orderproduct.quantity =x.quantity
@@ -207,13 +184,22 @@ def PlaceOrder(request):
                 
             cartlist_items.delete()
             print('deleted from cart')
+        if request.method == "POST":
 
-            client = razorpay.Client(auth=("rzp_test_u6wVuQH1CZfo2w", "exxRBF8nxJAEPS7EWtytlLCk"))
+            client = razorpay.Client(auth=("rzp_test_4IGtVl9xeiuWPZ", "ryeb6ntUIE8KhmaWvGzyrBMH"))
             payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
             print(payment)
-            return render(request,'Cart/razorpay.html',{'payment': payment})
-            
-    if pay_mode=='PayPal':
+            return render(request,'Cart/razorpay.html',{'payment': payment}) 
+        return render(request,'Cart/razorpay.html') 
+
+
+@csrf_exempt
+def success(request):
+    return render(request, "Cart/success.html")
+
+    
+# ----------------------- PayPal paymentMethod ----------------------- #
+def payPalPayment(request):
         print("HI paypal")
         user = request.user
         print(user)
@@ -264,7 +250,7 @@ def PlaceOrder(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
-            Obj_Order.is_ordered="True"
+            Obj_Order.is_ordered=True
             Obj_Order.save()
             
             
@@ -287,21 +273,5 @@ def PlaceOrder(request):
                 
             cartlist_items.delete()
             print('deleted from cart')
-            return render (request,'Cart/paypal.html',{'total':total})
-
-
-
-
-            
-    return render (request,"Order/Order_Confirm.html")
-
-
-@csrf_exempt
-def orderConfirmed(request):
-        return render (request,"Order/Order_Confirm.html")
-
-
-   
-    
-   
+            return render (request,'Cart/paypal.html',{'total':total})   
 

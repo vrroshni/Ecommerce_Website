@@ -75,7 +75,6 @@ Order List
                                             <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="order-dropdown-0">
                                                 <div class="py-2"><a class="dropdown-item" href="{% url 'order_Shipped' i.id %}">Shipped</a><a class="dropdown-item" href="{% url 'order_Out_For_delivery' i.id %}">Out for delivery</a><a class="dropdown-item" href="{% url 'order_Delivered' i.id %}">Delivered</a>
                                                     <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="{% url 'order_Cancelled' i.id %}">Cancel</a>
-                                                    <!-- <a class="dropdown-item text-danger" href="{% url 'order_Returned' i.id %}">Returned</a> -->
                                                 </div>
                                             </div>
                                         </div>

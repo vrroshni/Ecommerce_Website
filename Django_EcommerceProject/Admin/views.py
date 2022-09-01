@@ -95,7 +95,7 @@ def adminDashboard(request):
     raz = Payment.objects.filter(payment_method = 'razorpay').aggregate(Count('id')).get('id__count')
 
     # paypaltotal = Payment.objects.filter(payment_method = 'Paypal').aggregate(Sum('amount')).get('amount__sum')
-    pay = Payment.objects.filter(payment_method = 'Paypal').aggregate(Count('id')).get('id__count')
+    pay = Payment.objects.filter(payment_method = 'paypal').aggregate(Count('id')).get('id__count')
 
     # ordertotal = Payment.objects.all().aggregate(Sum('amount')).get('amount__sum')
 
@@ -496,16 +496,7 @@ def order_Delivered(request,id):
 
     return redirect(Adminvieworder_Details)
 
-def order_Returned(request,id):
-    user=request.user
-    orderproductdetails=Order_Product.objects.get(id=id)
-    print(orderproductdetails.status)
-    orderproductdetails.status='Returned'
-    print('------------------')
-    orderproductdetails.save()
-    print(orderproductdetails.status)
 
-    return redirect(Adminvieworder_Details)
 
 # ---------------------------------------------------------------------------- #
 #                           admin logout here. session is deleted              #

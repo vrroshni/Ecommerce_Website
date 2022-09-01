@@ -36,16 +36,19 @@ def add_ToCart(request,id):
         cart__id=Cart.objects.get(cart_id=create_cart_id(request))#took sessionkeyif it is exists
     except Cart.DoesNotExist:
         cart__id=Cart.objects.create(cart_id=create_cart_id(request))#created sessionkey if it doesnot exists  
+        messages.success(request,'Your Product is Added to Your cart')
         cart__id.save()
     # to take objects from Cart_Products
     try:
         cart_items=Cart_Products.objects.get(product=product,cart=cart__id)
         if cart_items.quantity<cart_items.product.stock:#checking quantity with stock
             cart_items.quantity+=1#increasing the quantity 
+        messages.success(request,'Your Product is Added to Your cart')
         cart_items.save()
     except Cart_Products.DoesNotExist:#not available,create one
         cart_items=Cart_Products.objects.create(product=product,quantity=1,cart=cart__id)
         cart_items.save()
+        messages.success(request,'Your Product is Added to Your cart')
     return redirect(index)
 
 
@@ -81,15 +84,31 @@ def decrease_quantity_cart(request,id):
         pass
     return redirect(view_cart)
 
+# ----------------------- increase the quantity in cart ---------------------- #
+def increase_quantity_cart(request,id):
+    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+    if cart_items.quantity>=1:
+        cart_items.quantity+=1
+        cart_items.save()
+    else:
+        pass
+    return redirect(view_cart)
+
 
 
 
 # ------------------------- delete product from cart ------------------------- #
 def delete_product_cart(request,id):
-    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
-    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
-    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
-    cart_items.delete()
+    if request.method=='POST':
+        print("KOOOII")
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+        cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+        # messages.error(request,'Product is Removed From Cart')
+        cart_items.delete()
+    
     return redirect(view_cart)
 
 

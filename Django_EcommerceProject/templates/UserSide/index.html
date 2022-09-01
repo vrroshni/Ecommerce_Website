@@ -120,7 +120,7 @@
                                             <div class="product-price-wrapper">
                                                 <span class="money"> ₹{{product.price}}</span>
                                             </div>
-                                            <a href="{% url 'AddToCart' product.id %}" class="add-to-cart" onclick="swal () ,cart()" >
+                                            <a href="{% url 'AddToCart' product.id %}" class="add-to-cart" >
                                                 <i class="la la-plus"></i>
                                                 <span>Add To Cart</span>
                                             </a>
@@ -877,25 +877,7 @@
 <!-- Main Content Wrapper End -->
 {% endblock %}
 {% block CustomScripts %}
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script>
-
-// function addToCart(){
-    swal({
-    title: 'Login Success',
-    text: 'Redirecting...',
-    icon: 'success',
-    timer: 2000,
-    buttons: false,
-})
-.then(() => {
-    dispatch(redirect('/'));
-})
-    
-
-</script>
 
 
 {% endblock %}

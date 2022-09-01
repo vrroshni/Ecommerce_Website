@@ -26,7 +26,6 @@
     <!-- style css -->
     <link rel="stylesheet" href="{% static 'templateresources/assets/css/main.css ' %}">
     <!-- custom links -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     {% block externalLinks %}
     {% endblock %}
@@ -599,8 +598,9 @@
     <script src="{% static 'templateresources/assets/js/vendor.js' %}"></script>
     <script src="{% static 'templateresources/assets/js/main.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+
 
 
     <script>
@@ -612,6 +612,26 @@
     </script>
 
     <!-- Main JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    swal("Removed Item!","{{message}}!","warning",{
+ 
+})
+    
+    {% else %}
+    
+    swal("Good job!","{{message}}!","success", {
+  button: "OK!",
+})
+     {% endif %}
+     {% endfor %}
+    
+</script>
     
     {% block CustomScripts %}
     {% endblock %}

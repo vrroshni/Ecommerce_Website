@@ -47,8 +47,9 @@ urlpatterns = [
         path('order_Shipped/<int:id>',views.order_Shipped,name='order_Shipped'),
         path('order_Out_For_delivery/<int:id>',views.order_Out_For_delivery,name='order_Out_For_delivery'),
         path('order_Delivered/<int:id>',views.order_Delivered,name='order_Delivered'),
-        path('order_Returned/<int:id>',views.order_Returned,name='order_Returned'),
+        # path('order_Returned/<int:id>',views.order_Returned,name='order_Returned'),
 
+        
 
 
 

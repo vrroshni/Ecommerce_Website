@@ -47,7 +47,14 @@
                                         {% for i in Cart_items %}
                                         <tbody>
                                             <tr>
-                                                <td class="product-remove text-start"><a href="{% url 'DeleteFromCart' i.product.id %}"><i class="la la-remove"></i></a></td>
+                                                <!-- <td class="product-remove text-start"><a href="{% url 'DeleteFromCart' i.product.id %}"><i class="la la-remove"></i></a></td> -->
+                                                <td class="text-start">
+                                                <form method="POST" action="{% url 'DeleteFromCart' i.product.id %}">
+                                                    {% csrf_token %}
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <i type="submit" class=" la la-remove  show_confirm product-remove text-danger" data-toggle="tooltip" title='Delete'></i>
+                                                </form>
+                                            </td>
                                                 <td class="product-thumbnail text-start">
                                                     <img src="{{i.product.Product_image.url}}" alt="Product Thumnail">
                                                 </td>
@@ -64,7 +71,7 @@
                                                 <td class="product-quantity">
                                                     
                                                         <!-- <input type="number" class="quantity-input" name="qty" id="qty-1" value="1" min="1"> -->
-                                                        <a href="{% url 'DecreaseQty' i.product.id  %}">-&nbsp;</a>{{i.quantity}}<a href="{% url 'AddToCart' i.product.id %}">&nbsp;+</a>
+                                                        <a href="{% url 'DecreaseQty' i.product.id  %}">-&nbsp;</a>{{i.quantity}}<a href="{% url 'IncreaseQty' i.product.id %}">&nbsp;+</a>
                                                     
                                                 </td>
                                                 <td class="product-total-price">
@@ -151,5 +158,27 @@
     </div>
 </div>
 <!-- Main Content Wrapper Start -->
+{% block CustomScripts %}
+<script type="text/javascript">
+    $('.show_confirm').click(function(event) {
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to Remove Product From Cart?`,
+            text: "If you remove this, it need to be added once again to cart.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+    </script>
+    {% endblock %}
+
 {% endblock %}
 

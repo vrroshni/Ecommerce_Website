@@ -1,59 +1,43 @@
-{% extends 'UserSide/base_userside.html' %}
-{% load static %}
-{% block title %}
-{% endblock %}
-{% block externalLinks %}
-{% endblock %}
-{% block contentbody %}
+{% extends 'UserSide/base_userside.html' %} {% load static %} {% block title %}
+{% endblock %} {% block externalLinks %} {% endblock %} {% block contentbody %}
 <div class="row justify-content-center mt-5">
-    <div class="col-4">
-      <img class="img-fluid" src="{% static 'project/razor.png' %}" alt="">
-  <!-- Set up a container element for the button -->
-  <div >
-    <button id="rzp-button1" class="btn  btn-size-lg  btn-block my-4 ms-2"><a>PAY NOW </a></button>
+  <div class="col-4">
+    <img class="img-fluid" src="{% static 'project/razor.png' %}" alt="" />
+    <!-- Set up a container element for the button -->
+    <div>
+      <form
+        class="text-center border border-light p-5"
+        action="success"
+        method="POST"
+      >
+        {% csrf_token %}
 
-  </div>
-  </div>
-  </div>
-{% endblock %}
-{% block CustomScripts %}
+        <input
+          type="name"
+          name="name"
+          id="name"
+          required
+          class="form-control mb-4"
+          placeholder="Name"
+        />
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-var options = {
-"key": "rzp_test_u6wVuQH1CZfo2w", // Enter the Key ID generated from the Dashboard
-"amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-"currency": "INR",
-"name": "Heavenly Bakes",
-"description": "Test Transaction",
-"image": "https://example.com/your_logo",
-"order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 2
-"callback_url": "orderconfirmed",
-"prefill": {
-"name": "Gaurav Kumar",
-"email": "gaurav.kumar@example.com",
-"contact": "9999999999"
-},
-"notes": {
-"address": "Razorpay Corporate Office"
-},
-"theme": {
-"color": "#3399cc"
-}
-};
-var rzp1 = new Razorpay(options);
-rzp1.on('payment.failed', function (response){
-alert(response.error.code);
-alert(response.error.description);
-alert(response.error.source);
-alert(response.error.step);
-alert(response.error.reason);
-alert(response.error.metadata.order_id);
-alert(response.error.metadata.payment_id);
-});
-document.getElementById('rzp-button1').onclick = function(e){
-rzp1.open();
-e.preventDefault();
-}
-</script>
+        <script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          data-key="rzp_test_4IGtVl9xeiuWPZ"
+          data-amount="50000"
+          data-currency="INR"
+          data-order_id="{{payment.id}}"
+          data-buttontext="Pay with Razorpay"
+          data-name="Professional Cipher"
+          data-description="Django and Data Science"
+          data-image="https://example.com/your_logo.jpg"
+          data-prefill.name="Roshni"
+          data-prefill.email="vrroshni@gmail.com"
+          data-theme.color="#F37254"
+        ></script>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
