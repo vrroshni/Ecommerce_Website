@@ -17,6 +17,9 @@ urlpatterns = [
 
     path('cancelorder/<int:id>',views.Cancelorder,name='Cancelorder'),
 
+    path('payment-done/',views.payment_done,name='payment_done'),
+    path('payment-cancelled/',views.payment_canceled,name='payment_cancelled'),
+
 
 
 

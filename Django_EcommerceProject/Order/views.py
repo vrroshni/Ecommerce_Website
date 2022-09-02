@@ -1,4 +1,5 @@
 from ast import Pass
+import imp
 from pickle import FALSE
 from django.shortcuts import render,redirect
 from Cart.models import*
@@ -9,6 +10,7 @@ from Cart.views import *
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from paypal.standard.forms import PayPalPaymentsForm
 
 
 
@@ -129,6 +131,7 @@ def orderConfirmed(request):
 def razorPayPayment(request):
         print("HI razor")
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        global cartlist_items
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
         print(cart_itemsid)
         print(cartlist_items)
@@ -145,7 +148,9 @@ def razorPayPayment(request):
             tax = ((2 * total)/100)
             amount=tax+total
             amount=int(amount)*100           
-            print(amount)
+            print(amount) 
+
+            global payment_obj
             payment_obj=Payment()
             payment_obj.user=request.user
             payment_obj. payment_method="razorpay"
@@ -158,7 +163,7 @@ def razorPayPayment(request):
 
 
 
-
+            global Obj_Order
             Obj_Order=Order()
             Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             Obj_Order.date =date.today()
@@ -166,7 +171,8 @@ def razorPayPayment(request):
             Obj_Order.total=total
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
-            Obj_Order.is_ordered=True
+           
+           
             Obj_Order.save()
 
             for x in cartlist_items:
@@ -182,8 +188,7 @@ def razorPayPayment(request):
                 product.stock -= x.quantity
                 product.save()
                 
-            cartlist_items.delete()
-            print('deleted from cart')
+            
         if request.method == "POST":
 
             client = razorpay.Client(auth=("rzp_test_4IGtVl9xeiuWPZ", "ryeb6ntUIE8KhmaWvGzyrBMH"))
@@ -195,15 +200,54 @@ def razorPayPayment(request):
 
 @csrf_exempt
 def success(request):
+    payment_obj.payment_status="Payment Succesfull"
+    payment_obj.save(update_fields=['payment_status'])
+    print('updated paymentstatus')
+    Obj_Order.is_ordered=True
+    Obj_Order.save(update_fields=['is_ordered'])
+
+    cartlist_items.delete()
+    print('deleted from cart')
     return render(request, "Cart/success.html")
 
-    
+
+
+
+
+def paypal(request):
+
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+    host = request.get_host()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': order.hotel.price,
+        'item_name': 'Order {}'.format(order.id),
+        'invoice': str(order.id),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host, reverse('payment_cancelled')),
+    }
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'UserHome/paypal.html', {'order': order, 'form': form})
+
+
+
+
+
+
+
+
+
 # ----------------------- PayPal paymentMethod ----------------------- #
 def payPalPayment(request):
         print("HI paypal")
         user = request.user
         print(user)
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        global cartlist_items
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
 
         print(cart_itemsid)
@@ -230,6 +274,7 @@ def payPalPayment(request):
             
             print(total)
             print('printed')
+            global payment_obj
             payment_obj=Payment()
             payment_obj.user=request.user
             payment_obj. payment_method="paypal"
@@ -242,7 +287,7 @@ def payPalPayment(request):
 
 
 
-
+            global Obj_Order
             Obj_Order=Order()
             Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             Obj_Order.date =date.today()
@@ -252,6 +297,20 @@ def payPalPayment(request):
             Obj_Order.payment=payment_obj
             Obj_Order.is_ordered=True
             Obj_Order.save()
+            order = get_object_or_404(Order, id=Obj_Order.id)
+            host = request.get_host()
+
+            paypal_dict = {
+                'business': settings.PAYPAL_RECEIVER_EMAIL,
+                'amount': total,
+                'item_name': 'Order {}'.format(order.id),
+                'invoice': str(order.id),
+                'currency_code': 'USD',
+                'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+                'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+                'cancel_return': 'http://{}{}'.format(host, reverse('payment_cancelled')),
+            }
+            form = PayPalPaymentsForm(initial=paypal_dict)
             
             
             
@@ -273,5 +332,22 @@ def payPalPayment(request):
                 
             cartlist_items.delete()
             print('deleted from cart')
-            return render (request,'Cart/paypal.html',{'total':total})   
+            return render (request,'Cart/paypal.html',{'total':total,'order': order,'form': form})   
 
+@csrf_exempt
+def payment_done(request):
+    payment_obj.payment_status="Payment Succesfull"
+    payment_obj.save(update_fields=['payment_status'])
+    print('updated paymentstatus')
+    Obj_Order.is_ordered=True
+    Obj_Order.save(update_fields=['is_ordered'])
+
+    cartlist_items.delete()
+    print('deleted from cart')
+    return render(request,"Cart/success.html")
+
+
+@csrf_exempt
+def payment_canceled(request):
+    return redirect(view_cart)
+    

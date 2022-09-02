@@ -27,6 +27,7 @@ urlpatterns = [
     path('wishlist/',include('Wishlist.urls')),
 
     path('adminsite/',include('Admin.urls')),
+    path('paypal/',include('paypal.standard.ipn.urls')),
 
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

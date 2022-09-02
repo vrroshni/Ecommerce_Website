@@ -1,5 +1,48 @@
 {% extends 'UserSide/base_userside.html' %} {% load static %} {% block title %}
-{% endblock %} {% block externalLinks %} {% endblock %} {% block contentbody %}
+{% endblock %} {% block externalLinks %} 
+<style>
+
+  .razorpay-payment-button{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 100%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.razorpay-payment-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.razorpay-payment-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.razorpay-payment-button span {
+  padding-right: 25px;
+}
+
+.razorpay-payment-button span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+{% endblock %} {% block contentbody %}
 <div class="row justify-content-center mt-5">
   <div class="col-4">
     <img class="img-fluid" src="{% static 'project/razor.png' %}" alt="" />
@@ -12,14 +55,7 @@
       >
         {% csrf_token %}
 
-        <input
-          type="name"
-          name="name"
-          id="name"
-          required
-          class="form-control mb-4"
-          placeholder="Name"
-        />
+  
 
         <script
           src="https://checkout.razorpay.com/v1/checkout.js"
