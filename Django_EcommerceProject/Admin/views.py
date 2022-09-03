@@ -53,17 +53,16 @@ def adminlogin(request):
        
     return render(request,'Admin/adminlogin.html')
 
+
+
+
 # ------------------------------ Admin Dashboard ----------------------------- #
 @login_required(login_url='Adminlogin')
 @autheticatedfor_adminonly
 def adminDashboard(request):
-
     orders=Order.objects.annotate(month=ExtractMonth('date')).values('month').annotate(count=Count('id')).values('month','count')
     yearorders=Order.objects.annotate(year=ExtractYear('date')).values('year').annotate(count=Count('id')).values('year','count')
     Dayorders=Order.objects.annotate(day=ExtractDay('date')).filter(date=date.today()).values('day').annotate(count=Count('id')).values('day','count')
-    # print(request.user.is_admin)
-
-    
     print(Dayorders)
     DayNumber=[]
     YearNumber=[]
@@ -74,35 +73,16 @@ def adminDashboard(request):
     for d in orders:
         monthNumber.append(calendar.month_name[d['month']])
         totalOrders.append(d['count'])
-
     for d in yearorders:
         YearNumber.append([d['year']])
-        totaltyearorders.append(d['count'])
-    
+        totaltyearorders.append(d['count']) 
     for d in Dayorders:
         DayNumber.append([d['day']])
         totaldayorder.append(d['count'])
-
     # ---------------------------------- payment --------------------------------- #
-    Allorders = Order.objects.all()
-    # orderproduct = OrderProduct.objects.filter(product__category_name = 1)
-    
-
-    # codtotal = Payment.objects.filter(payment_method = 'cashondelivery').aggregate(Sum('amount')).get('amount__sum')
     cod = Payment.objects.filter(payment_method = 'cashondelivery').aggregate(Count('id')).get('id__count')
-       
-    # raztotal = Payment.objects.filter(payment_method = 'razorpay').aggregate(Sum('amount')).get('amount__sum')
     raz = Payment.objects.filter(payment_method = 'razorpay').aggregate(Count('id')).get('id__count')
-
-    # paypaltotal = Payment.objects.filter(payment_method = 'Paypal').aggregate(Sum('amount')).get('amount__sum')
     pay = Payment.objects.filter(payment_method = 'paypal').aggregate(Count('id')).get('id__count')
-
-    # ordertotal = Payment.objects.all().aggregate(Sum('amount')).get('amount__sum')
-
-    # --------------------------------- StockLeft -------------------------------- #
-    
-
-    
     context={
         'Order':orders,
         'MonthNumber':monthNumber,
@@ -111,17 +91,84 @@ def adminDashboard(request):
         'totaltyearorders':totaltyearorders,
         'DayNumber':DayNumber,
         'totaldayorder':totaldayorder,
-        'Allorders':Allorders,
-        # 'codtotal':codtotal,
-        # 'paypaltotal':paypaltotal,
-        # 'raztotal':raztotal,
-        # 'total':ordertotal,
         'paypal':pay,
         'raz':raz,
         'cod':cod
-
     }
     return render(request,'Admin/dashboard.html',context)
+# ------------------------------- Sales Report ------------------------------- #
+
+def salesReport(request):
+    salesreport = Order.objects.filter(is_ordered = True).order_by('-id')
+    context = {
+            'salesreport':salesreport
+        }
+
+    return render(request,'Admin/salesreport.html',context)
+
+
+def monthly_report(request,date):
+    frmdate = date
+    fm = [2022, frmdate, 1]
+    todt = [2022,frmdate,28]
+
+    salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
+    if len(salesreport)>0:
+        context = {
+            'salesreport':salesreport,
+        }
+        return render(request,'Admin/salesreport.html',context)
+
+    else:
+        messages.error(request,"No Orders")
+        return render(request,'Admin/salesreport.html')
+
+
+
+def yearly_report(request,date):
+    frmdate = date
+    fm = [frmdate, 1, 1]
+    todt = [frmdate,12,31]
+
+    salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
+    if len(salesreport)>0:
+        context = {
+            'salesreport':salesreport,
+        }
+        return render(request,'Admin/salesreport.html',context)
+
+    else:
+        messages.error(request,"No Orders")
+        return render(request,'Admin/salesreport.html')
+
+
+def date_range(request):
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate')
+        if len(fromdate)>0 and len(todate)> 0 :
+            frm = fromdate.split("-")
+            tod = todate.split("-")
+
+            fm = [int(x) for x in frm]
+            todt = [int(x) for x in tod]
+
+            salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]) ,is_ordered =True)
+
+            context = {
+                'salesreport':salesreport,
+            }
+            return render(request,'Admin/salesreport.html',context)
+        else:
+            salesreport = Order.objects.all()
+            context = {
+                'salesreport': salesreport ,
+
+             }
+    return render (request,"Admin/salesreport.html",context)
+        
+
+
 
 
 # ------------------- users data will be seen in this page ------------------- #
@@ -159,6 +206,8 @@ def UnBlockUser(request, id):
     mydata.save()
     messages.error(request, 'User is UnBlocked Successfully')
     return redirect(userdata)
+
+
 
 # ---------------------------- CategoryManagement ---------------------------- #
 # --------------------------- Adding a new category -------------------------- #

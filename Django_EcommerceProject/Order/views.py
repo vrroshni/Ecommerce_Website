@@ -122,7 +122,7 @@ def CashonDelivery(request):
 
 
 
-@csrf_exempt
+@csrf_exempt  
 def orderConfirmed(request):
         return render (request,"Order/Order_Confirm.html")
 

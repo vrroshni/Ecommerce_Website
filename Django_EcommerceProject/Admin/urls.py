@@ -10,6 +10,13 @@ urlpatterns = [
 
 # ------------------------------ Admin Dashboard ----------------------------- #
         path('dashboard',views.adminDashboard,name='AdminDashboard'),
+        path('salesreport',views.salesReport,name='SalesReport'),
+        path("monthly_report/<int:date>/",views.monthly_report,name="monthly_report"),
+        path("yearly_report/<int:date>/",views.yearly_report,name="yearly_report"),
+        path("date_range",views.date_range,name="date_range"),
+
+
+
 
 
 

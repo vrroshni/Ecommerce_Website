@@ -1,0 +1,237 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block headerandfooter %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"> 
+    <!-- Content Header (Page header) -->
+    <div class="content-header sty-one">
+      <h1 class="text-black">Report</h1>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+        <li><i class="fa fa-angle-right"></i> Report</li>
+      </ol>
+      <div class="d-flex justify-content-between">
+        <div class="dropdown">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+          Monthly Report
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'monthly_report' 1 %}">January</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 2 %}">February</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 3 %}">March</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 4 %}">April</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 5 %}">May</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 6  %}">June</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 7 %}">July</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 8 %}">August</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 9 %}">September</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 10 %}">October</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 11 %}">November</a>
+            <a class="dropdown-item" href="{% url 'monthly_report' 12 %}">December</a>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form method="POST" action = "{% url 'date_range' %}">
+          {% csrf_token %}
+        From :&nbsp<input type='date' name="fromdate"  />&nbsp &nbsp &nbsp
+        To :&nbsp<input type='date' name="todate" />
+        <input type="submit" value="Search" class="btn btn-info dropdown-toggle"/>
+        </form>
+        </div>
+    <div class="dropdown mx-3">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+          Yearly Report
+        </button>
+        <div class="dropdown-menu">
+          
+          <a class="dropdown-item" href="{% url 'yearly_report' 2022 %}">2022</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2021 %}">2021</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2020 %}">2020</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2019 %}">2019</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2018 %}">2018</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2017 %}">2017</a>
+          <a class="dropdown-item" href="{% url 'yearly_report' 2016 %}">2016</a>
+          
+      
+        </div>
+      </div> 
+      </div>
+    <!-- Main content -->
+    <div class="content">
+      <div class="info-box">
+      <h4 class="text-black">Data Export</h4>
+
+      <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-hover" data-name="cool-table">
+                    <thead>
+                      <tr>
+                        <th>ID #</th>
+                        <th>total</th>
+                        <th>payment_method</th>
+                        <!-- <th style="width:19%;">status</th> -->
+                        <!-- <th>date</th>
+            
+                        <th>payment</th> -->
+                        <th>Date</th>
+
+                        <!-- <th>Data</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for x in  salesreport %}
+                      <tr>
+                        <td>{{x.order_id}}</td>
+                        
+                        <!-- <td>{{x.payment}}</td> -->
+                        <td>{{x.total}}</td>
+                        
+                        <td>{{x.payment.payment_method}}</td>
+                        
+                        
+                        <!-- <td>  -->
+                          <!-- <form action="{% url 'change_status' x.id %}" method="POST"> -->
+                            <!-- {% csrf_token %} -->
+                          <!-- <label>{{x.status}}</label> -->
+                          <!-- <select class="nice-select" name="status" value="status">
+                            <option>{{x.status}}</option>
+                            <option>order conformed</option>
+                              <option>shipped</option>
+                              <option>out for delivery</option>
+                              <option>delivered</option>
+                              <option>cancelled</option>
+                              <option>returned</option> -->
+                          <!-- </select> -->
+                      <!-- </div> -->
+
+                    <!-- </td>
+                    <td>
+                      <button class="btn "> submit</button>
+                    </td> -->
+                    </form>
+                        </select></td>
+                        <td>{{x.date}}</td>
+                    
+                        </td>
+                        
+                      </tr> 
+                    {% endfor %}
+                     </tbody>
+                  </table>
+                  </div>
+      </div>
+      {% if messages %}
+      {% for message in messages %}
+          {{message}}
+      {% endfor %}
+  {% endif %}
+</div>
+<script>
+  $(function ( ) {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging': true,
+      'lengthChange': false,
+      'searching': false,
+      'ordering': true,
+      'info': true,
+      'autoWidth': false
+    })
+  })
+</script>
+
+<script src="{% static 'dist/plugins/table-expo/filesaver.min.js' %}"></script>
+<script src="{% static 'dist/plugins/table-expo/xls.core.min.js' %}"></script>
+<script src="{% static 'dist/plugins/table-expo/tableexport.js' %}"></script>
+<script>
+  $("table").tableExport({ formats: ["xlsx", "xls", "csv", "txt"], });
+</script>
+<!-- ./wrapper --> 
+
+{% endblock %}
+
+
+def salesreport(request):
+    salesreport = order.objects.filter(is_ordered = True).order_by('-id')
+    
+    if request.method  == 'POST':
+        search = request.POST["salesreport_search"]
+        salesreports = order.objects.filter(order_id__contains = search)
+        context = {
+            'salesreport':salesreports
+        }
+        return render (request,"salesreport.html",context)
+   
+    context = {
+            'salesreport':salesreport
+        }
+    return render (request,"salesreport.html",context)
+
+
+def date_range(request):
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate')
+        if len(fromdate)>0 and len(todate)> 0 :
+            frm = fromdate.split("-")
+            tod = todate.split("-")
+
+            fm = [int(x) for x in frm]
+            todt = [int(x) for x in tod]
+
+            salesreport = order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]) ,is_ordered =True)
+
+            context = {
+                'salesreport':salesreport,
+            }
+
+            return render(request,'salesreport.html',context)
+
+        else:
+            salesreport = order.objects.all()
+            context = {
+                'salesreport': salesreport ,
+
+             }
+            
+
+
+    return render (request,"salesreport.html",context)
+        
+
+
+def monthly_report(request,date):
+    frmdate = date
+    fm = [2022, frmdate, 1]
+    todt = [2022,frmdate,28]
+
+    salesreport = order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
+    if len(salesreport)>0:
+        context = {
+            'salesreport':salesreport,
+        }
+        return render(request,'salesreport.html',context)
+
+    else:
+        messages.error(request,"No Orders")
+        return render(request,'salesreport.html')
+
+def yearly_report(request,date):
+    frmdate = date
+    fm = [frmdate, 1, 1]
+    todt = [frmdate,12,31]
+
+    salesreport = order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
+    if len(salesreport)>0:
+        context = {
+            'salesreport':salesreport,
+        }
+        return render(request,'salesreport.html',context)
+
+    else:
+        messages.error(request,"No Orders")
+        return render(request,'salesreport.html')
