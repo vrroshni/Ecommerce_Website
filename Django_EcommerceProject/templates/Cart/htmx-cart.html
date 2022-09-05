@@ -1,3 +1,141 @@
-<!-- <a type="button" hx-delete="{% url 'DecreaseQty' i.product.id  %}" hx-target="#cat_htmx" hx-swap="outerhtml">-&nbsp;</a>{{i.quantity}}
-<a  type="button" hx-delete="{% url 'AddToCart' i.product.id %}" hx-target="#cat_htmx" hx-swap="outerhtml">&nbsp;+</a> -->
-{% include 'Cart/htmx-cart.html' %}
+
+    <div class="container" id="tasks" hx-target="#tasks" hx-swap="outerHTML">
+        <div class="row">
+
+            {% if Cart_items %}
+            <div class="col-lg-8 mb-md--50">
+                <div class="row g-0">
+                    <div class="col-12">
+                        <div class="table-content table-responsive">
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Product Image </th>
+                                        <th class="text-start">Product</th>
+                                        <th>price</th>
+                                        <th>quantity</th>
+                                        <th>total</th>
+                                    </tr>
+                                </thead>
+                                {% for i in Cart_items %}
+                                <tbody>
+                                    <tr>
+                                        <!-- <td class="product-remove text-start"><a href="{% url 'DeleteFromCart' i.product.id %}"><i class="la la-remove"></i></a></td> -->
+                                        <td class="text-start">
+                                            <form method="POST" action="{% url 'DeleteFromCart' i.product.id %}">
+                                                {% csrf_token %}
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                <i type="submit"
+                                                    class=" la la-remove  show_confirm product-remove text-danger"
+                                                    data-toggle="tooltip" title='Delete'></i>
+                                            </form>
+                                        </td>
+                                        <td class="product-thumbnail text-start">
+                                            <img src="{{i.product.Product_image.url}}" alt="Product Thumnail">
+                                        </td>
+                                        <td class="product-name text-start wide-column">
+                                            <h3>
+                                                <a href="{% url 'showParticularproducts' i.product.id  %}">
+                                                    {{i.product.product_name}}</a>
+                                            </h3>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="product-price-wrapper">
+                                                <span class="money">₹{{i.product.price}}</span>
+                                            </span>
+                                        </td>
+                                        <div>
+                                        <td class="product-quantity">
+
+                                            <!-- <input type="number" class="quantity-input" name="qty" id="qty-1" value="1" min="1"> -->
+                                            <a
+                                                href="{% url 'DecreaseQty' i.product.id  %}">-&nbsp;</a>{{i.quantity}}<a
+                                                href="{% url 'IncreaseQty' i.product.id %}">&nbsp;+</a>
+
+                                        </td>
+                                    </div>
+                                        <td class="product-total-price">
+                                            <span class="product-price-wrapper">
+                                                <span class="money">₹{{i.product.price|mul:i.quantity}}</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+
+                        <div class="row g-0 border-top pt--20 mt--20">
+                            <div class="col-sm-5">
+                                <div class="coupon d-flex">
+                                    <input type="text" id="coupon" name="coupon" class="cart-form__input"
+                                        placeholder="Coupon Code">
+                                    <button type="submit" class="cart-form__btn">Apply Coupon</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 text-sm-end">
+                                <a href="{% url 'Index' %}"></a><button type="submit" class="cart-form__btn ">Update
+                                    Cart</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-collaterals">
+                    <div class="cart-totals">
+                        <h5 class="font-size-14 font-bold mb--15">Cart totals</h5>
+                        <div class="cart-calculator">
+                            <div class="cart-calculator__item">
+                                <div class="cart-calculator__item--head">
+                                    <span>Subtotal</span>
+                                </div>
+                                <div class="cart-calculator__item--value">
+                                    <span>₹{{Subtotal}}</span>
+                                </div>
+                            </div>
+
+                            <div class="cart-calculator__item">
+                                <div class="cart-calculator__item--head">
+                                    <span>Tax</span>
+                                </div>
+                                <div class="cart-calculator__item--value">
+                                    <span>₹{{Tax}}</span>
+                                    <p>(Calculated Tax)</p>
+                                </div>
+                            </div>
+
+                            <div class="cart-calculator__item order-total">
+                                <div class="cart-calculator__item--head">
+                                    <span>Total</span>
+                                </div>
+                                <div class="cart-calculator__item--value">
+                                    <span class="product-price-wrapper">
+                                        <span class="money">₹ {{Total}}</span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{% url 'AddressAdd'%}" class="btn btn-size-md btn-shape-square btn-fullwidth">
+                        Proceed To Checkout
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+
+        {% else %}
+
+        <div class="text-center m-4">
+            <h1>Your Cart is Empty</h1>
+            <a href="{% url 'Index'  %}"><button class="btn btn-size-md mt-2">Back to Home</button></a>
+        </div>
+
+        {% endif %}
+    </div>

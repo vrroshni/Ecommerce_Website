@@ -1,6 +1,8 @@
 from django.db import models
 from Admin.models  import  *
 from Accounts.models import *
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 
 # Create your models here.
@@ -28,17 +30,7 @@ class Cart_Products(models.Model):
         return self.product.price * self.quantity
 
 
-# class UserProfile(models.Model):
-#     user                        = models.ForeignKey(Account, on_delete=models.CASCADE)
-#     address_line_1              = models.CharField(max_length=100, blank=True)
-#     address_line_2              = models.CharField(max_length=100, blank=True)
-#     profile_picture             = models.ImageField(null=True ,blank=True,  upload_to='photos/userprofile')
-#     city                        = models.CharField( max_length=20)
-#     state                       = models.CharField( max_length=20)
-#     country                     = models.CharField( max_length=20)
 
-#     def __str__(self):
-#         return self.user.first_name
 
 
 
@@ -54,4 +46,33 @@ class Address(models.Model):
     country                     = models.CharField( max_length=20,default='India')
 
     def __str__(self):
-        return self.Buyername                   
+        return self.Buyername          
+
+
+
+class Categoryoffer(models.Model):
+    category= models.OneToOneField(Categories, related_name='category_offers', on_delete=models.CASCADE)
+    discount= models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)],null=True,default=0)
+    is_active = models.BooleanField(default=True)
+
+
+    def __str__(self):   
+     return self.category.title    
+
+class SubCategoryoffer(models.Model):
+    subcategory= models.OneToOneField(SubCategories, related_name='subcategory_offers', on_delete=models.CASCADE)
+    discount= models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)],null=True,default=0)
+    is_active = models.BooleanField(default=True)
+
+
+    def __str__(self):   
+     return self.subcategory.title     
+
+class Productoffer(models.Model):
+    product= models.OneToOneField(Products, related_name='subcategory_category_offers', on_delete=models.CASCADE)
+    discount= models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)],null=True,default=0)
+    is_active = models.BooleanField(default=True)
+
+
+    def __str__(self):   
+     return self.product.product_name 

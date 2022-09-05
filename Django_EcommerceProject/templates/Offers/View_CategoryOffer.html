@@ -1,0 +1,79 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Offers On Categories
+{% endblock %}
+{% block pagetitle %}
+Offers On Categories
+{% endblock  %}
+{% block body %}
+
+
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active "><a href="javascript:void(0)"></a></li>
+                
+            </ol>
+        </div>
+        {% if CategoryOffer %}
+        <div class="row" >
+            {% for value in CategoryOffer %}
+            <div class="col-xl-3 col-lg-6 col-sm-6" >
+                <div class="card">
+                    <div class="card-body">
+                        <div class="new-arrival-product">
+                            <div class="new-arrivals-img-contnent">
+                                <img class="img-fluid" src="{% static 'project/catoffer.png' %}" alt="">
+                            </div>
+                            <div class="new-arrival-content text-center mt-3">
+                                <h4><a href="#">{{value.category.title}}</a></h4>
+                                <p class="text-content text-danger"><b>Discount:{{value.discount}}%</b> </p>
+                                
+                                
+                                <a href="{% url 'EditCategoryOffer' value.id %}"><button type="button" class="btn light btn-secondary btn-xs ">Edit</button></a>
+                                <a href="{% url 'DeleteCategoryOffer' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Delete</button></a>
+                                <hr>
+                                {% if value.is_active %}
+                                        <a href="{% url 'BlockCategoryOffer' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Block</button></a> 
+
+                                        {% else %}
+                                        <a href="{% url 'UnBlockCategoryOffer' value.id %}"><button type="button" class="btn light btn-success btn-xs">UnBlock</button></a> 
+
+                                        {% endif %}
+
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+         <!-- ---------------------------------- Pagination ---------------------------------- -->
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if CategoryOffer.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="categoryoffers?page={{CategoryOffer.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="categoryoffers?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if CategoryOffer.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="categoryoffers?page={{CategoryOffer.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+     </nav>
+    </div>
+
+{% endblock %}

@@ -118,7 +118,10 @@
                                         <h3 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}</a></h3>
                                         <div class="product-info-bottom">
                                             <div class="product-price-wrapper">
-                                                <span class="money"> ₹{{product.price}}</span>
+                                                <span class="money">₹{{product.price}}</span>
+                                                <span class="money">₹{{product.discount_price}}</span>
+                                                
+
                                             </div>
                                             <a href="{% url 'AddToCart' product.id %}" class="add-to-cart" >
                                                 <i class="la la-plus"></i>

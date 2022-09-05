@@ -53,6 +53,7 @@ class Products(models.Model):
     product_description=models.TextField()
     product_long_description=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
+    discount_price=models.IntegerField(default=0)
     
     def __str__(self):
         return self.product_name

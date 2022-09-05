@@ -55,45 +55,130 @@ def add_ToCart(request,id):
 
 #------------------------ list the items in the cart ------------------------ #
 @login_required(login_url='Index')
-def view_cart(request,total=0,count=0,cartlist_items=None):
+def view_cart(request,total=0,count=0,cartlist_items=None,rawtotal=0):
     try:
         cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
         cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
         for i in cartlist_items:
-                    total+=(i.product.price*i.quantity)
-                    count+=i.quantity
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity)                   
     except ObjectDoesNotExist:
            pass
+    print(rawtotal)#without discount    
     subtotal=total
-    tax = (2 * total)/100
-    total=tax+total
-    return render(request,'Cart/ViewCart.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax,'Subtotal':subtotal})
+    print('after discount')
+    print(subtotal)#with discount
+    tax = (2 * subtotal)/100
+    alltotal=tax+subtotal#after having tax
+    context={
+        'Cart_items':cartlist_items,
+        'Total':alltotal,
+        'Count':count,
+        'Tax':tax,
+        'Subtotal':subtotal,
+        'WithOutDiscount':rawtotal
+
+
+    }
+    return render(request,'Cart/ViewCart.html',context)
 
 
 
 
 # ----------------------- decrease the quantity in cart ---------------------- #
 def decrease_quantity_cart(request,id):
-    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
-    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
-    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
-    if cart_items.quantity>1:
-        cart_items.quantity-=1
-        cart_items.save()
-    else:
-        pass
+    total=0
+    count=0
+    cartlist_items=None
+    rawtotal=0
+    try:
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True,)
+        for i in cartlist_items:
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity) 
+        cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+        if cart_items.quantity>1:
+            cart_items.quantity-=1
+            cart_items.quantity-=1
+            print(cart_items.quantity)
+            cart_items.save()
+        else:
+            pass
+    except ObjectDoesNotExist:
+           pass
+    print(rawtotal)#without discount    
+    subtotal=total
+    print('after discount')
+    print(subtotal)#with discount
+    tax = (2 * subtotal)/100
+    alltotal=tax+subtotal#after having tax
+    context={
+        'Cart_items':cartlist_items,
+        'Total':alltotal,
+        'Count':count,
+        'Tax':tax,
+        'Subtotal':subtotal,
+        'WithOutDiscount':rawtotal
+
+
+    }
     return redirect(view_cart)
 
 # ----------------------- increase the quantity in cart ---------------------- #
 def increase_quantity_cart(request,id):
-    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
-    product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
-    cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
-    if cart_items.quantity>=1:
-        cart_items.quantity+=1
-        cart_items.save()
-    else:
-        pass
+    total=0
+    count=0
+    cartlist_items=None
+    rawtotal=0
+    try:
+        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+        product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
+        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True,)
+        for i in cartlist_items:
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity)
+        cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
+        if cart_items.quantity>=1:
+            cart_items.quantity+=1
+            print(cart_items.quantity)
+            cart_items.save()
+        else:
+                pass
+    except ObjectDoesNotExist:
+           pass
+    print(rawtotal)#without discount    
+    subtotal=total
+    print('after discount')
+    print(subtotal)#with discount
+    tax = (2 * subtotal)/100
+    alltotal=tax+subtotal#after having tax
+    context={
+        'Cart_items':cartlist_items,
+        'Total':alltotal,
+        'Count':count,
+        'Tax':tax,
+        'Subtotal':subtotal,
+        'WithOutDiscount':rawtotal
+
+
+    }
     return redirect(view_cart)
 
 
@@ -107,15 +192,8 @@ def delete_product_cart(request,id):
         product=get_object_or_404(Products,id=id)#this will find the object from mentioned model ,in a given certain conditions
         cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
         # messages.error(request,'Product is Removed From Cart')
-        cart_items.delete()
-    
+        cart_items.delete()    
     return redirect(view_cart)
-
-
-
-
-
-
 
 
 
@@ -124,20 +202,27 @@ def add_address(request):
         total=0
         count=0
         cartlist_items=None
-    
-
+        rawtotal=0
         if request.user.is_authenticated:
             try:
                 cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
                 cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
                 for i in cartlist_items:
-                            total+=(i.product.price*i.quantity)
-                            count+=i.quantity
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity)  
             except ObjectDoesNotExist:
                 pass
+            print(rawtotal)#without discount    
             subtotal=total
-            tax = (2 * total)/100
-            total=tax+total
+            print('after discount')
+            print(subtotal)#with discount
+            tax = (2 * subtotal)/100
+            alltotal=tax+subtotal#after having tax
             addressDetails = Address.objects.filter(user=request.user)
             if request.method == "POST":
                     Buyername = request.POST["Buyername"]
@@ -148,42 +233,38 @@ def add_address(request):
                     city = request.POST["city"]
                     state = request.POST["state"]
                     pincode = request.POST["pincode"]
-                
-
                     if Buyername == "":
                         messages.error(request, "NameField is empty")
                         return render(request, "Cart/AddressAdd.html")
-                        
-
+            
                     elif len(Buyername) < 2:
                         messages.error(request, "Name is too short")
                         return render(request, "Cart/AddressAdd.html")
-
 
                     elif not Buyername.isalpha():
                         messages.error(request, "Name must contain alphabets")
                         return render(request, "Cart/AddressAdd.html")
 
-
                     elif not Buyername.isidentifier():
                         messages.error(request, "name start must start with alphabets")
-                        return render(request, "Cart/AddressAdd.html")
-                    
+                        return render(request, "Cart/AddressAdd.html") 
+
                     elif email == "":
                         messages.error(request, "email field is empty")
                         return render(request, "Cart/AddressAdd.html")
+
                     elif len(email) < 2:
                         messages.error(request, "email is too short")
                         return render(request, "Cart/AddressAdd.html")
+
                     elif len(phone_number) < 10:
                         messages.error(request, "Mobile Number should be 10 Digits")
                         return render(request, "Cart/AddressAdd.html")
 
-                    
-
                     elif Address.objects.filter(email=email):
                         messages.error(request, "email already exist try another")
                         return render(request, "Cart/AddressAdd.html")
+                        
                     address_data = Address(
                             Buyername=Buyername,
                             email=email,
@@ -197,8 +278,16 @@ def add_address(request):
                         )
                     address_data.save()
                     return redirect(add_address)
-        
-        return render(request,'Cart/AddressAdd.html',{'Cart_items':cartlist_items,'Total':total,'Count':count,'Tax':tax,'Subtotal':subtotal,'AddressDetails':addressDetails})
+            context={
+            'Cart_items':cartlist_items,
+            'Total':alltotal,
+            'Count':count,
+            'Tax':tax,
+            'Subtotal':subtotal,
+            'WithOutDiscount':rawtotal,
+            'AddressDetails':addressDetails
+            }
+        return render(request,'Cart/AddressAdd.html',context)
         
 
 

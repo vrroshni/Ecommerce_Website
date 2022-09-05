@@ -81,25 +81,35 @@ def CashonDelivery(request):
             total=0
             quantity=0
             count=0
+            rawtotal=0
             for i in cartlist_items:
-                    total+=(i.product.price*i.quantity)
-                    count+=i.quantity
-            tax = (2 * total)/100
-            total=tax+total
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity) 
+            print(rawtotal)#without discount    
+            subtotal=total
+            print('after discount')
+            print(subtotal)#with discount
+            tax = (2 * subtotal)/100
+            alltotal=tax+subtotal#after having tax
             # ------------------ saving Whole Order Payment details of CashonDelivey ----------------- #
             payment_obj=Payment()
             payment_obj.user=request.user
             payment_obj. payment_method="cashondelivery"
             payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             payment_obj.date =date.today()
-            payment_obj.amount=total
+            payment_obj.amount=alltotal
             payment_obj.save()
             # ------------------ saving Whole Order details of CashonDelivey ----------------- #
             Obj_Order=Order()
             Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             Obj_Order.date =date.today()
             Obj_Order.user=request.user
-            Obj_Order.total=total
+            Obj_Order.total=alltotal
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
             Obj_Order.is_ordered=True
@@ -142,12 +152,20 @@ def razorPayPayment(request):
             quantity=0
             count=0            
             for i in cartlist_items:
-                    total+=(i.product.price*i.quantity)
-                    count+=i.quantity    
-            subtotal=total            
-            tax = ((2 * total)/100)
-            amount=tax+total
-            amount=int(amount)*100           
+                    if i.product.discount_price>0:
+                        total+=(i.product.discount_price*i.quantity)
+                        count+=i.quantity
+                    else:
+                        total+=(i.product.price*i.quantity)
+                        count+=i.quantity
+                    rawtotal+=(i.product.price*i.quantity) 
+            print(rawtotal)#without discount    
+            subtotal=total
+            print('after discount')
+            print(subtotal)#with discount
+            tax = (2 * subtotal)/100
+            alltotal=tax+subtotal#after having tax   
+            amount=int(alltotal)*100           
             print(amount) 
 
             global payment_obj
@@ -156,7 +174,7 @@ def razorPayPayment(request):
             payment_obj. payment_method="razorpay"
             payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             payment_obj.date =date.today()
-            payment_obj.amount=total
+            payment_obj.amount=alltotal
             payment_obj.save()
 
 
@@ -168,7 +186,7 @@ def razorPayPayment(request):
             Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
             Obj_Order.date =date.today()
             Obj_Order.user=request.user
-            Obj_Order.total=total
+            Obj_Order.total=alltotal
             Obj_Order.address=addressdetails
             Obj_Order.payment=payment_obj
            
@@ -208,37 +226,7 @@ def success(request):
 
     cartlist_items.delete()
     print('deleted from cart')
-    return render(request, "Cart/success.html")
-
-
-
-
-
-def paypal(request):
-
-    order_id = request.session.get('order_id')
-    order = get_object_or_404(Order, id=order_id)
-    host = request.get_host()
-
-    paypal_dict = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': order.hotel.price,
-        'item_name': 'Order {}'.format(order.id),
-        'invoice': str(order.id),
-        'currency_code': 'USD',
-        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-        'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
-        'cancel_return': 'http://{}{}'.format(host, reverse('payment_cancelled')),
-    }
-    form = PayPalPaymentsForm(initial=paypal_dict)
-    return render(request, 'UserHome/paypal.html', {'order': order, 'form': form})
-
-
-
-
-
-
-
+    return render(request, "Order/Order_Confirm.html")
 
 
 # ----------------------- PayPal paymentMethod ----------------------- #
@@ -334,6 +322,25 @@ def payPalPayment(request):
             print('deleted from cart')
             return render (request,'Cart/paypal.html',{'total':total,'order': order,'form': form})   
 
+
+def paypal(request):
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+    host = request.get_host()
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': order.total,
+        'item_name': 'Order {}'.format(order.id),
+        'invoice': str(order.id),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host, reverse('payment_cancelled')),
+    }
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'UserHome/paypal.html', {'order': order, 'form': form})
+
+
 @csrf_exempt
 def payment_done(request):
     payment_obj.payment_status="Payment Succesfull"
@@ -341,11 +348,9 @@ def payment_done(request):
     print('updated paymentstatus')
     Obj_Order.is_ordered=True
     Obj_Order.save(update_fields=['is_ordered'])
-
     cartlist_items.delete()
     print('deleted from cart')
-    return render(request,"Cart/success.html")
-
+    return render(request,"Order/Order_Confirm.html")
 
 @csrf_exempt
 def payment_canceled(request):

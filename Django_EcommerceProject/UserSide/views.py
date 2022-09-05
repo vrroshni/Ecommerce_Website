@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from unicodedata import category
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth.models import auth
@@ -10,14 +11,52 @@ from Order.models import *
 from django.conf import settings
 from twilio.rest import Client
 from django.views.decorators.cache import cache_control
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
 
+#this function will save discount price in database 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
-    product=Products.objects.all()
-    return render(request,'UserSide/index.html',{'products':product})
+    allproduct=Products.objects.all()
+    #looping through all products to calculate its discount Price
+    for x in allproduct:
+        list=[]
+        # ------------------------ checking for category offer ----------------------- #
+        try:
+            category_offer=Categoryoffer.objects.get(category=x.category,is_active =True)
+            list.append(category_offer.discount)
+        except ObjectDoesNotExist:
+            print('no categoryOffer')
+            pass
+        # ------------------------ checking for subcategory offer ----------------------- #
+        try:
+            subcategory_offer=SubCategoryoffer.objects.get(subcategory=x.subcategories,is_active =True)
+            list.append(subcategory_offer.discount)
+        except ObjectDoesNotExist:
+            print('no subcategoryOffer')
+            pass
+        # ------------------------ checking for Product offer ----------------------- #
+        try:
+            product_offer=Productoffer.objects.get(product=x.id,is_active =True)
+            list.append(product_offer.discount)
+        except ObjectDoesNotExist:
+            print('no productOffer')
+            pass
+        #setting discount price zero,if we remove any ofers by chance
+        #every time we runserver offers will be setted once again        
+        x.discount_price=0
+        #incase if there is no any offers for this product 
+        if list:
+            minoffer=min(list)#finding minimum amount of offers from category,subcategory,products to apply
+            x.discount_price=x.price-(x.price*minoffer/100)#calculating amount after discount
+            x.save()
+        else:
+            pass
+    return render(request,'UserSide/index.html',{'products':allproduct})
+
+
 
 def Register(request):
     if 'username' in request.session:
@@ -44,8 +83,7 @@ def Register(request):
             elif Account.objects.filter(email=email):
                 messages.error(request, "Email exists")
                 return redirect(Register)
-            
-        
+
             user = Account.objects.create_user(
                     username=username,
                     password=password1,
@@ -53,13 +91,11 @@ def Register(request):
                     phone_number=phone_number,
                     first_name=first_name,
                     last_name=last_name
-
             )
             messages.success(request, 'You have succesfully Registered', )
             user.save()
             return redirect(Signin)
     return render(request,'UserSide/Userlogin-register.html')
-
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Signin(request):
@@ -92,8 +128,7 @@ def Signin(request):
             messages.error(request,'You are blocked!!')        
     return render(request,'UserSide/login.html')
 
-           
-    
+
 def loginotp(request,id):
     if request.method == 'POST':
         user      = Account.objects.get(id=id)
@@ -128,21 +163,15 @@ def userProfileInfo(request):
     user=request.user
     orderproductdetails=Order_Product.objects.filter(user=user)
     addressDetails = Address.objects.filter(user=request.user)
-
-
- 
     if request.method == 'POST':
-
         user.first_name=request.POST['first_name']
         user.last_name=request.POST['last_name']
         user.username=request.POST['username']
         user.email=request.POST['email']
-
         user.phone_number=request.POST['phone_number']
         if user.first_name =="" or  user.last_name =="" or  user.username =="" or user.email =="":
             messages.error(request,"Fields Can't be Empty") 
             return redirect(userProfileInfo)
-
         user.save()
         return redirect(userProfileInfo)
     context={
@@ -153,18 +182,11 @@ def userProfileInfo(request):
     return render(request,'UserSide/UserProfile.html',context)
 
 
-
-
-
 def showParticularproducts(request,id):
     product=Products.objects.get(id=id)
     return render(request,'UserSide/showParticularproducts.html',{'product':product})
-    
-  
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def Userlogout(request):
-    # if 'username' in request.session:
-    #    request.session.flush()
     auth.logout(request)
     return redirect(index)

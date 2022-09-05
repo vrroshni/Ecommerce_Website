@@ -1,0 +1,53 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block pagetitle %}
+Edit ProductOffer				
+{% endblock  %}
+{% block styles %}
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+<div class="col-6 " style="margin-top: 100px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Edit ProductOffer</h4>
+        </div>
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Product</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="product_name"  >
+                                {% for x in Products %}
+                                <option value="{{x.id}}">{{x.product_name}}</option >
+                                {% endfor %}
+                            </select> 
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Discount</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="discount" class="form-control" placeholder="Enter Discount " value="{{ProductOfferObj.discount}}">
+                        </div>
+                    </div>
+                   
+  
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Update this Offer to Product </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block CustomScripts %}
+{% endblock %}

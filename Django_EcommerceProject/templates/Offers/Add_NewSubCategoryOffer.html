@@ -1,0 +1,52 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block pagetitle %}
+Add New SubCategoryOffer				
+{% endblock  %}
+{% block styles %}
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+<div class="col-6 " style="margin-top: 100px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Add New SubCategoryOffer</h4>
+        </div>
+        <div class="card-body">
+            <div class="basic-form">
+                <form method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">SubCategory</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="subcategory_name"  >
+                                {% for y in SubCategory %}
+                                <option value="{{y.id}}">{{y.title}}</option >
+                                {% endfor %}
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Discount</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="discount" class="form-control" placeholder="Enter Discount ">
+                        </div>
+                    </div>
+                   
+  
+                    <div class="mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Add Offer to this SubCategory </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block CustomScripts %}
+{% endblock %}

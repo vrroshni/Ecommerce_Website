@@ -1,0 +1,81 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block title %}
+Offers On SubCategories
+{% endblock %}
+{% block pagetitle %}
+Offers On SubCategories
+{% endblock  %}
+{% block body %}
+
+
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active "><a href="javascript:void(0)"></a></li>
+                
+            </ol>
+        </div>
+        {% if SubCategoryOffer %}
+        <div class="row" >
+            {% for value in SubCategoryOffer %}
+            <div class="col-xl-3 col-lg-6 col-sm-6" >
+                <div class="card">
+                    <div class="card-body">
+                        <div class="new-arrival-product">
+                            <div class="new-arrivals-img-contnent">
+                                <img class="img-fluid" src="{% static 'project/subcat.jpg' %}" alt="">
+                            </div>
+                            <div class="new-arrival-content text-center mt-3">
+                                <h4><a href="#">{{value.subcategory.title}}</a></h4>
+                                <p class="text-content text-danger">Discount:<b>{{value.discount}}%</b> </p>
+                             
+
+                                
+                                
+                                <a href="{% url 'EditSubCategoryOffer' value.id %}"><button type="button" class="btn light btn-secondary btn-xs ">Edit</button></a>
+                                <a href="{% url 'DeleteSubCategoryOffer' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Delete</button></a>
+                              
+                                {% if value.is_active %}
+                                        <a href="{% url 'BlockSubCategoryOffer' value.id %}"><button type="button" class="btn light btn-danger btn-xs">Block</button></a> 
+
+                                        {% else %}
+                                        <a href="{% url 'UnBlockSubCategoryOffer' value.id %}"><button type="button" class="btn light btn-success btn-xs">UnBlock</button></a> 
+
+                                        {% endif %}
+
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+         <!-- ---------------------------------- Pagination ---------------------------------- -->
+      <nav class="d-flex justify-content-center">
+        <ul class="pagination pagination-circle">
+            {% if SubCategoryOffer.has_previous %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="subcategoryoffers?page={{SubCategoryOffer.previous_page_number}}">
+                    <i class="la la-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for n in totalPagelist %}
+            <li class="page-item ">
+                <a class="page-link" href="subcategoryoffers?page={{n}}">{{n}}</a>
+            </li>
+            {% endfor %}
+            
+            {% if SubCategoryOffer.has_next %} 
+            <li class="page-item page-indicator">
+                <a class="page-link" href="subcategoryoffers?page={{SubCategoryOffer.next_page_number}}">
+                    <i class="la la-angle-right"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+     </nav>
+    </div>
+
+{% endblock %}

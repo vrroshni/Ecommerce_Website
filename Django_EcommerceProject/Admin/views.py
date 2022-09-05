@@ -1,3 +1,5 @@
+from email import message
+from hmac import new
 from itertools import count
 from multiprocessing import context
 from turtle import title
@@ -44,7 +46,7 @@ def adminlogin(request):
                 auth.login(request,user)
                 request.session['username'] = username
                 messages.success(request, 'Welcome !!!')
-                return redirect(userdata)
+                return redirect(adminDashboard)
             else :
                 messages.error(request,'You are not authenticated to view coming pages')
         else:
@@ -79,7 +81,8 @@ def adminDashboard(request):
     for d in Dayorders:
         DayNumber.append([d['day']])
         totaldayorder.append(d['count'])
-    # ---------------------------------- payment --------------------------------- #
+
+# ---------------------------------- payment --------------------------------- #
     cod = Payment.objects.filter(payment_method = 'cashondelivery').aggregate(Count('id')).get('id__count')
     raz = Payment.objects.filter(payment_method = 'razorpay').aggregate(Count('id')).get('id__count')
     pay = Payment.objects.filter(payment_method = 'paypal').aggregate(Count('id')).get('id__count')
@@ -96,13 +99,16 @@ def adminDashboard(request):
         'cod':cod
     }
     return render(request,'Admin/dashboard.html',context)
+
+
+
 # ------------------------------- Sales Report ------------------------------- #
 
 def salesReport(request):
     salesreport = Order.objects.filter(is_ordered = True).order_by('-id')
     context = {
             'salesreport':salesreport
-        }
+            }
 
     return render(request,'Admin/salesreport.html',context)
 
@@ -111,14 +117,12 @@ def monthly_report(request,date):
     frmdate = date
     fm = [2022, frmdate, 1]
     todt = [2022,frmdate,28]
-
     salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
     if len(salesreport)>0:
         context = {
             'salesreport':salesreport,
         }
         return render(request,'Admin/salesreport.html',context)
-
     else:
         messages.error(request,"No Orders")
         return render(request,'Admin/salesreport.html')
@@ -129,18 +133,15 @@ def yearly_report(request,date):
     frmdate = date
     fm = [frmdate, 1, 1]
     todt = [frmdate,12,31]
-
     salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]),is_ordered =True).order_by("-id")
     if len(salesreport)>0:
         context = {
             'salesreport':salesreport,
         }
         return render(request,'Admin/salesreport.html',context)
-
     else:
         messages.error(request,"No Orders")
         return render(request,'Admin/salesreport.html')
-
 
 def date_range(request):
     if request.method == "POST":
@@ -149,12 +150,9 @@ def date_range(request):
         if len(fromdate)>0 and len(todate)> 0 :
             frm = fromdate.split("-")
             tod = todate.split("-")
-
             fm = [int(x) for x in frm]
             todt = [int(x) for x in tod]
-
             salesreport = Order.objects.filter(date__gte = datetime.date(fm[0],fm[1],fm[2]),date__lte=datetime.date(todt[0],todt[1],todt[2]) ,is_ordered =True)
-
             context = {
                 'salesreport':salesreport,
             }
@@ -163,7 +161,6 @@ def date_range(request):
             salesreport = Order.objects.all()
             context = {
                 'salesreport': salesreport ,
-
              }
     return render (request,"Admin/salesreport.html",context)
         
@@ -177,11 +174,8 @@ def date_range(request):
 def userdata(request):
     data = Account.objects.all()
     paginator=Paginator(data,per_page=3)
-    print(paginator)
     page_number=request.GET.get('page')
-    print(page_number)
     datafinal=paginator.get_page(page_number)
-    print(datafinal)
     totalpage=datafinal.paginator.num_pages
     context={
         'datas': datafinal,
@@ -289,6 +283,107 @@ def DeleteCategory(request,id):
     return redirect(ShowCategory)
 
 # ---------------------------------------------------------------------------- #
+# ------------------------------ Category Offer ------------------------------ #
+# --------------------------- Adding category offer -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def New_CategoryOffer(request):
+    CategoryObj=Categories.objects.all()
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        category=request.POST.get("category_name")
+        discount=int(discount)
+        if Categoryoffer.objects.filter(category=category).exists():
+            print("already exists")
+            messages.info(request,"Offer already exists for this Category")
+            return redirect(View_CategoryOffers)
+        if discount>0:
+            if discount<90:
+                newCategoryOffer=Categoryoffer()
+                newCategoryOffer.discount=discount
+                newCategoryOffer.category=Categories.objects.get(id=category)
+                newCategoryOffer.save()
+                return redirect(View_CategoryOffers)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(New_CategoryOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(New_CategoryOffer)
+    return render(request,'Offers/Add_NewCategoryOffer.html',{'Category':CategoryObj})
+
+# ---------------------------- Edit CategoryOffer ---------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def Edit_CategoryOffer(request,id):
+    CategoryObj=Categories.objects.all()
+    CategoryOfferObj=Categoryoffer.objects.get(id=id)
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        category=request.POST.get("category_name")
+        discount=int(discount)
+        if discount>0:
+            if discount<90:
+                CategoryOfferObj.discount=discount
+                CategoryOfferObj.category=Categories.objects.get(id=category)
+                CategoryOfferObj.save()
+                return redirect(View_CategoryOffers)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(New_CategoryOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(New_CategoryOffer)
+    context={
+        'Category':CategoryObj,
+        'CategoryOffer':CategoryOfferObj
+    }
+    return render(request,'Offers/Edit_CategoryOffer.html',context)
+
+
+
+# --------------------------- View category Offers --------------------------- #
+def View_CategoryOffers(request):
+    CategoryOfferObj=Categoryoffer.objects.all()
+    paginator=Paginator(CategoryOfferObj,per_page=2)
+    page_number=request.GET.get('page')
+    CategoryOfferObjfinal=paginator.get_page(page_number)
+    totalpage=CategoryOfferObjfinal.paginator.num_pages
+    context={
+        'CategoryOffer':CategoryOfferObjfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+    return render(request,'Offers/View_CategoryOffer.html',context)
+
+# -------------------------- Delete A Category Offer ------------------------- #
+def Delete_CategoryOffer(request,id):
+    toDelete_CategoryOffer=Categoryoffer.objects.get(id=id)
+    toDelete_CategoryOffer.delete()
+    messages.success(request,'Offer Deleted successfully')
+    return redirect(View_CategoryOffers)
+
+# ---------------------------- Block CategoryOffer --------------------------- #
+def Block_CategoryOffer(request,id):
+    toBlock_CategoryOffer=Categoryoffer.objects.get(id=id)
+    toBlock_CategoryOffer.is_active=False
+    toBlock_CategoryOffer.save()
+    messages.error(request, 'Offer is Blocked Successfully')
+    return redirect(View_CategoryOffers)
+
+# --------------------------- Unblock CategoryOffer -------------------------- #
+def UnBlock_CategoryOffer(request,id):
+    toUnBlock_CategoryOffer=Categoryoffer.objects.get(id=id)
+    toUnBlock_CategoryOffer.is_active=True
+    toUnBlock_CategoryOffer.save()
+    messages.error(request, 'Offer is UnBlocked Successfully')
+    return redirect(View_CategoryOffers)
+
+
+
+
+
 # --------------------------- Adding a new Subcategory -------------------------- #
 @login_required(login_url='Adminlogin')
 @autheticatedfor_adminonly
@@ -376,8 +471,110 @@ def DeleteSubCategory(request,id):
     subcategory=SubCategories.objects.get(id=id)
     subcategory.delete()
     messages.success(request,"Subcategory is deleted  succesfully")
-    return redirect(ShowSubCategory)    
-# ---------------------------------------------------------------------------- #
+    return redirect(ShowSubCategory)
+
+# ------------------------------ SubCategory Offer ------------------------------ #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def New_SubCategoryOffer(request):
+    SubCategoryObj=SubCategories.objects.all()
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        subcategory=request.POST.get("subcategory_name")
+        discount=int(discount)
+        if SubCategoryoffer.objects.filter(subcategory=subcategory).exists():
+            print("already exists")
+            messages.info(request,"Offer already exists for this SubCategory")
+            return redirect(View_SubCategoryOffers)
+        
+        if discount>0:
+            if discount<90:
+                newSubCategoryOffer=SubCategoryoffer()
+                newSubCategoryOffer.subcategory=SubCategories.objects.get(id=subcategory)
+                newSubCategoryOffer.discount=discount
+                newSubCategoryOffer.save()
+                
+                return redirect(View_SubCategoryOffers)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(New_SubCategoryOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(New_SubCategoryOffer)
+    context={
+       
+        'SubCategory':SubCategoryObj,
+
+    }
+    return render(request,'Offers/Add_NewSubCategoryOffer.html',context)   
+
+
+# ---------------------------- Edit SubCategoryOffer ---------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def Edit_SubCategoryOffer(request,id):
+    SubCategoryObj=SubCategories.objects.all()
+    SubCategoryOfferObj=SubCategoryoffer.objects.get(id=id)
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        subcategory=request.POST.get("subcategory_name")
+
+        discount=int(discount)
+        if discount>0:
+            if discount<90:
+                SubCategoryOfferObj.discount=discount
+                SubCategoryOfferObj.subcategory=SubCategories.objects.get(id=subcategory)
+                SubCategoryOfferObj.save()
+                return redirect(New_SubCategoryOffer)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(Edit_SubCategoryOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(Edit_SubCategoryOffer)
+    context={
+        'Subcategory':SubCategoryObj,
+        'SubCategoryOffer':SubCategoryOfferObj
+    }
+    return render(request,'Offers/Edit_SubCategoryOffer.html',context) 
+# --------------------------- View Subcategory Offers --------------------------- #
+def View_SubCategoryOffers(request):
+    SubCategoryOfferObj=SubCategoryoffer.objects.all().order_by('id')
+    paginator=Paginator(SubCategoryOfferObj,per_page=2)
+    page_number=request.GET.get('page')
+    SubCategoryOfferObjfinal=paginator.get_page(page_number)
+    totalpage=SubCategoryOfferObjfinal.paginator.num_pages
+    context={
+        'SubCategoryOffer':SubCategoryOfferObjfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+    return render(request,'Offers/View_SubCategoryOffer.html',context)
+# -------------------------- Delete SubCategoryOffer ------------------------- #
+def Delete_SubCategoryOffer(request,id):
+    toDelete_SubCategoryOffer=SubCategoryoffer.objects.get(id=id)
+    toDelete_SubCategoryOffer.delete()
+    messages.success(request,'Offer Deleted successfully')
+    return redirect(View_SubCategoryOffers)
+
+# ---------------------------- Block SubCategoryOffer --------------------------- #
+def Block_SubCategoryOffer(request,id):
+    toBlock_SubCategoryOffer=SubCategoryoffer.objects.get(id=id)
+    toBlock_SubCategoryOffer.is_active=False
+    toBlock_SubCategoryOffer.save()
+    messages.error(request, 'Offer is Blocked Successfully')
+    return redirect(View_SubCategoryOffers)
+
+# --------------------------- Unblock SubCategoryOffer -------------------------- #
+def UnBlock_SubCategoryOffer(request,id):
+    toUnBlock_SubCategoryOffer=SubCategoryoffer.objects.get(id=id)
+    toUnBlock_SubCategoryOffer.is_active=True
+    toUnBlock_SubCategoryOffer.save()
+    messages.error(request, 'Offer is UnBlocked Successfully')
+    return redirect(View_SubCategoryOffers)
+
+
 
 # --------------------------- Adding a new Product -------------------------- #
 @login_required(login_url='Adminlogin')
@@ -477,6 +674,109 @@ def EditProduct(request, id):
         messages.success(request, 'Product is   Updated Successfully')
         return redirect(ShowProducts)
     return render(request, 'Admin/editProduct.html', {'product': product,'category':category,'subcategory':subcategory})
+
+
+# ------------------------------ Product Offer ------------------------------ #
+# --------------------------- Adding Product  offer -------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def New_ProductOffer(request):
+    products=Products.objects.all()
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        choosed_product=request.POST.get("product_name")
+        if Productoffer.objects.filter(product=choosed_product).exists():
+            print("already exists")
+            messages.info(request,"Offer already exists for this Product")
+            return redirect(View_ProductOffers)
+        discount=int(discount)
+        if discount>0:
+            if discount<90:
+                newProductOffer=Productoffer()
+                newProductOffer.discount=discount
+                newProductOffer.product=Products.objects.get(id=choosed_product)
+                newProductOffer.save()
+                return redirect(View_ProductOffers)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(New_ProductOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(New_ProductOffer)
+    return render(request,'Offers/Add_NewProductOffer.html',{'Products':products})
+
+# # ---------------------------- Edit ProductOffer ---------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def Edit_ProductOffer(request,id):
+    products=Products.objects.all()
+    ProductOfferObj=Productoffer.objects.get(id=id)
+    if request.method=="POST":
+        discount=request.POST.get("discount")
+        choosed_product=request.POST.get("product_name")
+        discount=int(discount)
+        if discount>0:
+            if discount<90:
+                ProductOfferObj.discount=discount
+                ProductOfferObj.category=Products.objects.get(id=choosed_product)
+                ProductOfferObj.save()
+                return redirect(View_ProductOffers)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(Edit_ProductOffer)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(Edit_ProductOffer)
+    context={
+        'Products':products,
+        'ProductOfferObj':ProductOfferObj
+    }
+    return render(request,'Offers/Edit_ProductOffer.html',context)
+
+
+
+# # --------------------------- View Product Offers --------------------------- #
+def View_ProductOffers(request):
+    ProductOfferObj=Productoffer.objects.all()
+    paginator=Paginator(ProductOfferObj,per_page=2)
+    page_number=request.GET.get('page')
+    ProductOfferObjfinal=paginator.get_page(page_number)
+    totalpage=ProductOfferObjfinal.paginator.num_pages
+    context={
+        'ProductOffer':ProductOfferObjfinal,
+        'lastpage':totalpage,
+        'totalPagelist':[ n+1 for n  in range(totalpage)]
+
+    }
+    return render(request,'Offers/View_ProductOffer.html',context)
+
+
+# -------------------------- Delete A Product Offer ------------------------- #
+def Delete_ProductOffer(request,id):
+    toDelete_ProductOffer=Productoffer.objects.get(id=id)
+    toDelete_ProductOffer.delete()
+    messages.success(request,'Offer Deleted successfully')
+    return redirect(View_ProductOffers)
+
+# ---------------------------- Block ProductOffer --------------------------- #
+def Block_ProductOffer(request,id):
+    toBlock_ProductOffer=Productoffer.objects.get(id=id)
+    toBlock_ProductOffer.is_active=False
+    toBlock_ProductOffer.save()
+    messages.error(request, 'Offer is Blocked Successfully')
+    return redirect(View_ProductOffers)
+
+# --------------------------- Unblock ProductOffer -------------------------- #
+def UnBlock_ProductOffer(request,id):
+    toUnBlock_ProductOffer=Productoffer.objects.get(id=id)
+    toUnBlock_ProductOffer.is_active=True
+    toUnBlock_ProductOffer.save()
+    messages.error(request, 'Offer is UnBlocked Successfully')
+    return redirect(View_ProductOffers)
+
+
+
+
 
 
 
