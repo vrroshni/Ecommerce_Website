@@ -167,7 +167,7 @@
                 </div>
             </div>
         </header>
-        <div >
+        <!-- <div >
 			{% if messages %}
 			<div class="container-fluid">
 				<div class="row">
@@ -186,7 +186,7 @@
 				</div>
 			</div>
         </div>
-			{% endif %}
+			{% endif %} -->
         <!-- Header End -->
         {% block contentbody %}
         {% endblock %}
@@ -599,8 +599,12 @@
     <script src="{% static 'templateresources/assets/js/main.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
-
+    <script src="https://unpkg.com/htmx.org@1.1.0"></script>
+    <script>
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+    </script>
 
 
     <script>

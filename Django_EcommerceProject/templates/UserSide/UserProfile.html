@@ -22,6 +22,26 @@
 <!-- Breadcrumb area End -->
 <!-- Main Content Wrapper Start -->
 <div class="main-content-wrapper">
+    <div >
+        {% if messages %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-6">
+                    
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger ">{{message}}</div>
+                    {% else%}
+                    <div class="alert alert-{{message.tags}}">{{message}}</div>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
     <div class="page-content-inner ptb--80 ptb-md--60 pb-sm--55">
         <div class="container">
             <div class="row">

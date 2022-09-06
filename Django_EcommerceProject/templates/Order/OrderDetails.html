@@ -75,11 +75,18 @@ Checkout
 
                                         <a href="#" class=" ">{{i.status}}</a>
                                     </td>
-                                    {% if i.status == 'Order Confirmed' %}
+                                    
                                     <td class="product-action-btn">
+                                        {% if i.status == 'Order Confirmed' %}
                                         <a href="{% url 'Cancelorder' i.id %}" class="btn-danger btn ">Cancel</a>
+                                        
+                                        {% elif i.status == 'Delivered' %}
+                                        <a href="{% url 'OrderReturn' i.id %}" class="btn-danger btn ">Return</a>
+                                        {% else  %}
+                                        {% endif %}
+
                                     </td>
-                                    {% endif %}
+                                    
                                 </tr>
                                 
                                 {% endfor %} 

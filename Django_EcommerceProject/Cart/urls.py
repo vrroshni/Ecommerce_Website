@@ -13,6 +13,10 @@ urlpatterns = [
   # ----------------------------- checkout happens ----------------------------- #
 
     path('address',views.add_address,name='AddressAdd'),
+
+    path('applycoupon',views.apply_coupon,name='apply_coupon')
+
+  
     
       
 

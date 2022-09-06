@@ -26,11 +26,12 @@ def ViewWishlist(request):
 
 @login_required(login_url='Index')
 def remove_from_wishlist(request,id):
-    user=request.user
-    remove_item=Wishlist.objects.get(id=id)
-    remove_item.delete()
-    messages.error(request,'The item is removed from  your Wishlist')
+    if request.method=='POST':
+        user=request.user
+        remove_item=Wishlist.objects.get(id=id,user=user)
+        remove_item.delete()
+        # messages.error(request,'The item is removed from  your Wishlist')
 
-    return redirect(ViewWishlist)
+        return redirect(ViewWishlist)
     
 

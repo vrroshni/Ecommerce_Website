@@ -14,8 +14,6 @@ from django.views.decorators.cache import cache_control
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
-
 #this function will save discount price in database 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
@@ -47,7 +45,7 @@ def index(request):
         #setting discount price zero,if we remove any ofers by chance
         #every time we runserver offers will be setted once again        
         x.discount_price=0
-        #incase if there is no any offers for this product 
+        #incase if there is no any offers for this product(if list is empty) 
         if list:
             minoffer=min(list)#finding minimum amount of offers from category,subcategory,products to apply
             x.discount_price=x.price-(x.price*minoffer/100)#calculating amount after discount
@@ -56,7 +54,7 @@ def index(request):
             pass
     return render(request,'UserSide/index.html',{'products':allproduct})
 
-
+    
 
 def Register(request):
     if 'username' in request.session:

@@ -42,45 +42,82 @@ Checkout
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 {% for i in Wishlist_list%}
                                 <tr>
-                                    <td class="product-remove text-start"><a href="{% url 'RemoveFromWishlist' i.id %}"><i class="la la-remove"></i></a></td>
+                                    <td class="text-start">
+                                        <form method="POST" action="{% url 'RemoveFromWishlist' i.id %}">
+                                            {% csrf_token %}
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <i type="submit"
+                                                class="la la-remove text-denger show_confirm_ product-remove text-start"
+                                                data-toggle="tooltip" title='Delete'></i>
+                                        </form>
+                                    </td>
                                     <td class="product-thumbnail text-start">
                                         <img src="{{i.wished_product.Product_image.url}}" alt="Product Thumnail">
                                     </td>
                                     <td class="product-name text-start wide-column">
                                         <h3>
-                                            <a href="{% url 'showParticularproducts' i.wished_product.id  %}">{{i.wished_product.product_name}}</a>
+                                            <a
+                                                href="{% url 'showParticularproducts' i.wished_product.id  %}">{{i.wished_product.product_name}}</a>
                                         </h3>
                                     </td>
+
                                     <td class="product-stock">
-                                        In Stock <span class="text-success">({{i.wished_product.stock}})</span>
+                                        In Stock
+                                        {% if i.wished_product.stock < 10 %} <span class="text-success">
+                                            ({{i.wished_product.stock}})Left</span>
+                                            {% endif %}
                                     </td>
+
                                     <td class="product-price">
                                         <span class="product-price-wrapper">
                                             <span class="money">₹ {{i.wished_product.price}}</span>
                                         </span>
                                     </td>
                                     <td class="product-action-btn">
-                                        <a href="{% url 'AddToCart' i.wished_product.id %}" class="btn btn-size-md">Add to cart</a>
+                                        <a href="{% url 'AddToCart' i.wished_product.id %}" class="btn btn-size-md">Add
+                                            to cart</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
                                 <div class="text-center m-4">
-                                <h1>Your WishList is Empty</h1>
-                                <a href="{% url 'Index'  %}"><button class="btn btn-size-md mt-2">Back to Home</button></a>
-                            </div>
+                                    <h1>Your WishList is Empty</h1>
+                                    <a href="{% url 'Index'  %}"><button class="btn btn-size-md mt-2">Back to
+                                            Home</button></a>
+                                </div>
                                 {% endif %}
-                                
+
                             </tbody>
                         </table>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Main Content Wrapper Start -->
+{% endblock %}
+{% block CustomScripts %}
+<script type="text/javascript">
+    $('.show_confirm_').click(function(event) {
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to Remove this Product From Your Favourites?`,
+            text: "If you remove this, you can add it back .",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+    </script>
 {% endblock %}

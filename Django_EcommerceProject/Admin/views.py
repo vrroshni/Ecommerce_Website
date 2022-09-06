@@ -172,7 +172,7 @@ def date_range(request):
 @login_required(login_url='Adminlogin')
 @autheticatedfor_adminonly
 def userdata(request):
-    data = Account.objects.all()
+    data = Account.objects.all().order_by('id')
     paginator=Paginator(data,per_page=3)
     page_number=request.GET.get('page')
     datafinal=paginator.get_page(page_number)
@@ -186,11 +186,14 @@ def userdata(request):
 
 # --------------------------- for blocking User --------------------------- #
 def BlockUser(request, id):
-    mydata = Account.objects.get(id=id)
-    mydata.is_active=False
-    mydata.save()
-    messages.success(request, 'User is Blocked Successfully')
-    return redirect(userdata)
+    print("entering")
+    if request.method=='POST':
+
+        mydata = Account.objects.get(id=id)
+        mydata.is_active=False
+        mydata.save()
+        messages.success(request, 'User is Blocked Successfully')
+        return redirect(userdata)
 
 
 # --------------------------- for Unblocking User --------------------------- #
@@ -220,8 +223,6 @@ def AddCategory(request):
                 messages.error(request, "Category fields cannot be blank")
                 print('Filed blank')
                 return redirect(AddCategory)
-        
-        
             category = Categories.objects.create(
                         title=title,description=description)
             category.save()
@@ -245,8 +246,6 @@ def ShowCategory(request):
         'totalPagelist':[ n+1 for n  in range(totalpage)]
 
     }
-
-
 
     return render(request,'Admin/showCategory.html',context)
 
@@ -283,6 +282,8 @@ def DeleteCategory(request,id):
     return redirect(ShowCategory)
 
 # ---------------------------------------------------------------------------- #
+
+
 # ------------------------------ Category Offer ------------------------------ #
 # --------------------------- Adding category offer -------------------------- #
 @login_required(login_url='Adminlogin')
@@ -775,6 +776,16 @@ def UnBlock_ProductOffer(request,id):
     return redirect(View_ProductOffers)
 
 
+# ---------------------------------- coupon ---------------------------------- #
+def add_coupons(request):
+    coupons=Coupons.objects.all()
+    if request.method=="POST":
+        coupon=request.POST['code']
+        valid_to=request.POST['validity']
+        discount=request.POST['discount']
+        coupon_code=Coupons.objects.create(coupon_code=coupon,valid_to=valid_to,discount=discount)
+
+    return render(request,'Offers/Add_coupon.html',{'coupons':coupons})
 
 
 

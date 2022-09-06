@@ -1,0 +1,15 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+Return
+{% endblock %}
+{% block externalLinks %}
+{% endblock %}
+{% block contentbody %}
+<div class=" text-center mt-5" >
+<h1>Your Order will be Returned!!</h1>
+<p class="fs-1"><b> Our Representative will contact you shortly.. <br>
+Product will be picked up by our Representative....!!!</b></p>
+<a href="{% url 'ViewOrderDetails' %}" class="btn my-5">View order Details</a>
+</div>
+{% endblock %}

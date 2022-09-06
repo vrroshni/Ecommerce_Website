@@ -75,6 +75,7 @@ def view_cart(request,total=0,count=0,cartlist_items=None,rawtotal=0):
     print(subtotal)#with discount
     tax = (2 * subtotal)/100
     alltotal=tax+subtotal#after having tax
+    request.session['Totalamount']=alltotal
     context={
         'Cart_items':cartlist_items,
         'Total':alltotal,
@@ -111,7 +112,6 @@ def decrease_quantity_cart(request,id):
         cart_items=Cart_Products.objects.get(product=product,cart=cart_itemsid)
         if cart_items.quantity>1:
             cart_items.quantity-=1
-            cart_items.quantity-=1
             print(cart_items.quantity)
             cart_items.save()
         else:
@@ -134,7 +134,7 @@ def decrease_quantity_cart(request,id):
 
 
     }
-    return redirect(view_cart)
+    return render(request,'Cart/htmx-cart.html',context)
 
 # ----------------------- increase the quantity in cart ---------------------- #
 def increase_quantity_cart(request,id):
@@ -179,7 +179,7 @@ def increase_quantity_cart(request,id):
 
 
     }
-    return redirect(view_cart)
+    return render(request,'Cart/htmx-cart.html',context)
 
 
 
@@ -222,7 +222,12 @@ def add_address(request):
             print('after discount')
             print(subtotal)#with discount
             tax = (2 * subtotal)/100
-            alltotal=tax+subtotal#after having tax
+            
+            # alltotal=tax+subtotal#after having tax
+            alltotal=request.session['Totalamount']
+            print(alltotal,'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+
+
             addressDetails = Address.objects.filter(user=request.user)
             if request.method == "POST":
                     Buyername = request.POST["Buyername"]
@@ -278,7 +283,9 @@ def add_address(request):
                         )
                     address_data.save()
                     return redirect(add_address)
+            sessiontotal=request.session['Totalamount']
             context={
+            'sessiontotal':sessiontotal,
             'Cart_items':cartlist_items,
             'Total':alltotal,
             'Count':count,
@@ -287,12 +294,32 @@ def add_address(request):
             'WithOutDiscount':rawtotal,
             'AddressDetails':addressDetails
             }
+        
         return render(request,'Cart/AddressAdd.html',context)
         
 
 
 
+def apply_coupon(request):
+    if request.method=="POST":
+        code=request.POST['code']
+        if Coupons.objects.filter(coupon_code__icontains=code,active=True):
+            obj=Coupons.objects.get(coupon_code=code)
+            discount=int(obj.discount)
+            print(discount)
+            alltotal=    request.session['Totalamount']
+            
+            
+            totalamount = alltotal-(alltotal*discount/100)
+            print(totalamount,'pppppppppppppppppppppppppppp')
+            request.session['Totalamount']=totalamount
+            
+            # obj.active=False
+            obj.save()
 
+        else:
+            messages.error(request, "Invalid Coupon")
+    return redirect(add_address)
     
 
 

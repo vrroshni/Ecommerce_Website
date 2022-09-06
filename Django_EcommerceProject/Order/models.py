@@ -56,7 +56,6 @@ class Order_Product (models.Model):
     payment = models.ForeignKey(Payment,on_delete=models.CASCADE,null=True)
     product = models.ForeignKey(Products, on_delete=models.CASCADE,null=True)
     status = models.CharField(max_length=100,choices=STATUS,default='Order Confirmed',null=True)
-
     quantity = models.IntegerField(null=True)
     product_price = models.FloatField(null=True)
    

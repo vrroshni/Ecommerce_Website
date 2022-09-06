@@ -5,6 +5,7 @@
 {% block externalLinks %}
 {% endblock %}
 {% block contentbody %}
+ 
 <section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
     <div class="container">
         <div class="row">
@@ -18,6 +19,26 @@
         </div>
     </div>
 </section>
+<div >
+			{% if messages %}
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-6">
+						
+						{% for message in messages %}
+						{% if message.tags == 'error' %}
+						<div class="alert alert-danger ">{{message}}</div>
+						{% else%}
+						<div class="alert alert-{{message.tags}}">{{message}}</div>
+						{% endif %}
+						{% endfor %}
+						
+					</div>
+				</div>
+			</div>
+        </div>
+			{% endif %}
 <div class="main-content-wrapper">
     <div class="page-content-inner pt--75 pb--80">
         <div class="container">

@@ -1,0 +1,102 @@
+{% extends 'Admin/base_admin.html' %}
+{% load static %}
+{% block pagetitle %}
+Add New CategoryOffer				
+{% endblock  %}
+{% block styles %}
+{% endblock %}
+{% block body %}
+<!--************
+        Main wrapper start
+    *************-->
+
+
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+
+            <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal"
+                data-bs-target="#exampleModalCenter">Add Coupon</button>
+
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Coupon</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Add Code</label>
+                                <div class="mb-3">
+                                    <input type="text" name="code" class="form-control input-rounded"
+                                        placeholder="Enter Code">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Validity</label>
+                                <div class="mb-3">
+                                    <input type="date" name="validity" class="form-control input-rounded"
+                                        placeholder="Enter Date">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Discount Percentage</label>
+                                <div class="mb-3">
+                                    <input type="text" name="discount" class="form-control input-rounded"
+                                        placeholder="Enter Discount Percentage">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for i in coupons %}
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h5 class="card-title">{{i.coupon_code}}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Valid from</p>
+                        <p class="card-text">{{i.valid_from}}
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <p>Valid To</p>
+                        <p class="card-text">{{i.valid_to}}
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <p>Discount Percentage</p>
+                        <p class="card-text">{{i.discount}}
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <p>Active</p>
+                        <p class="card-text">{{i.active}}
+                        </p>
+                    </div>
+                    <div class="card-footer border-0 pt-0">
+                        <p class="card-text d-inline">Edit</p>
+                        <a href="javascript:void(0);" class="card-link float-end">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

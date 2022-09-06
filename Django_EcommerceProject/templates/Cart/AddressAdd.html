@@ -30,6 +30,28 @@ Checkout
         <div class="container">
             <div class="row d-flex">
                 <div class="col-xs-6 col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- User Action Start -->
+                            <div class="user-actions user-actions__coupon">
+                                <div class="message-box mb--30">
+                                    <p><i class="la la-exclamation-circle"></i> Have A Coupon? <a class="expand-btn" href="#coupon_info"> Click Here To Enter Your Code.</a></p>
+                                </div>
+                                <div id="coupon_info" class="user-actions__form hide-in-default">
+                                    <form action="{% url 'apply_coupon' %}" method="post" class="form">
+                                        {% csrf_token %}
+                                        <p>If you have a coupon code, please apply it below.</p>
+                                        <div class="form__group d-sm-flex">
+
+                                            <input type="text" name="code" id="coupon" class="form__input mr--20 mr-xs--0" placeholder="Coupon Code">
+                                            <button type="submit" class="btn btn-size-sm">Apply Coupon</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- User Action End -->
+                        </div>
+                    </div>
                     
                     <div class="row">
                         <div class="col-12">
@@ -170,7 +192,7 @@ Checkout
                                     <tr class="order-total">
                                         <th>Order Total</th>
                                         <td class="text-right"><span class="order-total-ammount">₹
-                                                {{Total}}</span></td>
+                                                {{sessiontotal}}</span></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -184,9 +206,9 @@ Checkout
                             <div class="user-actions user-actions__coupon">
                                 <div class="message-box mb--30">
                                     <p><i class="la la-exclamation-circle"></i> <a class="expand-btn"
-                                            href="#coupon_info"> Choose Address</a></p>
+                                            href="#address_info"> Choose Address</a></p>
                                 </div>
-                                <div id="coupon_info" class="user-actions__form hide-in-default">
+                                <div id="address_info" class="user-actions__form hide-in-default">
 
                                     <p>choose from Address from Given Below.</p>
                                     <div class="form__group d-sm-flex">

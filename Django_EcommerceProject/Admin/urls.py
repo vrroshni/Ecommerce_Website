@@ -65,7 +65,8 @@ urlpatterns = [
         path('ShowProducts',views.ShowProducts,name='ShowProducts'),
         path('DeleteProducts/<int:id>',views.DeleteProducts,name='DeleteProducts'),
         path('EditProducts/<int:id>',views.EditProduct,name='EditProducts'),
-
+# ----------------------------- Coupon management ---------------------------- #
+        path('coupons',views.add_coupons,name='coupons'),
 # ------------------------------ ordermanagement(adminside) ----------------------------- #
         path('Adminvieworder_Details',views.Adminvieworder_Details,name='Adminvieworder_Details'),
         
@@ -74,7 +75,6 @@ urlpatterns = [
         path('order_Shipped/<int:id>',views.order_Shipped,name='order_Shipped'),
         path('order_Out_For_delivery/<int:id>',views.order_Out_For_delivery,name='order_Out_For_delivery'),
         path('order_Delivered/<int:id>',views.order_Delivered,name='order_Delivered'),
-        # path('order_Returned/<int:id>',views.order_Returned,name='order_Returned'),
 
         
 
