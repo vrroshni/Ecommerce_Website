@@ -82,4 +82,4 @@ class Coupons(models.Model):
     valid_from=models.DateField(auto_now=True)
     valid_to=models.DateField(null=True)
     discount=models.IntegerField(null=True)
-    active=models.BooleanField(default=True)
+    is_active=models.BooleanField(default=True)

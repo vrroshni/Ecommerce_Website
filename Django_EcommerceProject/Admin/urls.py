@@ -65,8 +65,14 @@ urlpatterns = [
         path('ShowProducts',views.ShowProducts,name='ShowProducts'),
         path('DeleteProducts/<int:id>',views.DeleteProducts,name='DeleteProducts'),
         path('EditProducts/<int:id>',views.EditProduct,name='EditProducts'),
+
 # ----------------------------- Coupon management ---------------------------- #
-        path('coupons',views.add_coupons,name='coupons'),
+        path('coupons',views.Add_coupons,name='Coupons'),
+        path('EditCoupon/<int:id>',views.Edit_Coupon,name='EditCoupon'),
+        path("BlockCoupon/<int:id>/",views.Block_Coupon,name="BlockCoupon"),
+        path("UnblockCoupon/<int:id>/",views.UnBlock_Coupon,name="UnBlockCoupon"),
+        path("DeleteCoupon/<int:id>/",views.Delete_Coupon,name="DeleteCoupon"),
+        
 # ------------------------------ ordermanagement(adminside) ----------------------------- #
         path('Adminvieworder_Details',views.Adminvieworder_Details,name='Adminvieworder_Details'),
         

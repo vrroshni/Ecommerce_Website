@@ -1,13 +1,7 @@
-from email import message
-from hmac import new
-from itertools import count
-from multiprocessing import context
-from turtle import title
-from unicodedata import category
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from django.contrib import messages
-from django.contrib.auth.models import auth,User
+from django.contrib.auth.models import auth
 from Accounts.models import *
 from .models import *
 from django.views.decorators.cache import cache_control
@@ -106,13 +100,14 @@ def adminDashboard(request):
 
 def salesReport(request):
     salesreport = Order.objects.filter(is_ordered = True).order_by('-id')
+    print(len(salesreport))
+ 
     context = {
             'salesreport':salesreport
             }
-
     return render(request,'Admin/salesreport.html',context)
 
-
+# ------------------------------- monthly based ------------------------------ #
 def monthly_report(request,date):
     frmdate = date
     fm = [2022, frmdate, 1]
@@ -128,7 +123,7 @@ def monthly_report(request,date):
         return render(request,'Admin/salesreport.html')
 
 
-
+# ------------------------------- yearly based ------------------------------- #
 def yearly_report(request,date):
     frmdate = date
     fm = [frmdate, 1, 1]
@@ -143,6 +138,7 @@ def yearly_report(request,date):
         messages.error(request,"No Orders")
         return render(request,'Admin/salesreport.html')
 
+# -------------------------- based on range of date -------------------------- #
 def date_range(request):
     if request.method == "POST":
         fromdate = request.POST.get('fromdate')
@@ -166,9 +162,10 @@ def date_range(request):
         
 
 
-
+# ------------------------------------ -- ------------------------------------ #
 
 # ------------------- users data will be seen in this page ------------------- #
+# --------------------------- pagination also done --------------------------- #
 @login_required(login_url='Adminlogin')
 @autheticatedfor_adminonly
 def userdata(request):
@@ -295,8 +292,7 @@ def New_CategoryOffer(request):
         category=request.POST.get("category_name")
         discount=int(discount)
         if Categoryoffer.objects.filter(category=category).exists():
-            print("already exists")
-            messages.info(request,"Offer already exists for this Category")
+            messages.error(request,"Offer already exists for this Category")
             return redirect(View_CategoryOffers)
         if discount>0:
             if discount<90:
@@ -458,7 +454,6 @@ def EditSubCategory(request, id):
 
         if subcategory.title =='' or subcategory.description =='' :
                 messages.error(request, "SubCategory fields cannot be blank")
-                print('Field blank')
                 return redirect(AddSubCategory)
         subcategory.save()
         messages.success(request, 'SubCategory is   Updated Successfully')
@@ -484,8 +479,7 @@ def New_SubCategoryOffer(request):
         subcategory=request.POST.get("subcategory_name")
         discount=int(discount)
         if SubCategoryoffer.objects.filter(subcategory=subcategory).exists():
-            print("already exists")
-            messages.info(request,"Offer already exists for this SubCategory")
+            messages.error(request,"Offer already exists for this SubCategory")
             return redirect(View_SubCategoryOffers)
         
         if discount>0:
@@ -687,7 +681,6 @@ def New_ProductOffer(request):
         discount=request.POST.get("discount")
         choosed_product=request.POST.get("product_name")
         if Productoffer.objects.filter(product=choosed_product).exists():
-            print("already exists")
             messages.info(request,"Offer already exists for this Product")
             return redirect(View_ProductOffers)
         discount=int(discount)
@@ -777,15 +770,73 @@ def UnBlock_ProductOffer(request,id):
 
 
 # ---------------------------------- coupon ---------------------------------- #
-def add_coupons(request):
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def Add_coupons(request):
     coupons=Coupons.objects.all()
     if request.method=="POST":
         coupon=request.POST['code']
         valid_to=request.POST['validity']
         discount=request.POST['discount']
-        coupon_code=Coupons.objects.create(coupon_code=coupon,valid_to=valid_to,discount=discount)
+        if discount>0:
+            if discount<90:
+                Coupons.objects.create(coupon_code=coupon,valid_to=valid_to,discount=discount)
 
     return render(request,'Offers/Add_coupon.html',{'coupons':coupons})
+
+
+# -------------------------------- Edit Coupon ------------------------------- #
+@login_required(login_url='Adminlogin')
+@autheticatedfor_adminonly
+def Edit_Coupon(request,id):
+    CouponDiscount=Coupons.objects.get(id=id)
+    if request.method=="POST":
+        coupon=request.POST['code']
+        valid_to=request.POST['validity']
+        discount=request.POST['discount']
+        discount=int(discount)
+        if discount>0:
+            if discount<90:
+                CouponDiscount.discount=discount
+                CouponDiscount.coupon=coupon
+                CouponDiscount.valid_to=valid_to
+                CouponDiscount.save()
+                return redirect(Add_coupons)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(Edit_Coupon)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(Edit_Coupon)
+    context={
+        
+        'CouponDiscount':CouponDiscount
+    }
+    return render(request,'Offers/Edit_coupon.html',context)
+
+# -------------------------- Delete A Coupon ------------------------- #
+def Delete_Coupon(request,id):
+    toDelete_Coupon=Coupons.objects.get(id=id)
+    toDelete_Coupon.delete()
+    messages.success(request,'Coupon Deleted successfully')
+    return redirect(Add_coupons)
+
+# ---------------------------- Block Coupon --------------------------- #
+def Block_Coupon(request,id):
+    toBlock_Coupon=Coupons.objects.get(id=id)
+    toBlock_Coupon.is_active=False
+    toBlock_Coupon.save()
+    messages.error(request, 'Coupon is Blocked Successfully')
+    return redirect(Add_coupons)
+
+# --------------------------- Unblock Coupon -------------------------- #
+def UnBlock_Coupon(request,id):
+    toUnBlock_Coupon=Coupons.objects.get(id=id)
+    toUnBlock_Coupon.is_active=True
+    toUnBlock_Coupon.save()
+    messages.error(request, 'Coupon is UnBlocked Successfully')
+    return redirect(Add_coupons)
+
 
 
 
@@ -823,7 +874,6 @@ def order_Cancelled(request,id):
     return redirect(Adminvieworder_Details)
 
 def order_Shipped(request,id):
-    user=request.user
     orderproductdetails=Order_Product.objects.get(id=id)
     print(orderproductdetails.status)
     orderproductdetails.status='Shipped'
@@ -834,7 +884,6 @@ def order_Shipped(request,id):
     return redirect(Adminvieworder_Details)
 
 def order_Out_For_delivery(request,id):
-    user=request.user
     orderproductdetails=Order_Product.objects.get(id=id)
     print(orderproductdetails.status)
     orderproductdetails.status='Out for delivery'
@@ -846,7 +895,6 @@ def order_Out_For_delivery(request,id):
 
 
 def order_Delivered(request,id):
-    user=request.user
     orderproductdetails=Order_Product.objects.get(id=id)
     print(orderproductdetails.status)
     orderproductdetails.status='Delivered'
@@ -865,7 +913,6 @@ def order_Delivered(request,id):
 def adminlogout(request):
     if 'username' in request.session:
        request.session.flush()
-    # auth.logout(request)
     return redirect(adminlogin)
 
 
