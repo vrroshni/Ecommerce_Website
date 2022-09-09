@@ -1,6 +1,4 @@
-from ast import Pass
-import imp
-from pickle import FALSE
+
 from django.shortcuts import render,redirect
 from Cart.models import*
 from Order.models import*

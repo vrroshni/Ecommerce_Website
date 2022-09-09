@@ -47,8 +47,8 @@ def index(request):
         x.discount_price=0
         #incase if there is no any offers for this product(if list is empty) 
         if list:
-            minoffer=min(list)#finding minimum amount of offers from category,subcategory,products to apply
-            x.discount_price=x.price-(x.price*minoffer/100)#calculating amount after discount
+            maxoffer=max(list)#finding minimum amount of offers from category,subcategory,products to apply
+            x.discount_price=x.price-(x.price*maxoffer/100)#calculating amount after discount
             x.save()
         else:
             pass

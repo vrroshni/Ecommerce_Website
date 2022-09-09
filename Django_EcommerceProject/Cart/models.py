@@ -83,3 +83,4 @@ class Coupons(models.Model):
     valid_to=models.DateField(null=True)
     discount=models.IntegerField(null=True)
     is_active=models.BooleanField(default=True)
+    user=models.ForeignKey(Account,on_delete=models.CASCADE,null=True)

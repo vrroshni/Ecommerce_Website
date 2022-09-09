@@ -1,3 +1,5 @@
+from ast import If
+from time import timezone
 from django.shortcuts import render,redirect,get_object_or_404
 from Admin.models import*
 from Accounts.models import*
@@ -8,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from UserSide.views import *
-
+from datetime import date
 
 # Create your views here.
 
@@ -303,23 +305,44 @@ def add_address(request):
 def apply_coupon(request):
     if request.method=="POST":
         code=request.POST['code']
-        if Coupons.objects.filter(coupon_code__icontains=code,active=True):
-            obj=Coupons.objects.get(coupon_code=code)
-            discount=int(obj.discount)
-            print(discount)
-            alltotal=    request.session['Totalamount']
-            
-            
-            totalamount = alltotal-(alltotal*discount/100)
-            print(totalamount,'pppppppppppppppppppppppppppp')
-            request.session['Totalamount']=totalamount
-            
-            # obj.active=False
-            obj.save()
+        now=date.today()
+        print(now)
 
+        if Coupons.objects.filter(coupon_code__iexact=code):
+            applying_coupon=Coupons.objects.get(coupon_code__iexact=code)
+            if Coupons.objects.filter(coupon_code__iexact=code,valid_from__lte=now,valid_to__gte=now):
+                if applying_coupon.user==request.user:
+                    print('This Coupon is Already Used,Try Another Valid Coupon')
+                    messages.error(request,'This Coupon is Already Used,Try Another Valid Coupon')
+                    return redirect(add_address)
+
+                if applying_coupon.is_active == True:
+                    discount=int(applying_coupon.discount)
+                    print(discount)
+                    alltotal=    request.session['Totalamount']
+                    totalamount = alltotal-(alltotal*discount/100)
+                    print(totalamount)
+                    request.session['Totalamount']=totalamount
+                    # applying_coupon.is_active=False #for one time use
+                    applying_coupon.user=request.user
+                    applying_coupon.save()
+                    print('coupon applied')
+                            
+                else:
+                    print('coupon invalid')
+                    messages.error(request,'This Coupon is Invalid')
+                    return redirect(add_address)
+    
+            else:
+                
+                messages.error(request,'This Coupon is Expired')
+                return redirect(add_address)
+     
         else:
-            messages.error(request, "Invalid Coupon")
+            messages.error(request,'This Coupon does not exist')
+            return redirect(add_address)
     return redirect(add_address)
+    
     
 
 

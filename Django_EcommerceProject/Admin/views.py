@@ -778,9 +778,19 @@ def Add_coupons(request):
         coupon=request.POST['code']
         valid_to=request.POST['validity']
         discount=request.POST['discount']
+        discount=int(discount)
+        if Coupons.objects.filter(coupon_code=coupon).exists():
+            messages.info(request,"This Coupon already exists ")
+            return redirect(Add_coupons)
         if discount>0:
             if discount<90:
                 Coupons.objects.create(coupon_code=coupon,valid_to=valid_to,discount=discount)
+            else:
+                messages.error(request,"Discount must be less than 90%")
+                return redirect(Add_coupons)
+        else:
+                messages.error(request,"Discount must be greater than 0%")
+                return redirect(Add_coupons)
 
     return render(request,'Offers/Add_coupon.html',{'coupons':coupons})
 
@@ -794,6 +804,9 @@ def Edit_Coupon(request,id):
         coupon=request.POST['code']
         valid_to=request.POST['validity']
         discount=request.POST['discount']
+        if Coupons.objects.exclude(id=id).filter(coupon_code=coupon).exists():
+            messages.info(request,"This Coupon already exists ")
+            return redirect(Edit_Coupon)
         discount=int(discount)
         if discount>0:
             if discount<90:

@@ -121,7 +121,7 @@
                                                 {% if product.discount_price > 0 %}
                                                 <span class="money"> <del>₹{{product.price}}</del> </span>
                                                 <br>
-                                                <span class="money">Offer ₹{{product.discount_price}}</span>
+                                                <span class="money">Discount : ₹{{product.discount_price}}</span>
                                                 {% else %}
                                                 <span class="money">₹{{product.price}}</span>
                                                 {% endif %}
@@ -162,7 +162,7 @@
                             </div>
                             <figure class="feature-product__image mb-sm--30">
                                 <a href="product-details.html">
-                                    <img src="{% static 'templateresources/assets/img/products/feature-product-01.png ' %}" alt="Feature Product">
+                                    <img src="{% static 'project/main1.webp ' %}" alt="Feature Product">
                                 </a>
                             </figure>
                         </div>
@@ -231,12 +231,20 @@
                                                 <div class="product-category">
                                                     <a href="{% url 'showParticularproducts' product.id %}"><b>{{product.product_name}}</b></a>
                                                 </div>
-                                                <h4 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_description}}</a></h4>
-                                                <p><a href="{% url 'showParticularproducts' product.id %}">{{product.product_long_description}}</a></p>
+                                                <!-- <h4 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_description}}</a></h4>
+                                                <p><a href="{% url 'showParticularproducts' product.id %}">{{product.product_long_description}}</a></p> -->
                                                 
                                                 <div class="product-info-bottom">
                                                     <div class="product-price-wrapper">
-                                                        <span class="money">Price:{{product.price}}</span>
+                                                        {% if product.discount_price > 0 %}
+                                                <span class="money"> <del>₹{{product.price}}</del> </span>
+                                                <br>
+                                                <span class="money">Offer ₹{{product.discount_price}}</span>
+                                                {% else %}
+                                                <span class="money">₹{{product.price}}</span>
+                                                {% endif %}
+
+
                                                     </div>
                                                     <a href="{% url 'AddToCart' product.id %}" class="add-to-cart pr--15">
                                                         <i class="la la-plus"></i>

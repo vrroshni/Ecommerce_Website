@@ -37,13 +37,6 @@ class Order(models.Model):
     is_ordered = models.BooleanField(default=False)
     
 
- 
-
-
-
-
-
-
 class Order_Product (models.Model):
     STATUS =(('Order Confirmed','Order Confirmed'),
                 ("Shipped","Shipped"),
@@ -58,9 +51,7 @@ class Order_Product (models.Model):
     status = models.CharField(max_length=100,choices=STATUS,default='Order Confirmed',null=True)
     quantity = models.IntegerField(null=True)
     product_price = models.FloatField(null=True)
-   
-   
-   
+  
     def __str__(self):
         return str(self.product)
 
