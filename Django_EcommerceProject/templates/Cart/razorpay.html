@@ -42,15 +42,15 @@
   right: 0;
 }
 </style>
-{% endblock %} {% block contentbody %}
+{% endblock %} 
+{% block contentbody %}
 <div class="row justify-content-center mt-5">
   <div class="col-4">
     <img class="img-fluid" src="{% static 'project/razor.png' %}" alt="" />
-    <!-- Set up a container element for the button -->
     <div>
       <form
         class="text-center border border-light p-5"
-        action="success"
+        action=""
         method="POST"
       >
         {% csrf_token %}
@@ -60,7 +60,7 @@
         <script
           src="https://checkout.razorpay.com/v1/checkout.js"
           data-key="rzp_test_4IGtVl9xeiuWPZ"
-          data-amount="50000"
+          data-amount="{{amount}}"
           data-currency="INR"
           data-order_id="{{payment.id}}"
           data-buttontext="Pay with Razorpay"

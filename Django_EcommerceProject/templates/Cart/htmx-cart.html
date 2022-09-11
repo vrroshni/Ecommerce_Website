@@ -49,10 +49,11 @@
 
                                                 <!-- <input type="number" class="quantity-input" name="qty" id="qty-1" value="1" min="1"> -->
                                                 <a
-                                                    hx-post="{% url 'DecreaseQty' i.product.id  %}">-&nbsp;</a>
+                                                    hx-post="{% url 'DecreaseQty' i.product.id  %}">-</a>
                                                     
-                                                    {{i.quantity}}<a
-                                                    hx-post="{% url 'IncreaseQty' i.product.id %}">&nbsp;+</a>
+                                                    {{i.quantity}}
+                                                    <a
+                                                    hx-post="{% url 'IncreaseQty' i.product.id %}">+</a>
 
                                             </td>
                                         </div>

@@ -19,7 +19,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 def vieworder_Details(request):
    user=request.user
    addressDetails = Address.objects.filter(user=user)
-   orderproductdetails=Order_Product.objects.filter(user=user)
+   orderproductdetails=Order_Product.objects.filter(user=user,order__is_ordered=True)
    return render(request,'Order/OrderDetails.html',{'OrderProductDetails':orderproductdetails,'AddressDetails':addressDetails})
 
 
@@ -138,84 +138,83 @@ def orderConfirmed(request):
 
  # -----------------------RazorPay paymentMethod ----------------------- #
 def razorPayPayment(request):
-        print("HI razor")
-        cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
-        global cartlist_items
-        cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
-        print(cart_itemsid)
-        print(cartlist_items)
-        cart_itemcount = cartlist_items.count()
-        print(cart_itemcount)
-        if request.user.is_authenticated:
-            total=0
-            quantity=0
-            count=0
-            rawtotal=0            
-            for i in cartlist_items:
-                    if i.product.discount_price>0:
-                        total+=(i.product.discount_price*i.quantity)
-                        count+=i.quantity
-                    else:
-                        total+=(i.product.price*i.quantity)
-                        count+=i.quantity
-                    rawtotal+=(i.product.price*i.quantity) 
-            print(rawtotal)#without discount    
-            subtotal=total
-            print('after discount')
-            print(subtotal)#with discount
-            tax = (2 * subtotal)/100
-            # alltotal=tax+subtotal#after having tax   
-            alltotal=request.session['Totalamount']
+    
+    print("HI razor")
+    cart_itemsid=Cart.objects.get(cart_id=create_cart_id(request))
+    global cartlist_items
+    cartlist_items=Cart_Products.objects.filter(cart=cart_itemsid,is_active=True)
+    print(cart_itemsid)
+    print(cartlist_items)
+    cart_itemcount = cartlist_items.count()
+    print(cart_itemcount)
+    if request.user.is_authenticated:
+        total=0
+        quantity=0
+        count=0
+        rawtotal=0            
+        for i in cartlist_items:
+                if i.product.discount_price>0:
+                    total+=(i.product.discount_price*i.quantity)
+                    count+=i.quantity
+                else:
+                    total+=(i.product.price*i.quantity)
+                    count+=i.quantity
+                rawtotal+=(i.product.price*i.quantity) 
+        print(rawtotal)#without discount    
+        subtotal=total
+        print('after discount')
+        print(subtotal)#with discount
+        tax = (2 * subtotal)/100
+        # alltotal=tax+subtotal#after having tax   
+        alltotal=request.session['Totalamount']
 
-            amount=int(alltotal)*100           
-            print(amount) 
+        amount=alltotal*100   
+        amount=int(amount)        
+        print(amount) 
 
-            global payment_obj
-            payment_obj=Payment()
-            payment_obj.user=request.user
-            payment_obj. payment_method="razorpay"
-            payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
-            payment_obj.date =date.today()
-            payment_obj.amount=alltotal
-            payment_obj.save()
-
-
-
+        global payment_obj
+        payment_obj=Payment()
+        payment_obj.user=request.user
+        payment_obj. payment_method="razorpay"
+        payment_obj.payment_id = str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+        payment_obj.date =date.today()
+        payment_obj.amount=alltotal
+        payment_obj.save()
 
 
-            global Obj_Order
-            Obj_Order=Order()
-            Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
-            Obj_Order.date =date.today()
-            Obj_Order.user=request.user
-            Obj_Order.total=alltotal
-            Obj_Order.address=addressdetails
-            Obj_Order.payment=payment_obj
-           
-           
-            Obj_Order.save()
 
-            for x in cartlist_items:
-                orderproduct = Order_Product()
-                orderproduct.user=request.user
-                orderproduct.order=Obj_Order
-                orderproduct.quantity =x.quantity
-                orderproduct.product=x.product
-                orderproduct.payment=payment_obj
-                orderproduct.product_price=x.product.price
-                orderproduct.save() 
-                product = Products.objects.get(id = x.product.id)
-                product.stock -= x.quantity
-                product.save()
-                
-            
-        if request.method == "POST":
 
-            client = razorpay.Client(auth=("rzp_test_4IGtVl9xeiuWPZ", "ryeb6ntUIE8KhmaWvGzyrBMH"))
-            payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
-            print(payment)
-            return render(request,'Cart/razorpay.html',{'payment': payment}) 
-        return render(request,'Cart/razorpay.html') 
+
+        global Obj_Order
+        Obj_Order=Order()
+        Obj_Order.order_id= str(int(datetime.datetime.now().strftime('%Y%m%d%H%M%S')))
+        Obj_Order.date =date.today()
+        Obj_Order.user=request.user
+        Obj_Order.total=alltotal
+        Obj_Order.address=addressdetails
+        Obj_Order.payment=payment_obj
+        
+        
+        Obj_Order.save()
+
+        for x in cartlist_items:
+            orderproduct = Order_Product()
+            orderproduct.user=request.user
+            orderproduct.order=Obj_Order
+            orderproduct.quantity =x.quantity
+            orderproduct.product=x.product
+            orderproduct.payment=payment_obj
+            orderproduct.product_price=x.product.price
+            orderproduct.save() 
+            product = Products.objects.get(id = x.product.id)
+            product.stock -= x.quantity
+            product.save()
+    if request.method == "POST":
+        client = razorpay.Client(auth=("rzp_test_4IGtVl9xeiuWPZ", "ryeb6ntUIE8KhmaWvGzyrBMH"))
+        print('hellooo')
+        payment = client.order.create({'amount': amount*100, 'currency': 'INR', 'payment_capture': '1'})        
+        return render(request,'Cart/razorpay.html',{'payment': payment,'amount':amount})   
+    return render(request,'Cart/razorpay.html',{'amount':amount}) 
 
 
 @csrf_exempt
@@ -223,8 +222,9 @@ def success(request):
     payment_obj.payment_status="Payment Succesfull"
     payment_obj.save(update_fields=['payment_status'])
     print('updated paymentstatus')
+    Obj_Order.status="Order Confirmed"
     Obj_Order.is_ordered=True
-    Obj_Order.save(update_fields=['is_ordered'])
+    Obj_Order.save(update_fields=['is_ordered','status'])
 
     cartlist_items.delete()
     print('deleted from cart')
@@ -330,7 +330,7 @@ def payPalPayment(request):
                 
             cartlist_items.delete()
             print('deleted from cart')
-            return render (request,'Cart/paypal.html',{'total':total,'order': order,'form': form})   
+            return render (request,'Cart/paypal.html',{'total':total,'order': order,'form': form,'Alltotal':alltotal})   
 
 
 
@@ -341,8 +341,9 @@ def payment_done(request):
     payment_obj.payment_status="Payment Succesfull"
     payment_obj.save(update_fields=['payment_status'])
     print('updated paymentstatus')
+    Obj_Order.status="Order Confirmed"
     Obj_Order.is_ordered=True
-    Obj_Order.save(update_fields=['is_ordered'])
+    Obj_Order.save(update_fields=['is_ordered','status'])
     cartlist_items.delete()
     print('deleted from cart')
     return render(request,"Order/Order_Confirm.html")
