@@ -20,14 +20,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cart/',include('Cart.urls')),
     path('', include('UserSide.urls')),
+    path('cart/',include('Cart.urls')),
     path('accounts/',include('Accounts.urls')),
     path('order/',include('Order.urls')),
     path('wishlist/',include('Wishlist.urls')),
-
     path('adminsite/',include('Admin.urls')),
     path('paypal/',include('paypal.standard.ipn.urls')),
-
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

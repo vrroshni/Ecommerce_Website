@@ -1,0 +1,123 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+Invoice
+{% endblock %}
+{% block externalLinks %}
+<style>
+.maindiv{
+    /* margin-top:10px;
+    background:rgb(242, 242, 242);   
+    border-radius: 10px; */
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
+}
+.label-success{
+    background-color: #2fbe55;
+    border-radius: 4px;
+}
+</style>
+{% endblock %}
+{% block contentbody %}
+<div class="container mt-5">
+<main class="main-content-wrapper ">
+    <div class="row">
+        <!-- Start .row -->
+        <div class="col-lg-6">
+            <!-- col-lg-6 start here -->
+            <div class="invoice-logo"><img width="100" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Invoice logo"></div>
+        </div>
+        <!-- col-lg-6 end here -->
+        <div class="col-lg-6 ">
+            <!-- col-lg-6 start here -->
+            <div class="invoice-from d-flex justify-content-end">
+                <ul class="list-unstyled text-right">
+                    <li>{{BillOrder.order.address.Buyername}}</li>
+                    <li>{{BillOrder.order.address.city}}</li>
+                    <li>{{BillOrder.order.address.state}}</li>
+                    <li>+{{BillOrder.order.address.phone_number}}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- col-lg-6 end here -->
+        <div class="col-lg-12">
+            <!-- col-lg-12 start here -->
+            <div class="invoice-details mt25">
+                <div class="well maindiv">
+                    <ul class="list-unstyled mb0">
+                        <li><strong>ORDER ID : </strong>{{BillOrder.order.order_id}}</li>
+                        <li><strong>ORDERED DATE : </strong>{{BillOrder.order.date}}</li>
+                        <li><strong>STATUS : </strong> <span class="label label-success text-light">{{BillOrder.status}}</span></li>
+                        <li><strong>PAYMENT METHOD : </strong> <span class="label label-success text-light">{{BillOrder.payment.payment_method}}</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="invoice-to mt25">
+                <ul class="list-unstyled">
+                    <li><strong>ORDERED ADDRESS</strong></li>
+                    <li>{{BillOrder.order.address.Buyername}}</li>
+                    <li>{{BillOrder.order.address.city}}</li>
+                    <li>{{BillOrder.order.address.state}}</li>
+                    <li>+{{BillOrder.order.address.phone_number}}</li>
+                </ul>
+            </div>
+            <div class="invoice-items">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="per70 text-center">Description</th>
+                                <th class="per5 text-center">Qty</th>
+                                <th class="per25 text-center">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in Fullproducts %}
+                            <tr>
+                                <td>{{i.product.product_name}}</td>
+                                <td class="text-center">{{i.quantity}}</td>
+                                <td class="text-center">₹ {{i.product.discount_price}}</td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-right">2% TAX:</th>
+                                <th class="text-center">{{Tax}}</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-right">Total:</th>
+                                <th class="text-center">₹ {{BillOrder.order.total}}</th>
+                            </tr>
+                            
+                            <!-- <tr>
+                                <th colspan="2" class="text-right">Credit:</th>
+                                <th class="text-center">$00.00 USD</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-right">Total:</th>
+                                <th class="text-center">$284.4.40 USD</th>
+                            </tr> -->
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="invoice-footer text-center">
+                <p class="text-center mt-5 ">Generated on {{Today}} </p>
+                <a href="#" class="btn btn-size-xxs"><i class="fa fa-print mt-2"></i> Print</a>
+            </div>
+        </div>
+        <!-- col-lg-12 end here -->
+    </div>
+    <!-- End .row -->
+</main>
+</div>
+
+{% endblock %}
+

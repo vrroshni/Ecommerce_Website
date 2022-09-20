@@ -79,8 +79,15 @@ class Productoffer(models.Model):
 
 class Coupons(models.Model):
     coupon_code=models.CharField(max_length=100)
+    description=models.CharField(max_length=100,null=True)
     valid_from=models.DateField(auto_now=True)
     valid_to=models.DateField(null=True)
     discount=models.IntegerField(null=True)
     is_active=models.BooleanField(default=True)
+    min_amount=models.IntegerField(null=True)
+    max_amount=models.IntegerField(null=True)
+
+class CouponUsedUsers(models.Model):
     user=models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
+    coupon=models.ForeignKey(Coupons,on_delete=models.CASCADE,null=True)
+    status=models.BooleanField(default=False)

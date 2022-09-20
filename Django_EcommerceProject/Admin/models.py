@@ -54,6 +54,7 @@ class Products(models.Model):
     product_long_description=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     discount_price=models.IntegerField(default=0)
+    discount_percentage=models.IntegerField(null=True)
     
     def __str__(self):
         return self.product_name

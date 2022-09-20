@@ -170,7 +170,7 @@ def date_range(request):
 @autheticatedfor_adminonly
 def userdata(request):
     data = Account.objects.all().order_by('id')
-    paginator=Paginator(data,per_page=3)
+    paginator=Paginator(data,per_page=10)
     page_number=request.GET.get('page')
     datafinal=paginator.get_page(page_number)
     totalpage=datafinal.paginator.num_pages
@@ -233,7 +233,7 @@ def AddCategory(request):
 @autheticatedfor_adminonly
 def ShowCategory(request):
     category=Categories.objects.all()
-    paginator=Paginator(category,per_page=3)
+    paginator=Paginator(category,per_page=10)
     page_number=request.GET.get('page')
     categoryfinal=paginator.get_page(page_number)
     totalpage=categoryfinal.paginator.num_pages
@@ -342,7 +342,7 @@ def Edit_CategoryOffer(request,id):
 # --------------------------- View category Offers --------------------------- #
 def View_CategoryOffers(request):
     CategoryOfferObj=Categoryoffer.objects.all()
-    paginator=Paginator(CategoryOfferObj,per_page=2)
+    paginator=Paginator(CategoryOfferObj,per_page=10)
     page_number=request.GET.get('page')
     CategoryOfferObjfinal=paginator.get_page(page_number)
     totalpage=CategoryOfferObjfinal.paginator.num_pages
@@ -417,7 +417,7 @@ def AddSubCategory(request):
 @autheticatedfor_adminonly
 def ShowSubCategory(request):
     subcategory=SubCategories.objects.all()
-    paginator=Paginator(subcategory,per_page=2)
+    paginator=Paginator(subcategory,per_page=10)
     page_number=request.GET.get('page')
     subcategoryfinal=paginator.get_page(page_number)
     totalpage=subcategoryfinal.paginator.num_pages
@@ -612,7 +612,7 @@ def AddProducts(request):
 @autheticatedfor_adminonly
 def ShowProducts(request):
      products=Products.objects.all()
-     paginator=Paginator(products,per_page=3)
+     paginator=Paginator(products,per_page=10)
      page_number=request.GET.get('page')
      productsfinal=paginator.get_page(page_number)
      totalpage=productsfinal.paginator.num_pages
@@ -732,7 +732,7 @@ def Edit_ProductOffer(request,id):
 # # --------------------------- View Product Offers --------------------------- #
 def View_ProductOffers(request):
     ProductOfferObj=Productoffer.objects.all()
-    paginator=Paginator(ProductOfferObj,per_page=2)
+    paginator=Paginator(ProductOfferObj,per_page=10)
     page_number=request.GET.get('page')
     ProductOfferObjfinal=paginator.get_page(page_number)
     totalpage=ProductOfferObjfinal.paginator.num_pages

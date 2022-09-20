@@ -1,0 +1,68 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block title %}
+{% endblock %}
+{% block externalLinks %}
+
+{% endblock %}
+{% block contentbody %}
+<section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">Cart</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><span>Cart</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb area End -->
+
+<!-- Main Content Wrapper Start -->
+<div class="main-content-wrapper">
+    <div class="page-content-inner ptb--80 pt-md--40 pb-md--60">
+        <div class="container" id="cartbox">
+            
+                {% include 'Cart/htmx-cart.html' %}
+
+                
+            
+
+
+
+            
+        </div>
+    </div>
+</div>
+<!-- Main Content Wrapper Start -->
+{% block CustomScripts %}
+<script type="text/javascript">
+    $('.show_confirm').click(function (event) {
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to Remove Product From Cart?`,
+            text: "If you remove this, You can add once again to cart.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
+    function button(){
+        event.preventDefault()
+        alert('helloooo')
+    }
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -6,6 +6,28 @@
 Checkout
 {% endblock %}
 {% block externalLinks %}
+<style>
+    .coupon-box .radio-icon-div .radio-icon {
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        float: left;
+    }
+
+    .coupon-box .custom-title span {
+        padding: 2px 10px;
+        border-width: 2px;
+        border-style: dashed;
+    }
+
+    .radio-icon-div ul {
+        list-style: none;
+    }
+    .sudoo > row {
+        --bs-gutter-x: 0px !important ; 
+
+    }
+</style>
 {% endblock %}
 {% block contentbody %}
 <!-- Breadcrumb area Start -->
@@ -27,32 +49,57 @@ Checkout
 <!-- Main Content Wrapper Start -->
 <div class="main-content-wrapper">
     <div class="page-content-inner pt--80 pt-md--60 pb--72 pb-md--60">
-        <div class="container">
-            <div class="row d-flex">
+        <div class="container sudoo">
+            <div class="row d-flex " >
                 <div class="col-xs-6 col-6">
                     <div class="row">
                         <div class="col-12">
                             <!-- User Action Start -->
                             <div class="user-actions user-actions__coupon">
                                 <div class="message-box mb--30">
-                                    <p><i class="la la-exclamation-circle"></i> Have A Coupon? <a class="expand-btn" href="#coupon_info"> Click Here To Enter Your Code.</a></p>
+                                    <p><i class="la la-exclamation-circle"></i> Have A Coupon? <a class="expand-btn"
+                                            href="#coupon_info"> Click Here To Enter Your Code.</a></p>
                                 </div>
-                                <div id="coupon_info" class="user-actions__form hide-in-default">
-                                    <form action="{% url 'apply_coupon' %}" method="post" class="form">
-                                        {% csrf_token %}
-                                        <p>If you have a coupon code, please apply it below.</p>
-                                        <div class="form__group d-sm-flex">
+                                <div id="coupon_info" class="user-actions__form hide-in-default ms-5">
+                                    <div class="coupon-box ">
 
-                                            <input type="text" name="code" id="coupon" class="form__input mr--20 mr-xs--0" placeholder="Coupon Code">
-                                            <button type="submit" class="btn btn-size-sm">Apply Coupon</button>
+                                        <form action="{% url 'apply_coupon' %}" method="POST">
+                                            <div class="row">
+
+                                            {% csrf_token %}
+                                            {% for i in coupon %}
+                                            <div class="radio-icon-div  col-4">
+                                                <div class="radio-icon">
+                                                    <input type="radio" value="{{i.coupon_code}}" name="code">
+                                                    <label class="radio-style" for="radio"></label>
+                                                </div>
+                                                <div class="radio-label-text">
+                                                    <div class="row">
+                                                        <h3 class="custom-title">
+                                                            <span>{{i.coupon_code}}</span>
+                                                        </h3>
+                                                        <h5 class="custom-desc">
+                                                            <ul>
+                                                                <li class="coupon-description">{{i.discount}}% off
+                                                                    on selected items</li>
+                                                                <li class="coupons-description">{{i.description}}</li>
+                                                            </ul>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
                                         </div>
-                                    </form>
+                                            <button type="submit" class="btn btn-size-sm" style="margin-left: 17vh;">Apply Coupon</button>
+                                        </form>
+                                    </div>
                                 </div>
+
                             </div>
                             <!-- User Action End -->
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-12">
                             <div class="form__group">
@@ -91,16 +138,15 @@ Checkout
                                                 <div class="form__group col-12">
                                                     <label for="billing_city" class="form__label">Town / City <span
                                                             class="required">*</span></label>
-                                                    <input type="text" name="city" id="billing_city"
-                                                        class="form__input" required>
+                                                    <input type="text" name="city" id="billing_city" class="form__input"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
                                                 <div class="form__group col-12">
                                                     <label for="billing_phone" class="form__label">pincode <span
                                                             class="required">*</span></label>
-                                                    <input type="text" name="pincode" 
-                                                        class="form__input" required>
+                                                    <input type="text" name="pincode" class="form__input" required>
                                                 </div>
                                             </div>
                                             <div class="row mb--20">
@@ -165,6 +211,7 @@ Checkout
                                     <tr>
                                         <th>Product</th>
                                         <th class="text-right">Total</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,14 +220,20 @@ Checkout
                                         <th>{{i.product.product_name}}
                                             <strong><span>&#10005;</span>{{i.quantity}}</strong>
                                         </th>
-                                        <td class="text-right">₹{{i.product.price|mul:i.quantity}} (₹{{i.product.price}}×{{i.quantity}})</td>
+                                        <td class="text-right">
+                                             ₹{{i.product.discount_price|mul:i.quantity|floatformat:1}}</b> </span> 
+                                            </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                                 <tfoot>
                                     <tr class="cart-subtotal">
                                         <th>Subtotal</th>
-                                        <td class="text-right">₹{{Subtotal}}</td>
+                                        <td class="text-right">₹{{Subtotal|floatformat:1}}</td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>Discount</th>
+                                        <td class="text-right">₹{{discount|floatformat:1}}</td>
                                     </tr>
                                     <tr class="shipping">
                                         <th>Tax</th>
@@ -191,15 +244,77 @@ Checkout
                                     </tr>
                                     <tr class="order-total">
                                         <th>Order Total</th>
-                                        <td class="text-right"><span class="order-total-ammount">₹
-                                                {{sessiontotal}}</span></td>
+                                        <td class="text-right"><span class="order-total-ammount text-danger fs-2">
+                                            <b>₹ {{sessiontotal|floatformat:1}} </b></span></td>
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div>
+
+                            </div>
+                            {% if walletstatus == None %}
+                            
+                            <form action="{% url 'UseWallet' %}" method="POST">
+                            <div class="coupon-box d-flex flex-column ">
+
+
+                                    {% csrf_token %}
+
+                                    <div class="radio-icon-div  col-4">
+                                        
+                                        <div class="radio-label-text">
+                                            <div class="row flex-column" >
+                                                <h3 class="custom-title">
+                                                    <img src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw" class="image-fluid" alt="wallet" style="width: 40px;" >
+                                                </h3>
+                                                <h5 class="custom-desc">
+                                                    <ul>
+                                                        <li class="coupon-description"> Available Balance On Wallet
+                                                           <b class="fs-3 font-weight-bold">{{wallet.balance}}</b>
+                                                        </li>
+                                                    </ul>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if wallet.balance > 0 %}
+
+                                    <button type="submit" class="btn btn-size-sm">Use Wallet</button>
+                                </div>
+                                {% endif %}
+                            </form>
+                            
+                            {% else %}
+                            <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
+                                <strong>Wallet Applied<span class="fs-2 ms-3 text-danger font-weight-bold">{{walletamount}}</span> Used from Wallet</strong>
+                                 
+                                <a class="close" href="{% url 'remove_wallet' %}">
+                                    <span aria-hidden="true">&times;</span>
+                                </a>
+                            </div>
+
+
+                            {% endif %}
+            
+                            {% if usedcoupon != None %}
+                            <div class="row">
+                            <div class="col-12">
+                                
+                                <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
+                                    <strong>Coupon Applied<span class="fs-2 ms-3 text-danger font-weight-bold">{{usedcoupon}}</span></strong>
+                                    <a class="close" href="{% url 'remove_coupon' %}">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                            {% endif %}
+                        
                         </div>
                         <hr>
 
-                        <div class="row">
+                        <div class="row" >
 
 
 
@@ -212,21 +327,21 @@ Checkout
 
                                     <p>choose from Address from Given Below.</p>
                                     <div class="form__group d-sm-flex">
-                                    <form action="{% url 'PlaceOrder' %}" method="POST" class="form">
-                                        {% csrf_token %}
+                                        <form action="{% url 'PlaceOrder' %}" method="POST" class="form">
+                                            {% csrf_token %}
                                             {% for i in AddressDetails %}
                                             <div class="card">
                                                 <div class="card-body">
                                                     <h2>{{i.Buyername}}</h2>
                                                     <p>{{i.Buyers_Address}}</p>
-                                                    <p> {{i.city}}</p> 
+                                                    <p> {{i.city}}</p>
                                                     <p> {{i.state}}- {{i.pincode}}</p>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="form-check mt-2 mb-5">
-                                                <input class="form-check-input" type="radio"  required name="addressUsed"
-                                                    value="{{i.id}}" >
+                                                <input class="form-check-input" type="radio" required name="addressUsed"
+                                                    value="{{i.id}}">
                                                 <label class="form-check-label fw-bold"
                                                     for="custadd{{forloop.counter}}">
                                                     Address: {{ forloop.counter }} </label>
@@ -236,47 +351,103 @@ Checkout
                                             <div class="checkout-payment">
                                                 <h2 class="text-center">Mode of Payment</h2>
                                                 <hr>
+                                                {% if walletstatus == 'used' %}
+
+                                                
+                                                <div class="payment-group mt--20">
+                                                    <input type="radio" value="wallet" name="payment-method" required >
+                                                    <label class="payment-label" for="cash">
+                                                        Amount Payed from Wallet
+                                                    </label>
+                                                    
+                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Proceed
+                                                        to checkout
+                                                    </button>
+                                                </div>
+                                                {% elif walletstatus == 'partiallyused' %}
+                                                <div class="payment-group mb--10">
+                                                    <div class="payment-radio">
+                                                        <input type="radio" value="RazorPay" name="payment-method"
+                                                            required checked>
+                                                        <label class="payment-label" for="RazorPay">RazorPay
+                                                        </label>
+                                                    </div>
+                                                    <div class="payment-info hide-in-default" data-method="bank">
+                                                        <p>Make your payment directly into our bank account. Please use
+                                                            your Order
+                                                            ID as the payment reference. Your order will not be shipped
+                                                            until the
+                                                            funds have cleared in our account.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-group mb--10">
+                                                    <div class="payment-radio">
+                                                        <input type="radio" value="PayPal" name="payment-method"
+                                                            required checked>
+                                                        <label class="payment-label" for="PayPal">PayPal
+                                                        </label>
+                                                    </div>
+                                                    <div class="payment-info hide-in-default" data-method="bank">
+                                                        <p>Make your payment directly into our bank account. Please use
+                                                            your Order
+                                                            ID as the payment reference. Your order will not be shipped
+                                                            until the
+                                                            funds have cleared in our account.</p>
+                                                    </div>
+                                                </div>
+
+
+                                                
+                                                <div class="payment-group mt--20">
+                                                    <p class="mb--15">Your personal data will be used to process your
+                                                        order, support
+                                                        your experience throughout this website, and for other purposes
+                                                        described in
+                                                        our privacy policy.</p>
+                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Proceed
+                                                        to checkout
+                                                    </button>
+                                                </div>
+                                                {% else %}
+                                                <div class="payment-group mb--10">
+                                                    <div class="payment-radio">
+                                                        <input type="radio" value="RazorPay" name="payment-method"
+                                                            required checked>
+                                                        <label class="payment-label" for="RazorPay">RazorPay
+                                                        </label>
+                                                    </div>
+                                                    <div class="payment-info hide-in-default" data-method="bank">
+                                                        <p>Make your payment directly into our bank account. Please use
+                                                            your Order
+                                                            ID as the payment reference. Your order will not be shipped
+                                                            until the
+                                                            funds have cleared in our account.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-group mb--10">
+                                                    <div class="payment-radio">
+                                                        <input type="radio" value="PayPal" name="payment-method"
+                                                            required checked>
+                                                        <label class="payment-label" for="PayPal">PayPal
+                                                        </label>
+                                                    </div>
+                                                    <div class="payment-info hide-in-default" data-method="bank">
+                                                        <p>Make your payment directly into our bank account. Please use
+                                                            your Order
+                                                            ID as the payment reference. Your order will not be shipped
+                                                            until the
+                                                            funds have cleared in our account.</p>
+                                                    </div>
+                                                </div>
+
 
                                                 <div class="payment-group mb--10">
                                                     <div class="payment-radio">
-                                                        <input type="radio" value="RazorPay" name="payment-method"  required
-                                                            checked>
-                                                        <label class="payment-label" for="RazorPay">RazorPay
-                                                            </label>
-                                                    </div>
-                                                    <div class="payment-info hide-in-default" data-method="bank">
-                                                        <p>Make your payment directly into our bank account. Please use
-                                                            your Order
-                                                            ID as the payment reference. Your order will not be shipped
-                                                            until the
-                                                            funds have cleared in our account.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="payment-group mb--10">
-                                                    <div class="payment-radio">
-                                                        <input type="radio" value="PayPal" name="payment-method" required
-                                                            checked>
-                                                        <label class="payment-label" for="PayPal">PayPal
-                                                            </label>
-                                                    </div>
-                                                    <div class="payment-info hide-in-default" data-method="bank">
-                                                        <p>Make your payment directly into our bank account. Please use
-                                                            your Order
-                                                            ID as the payment reference. Your order will not be shipped
-                                                            until the
-                                                            funds have cleared in our account.</p>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="payment-group mb--10">
-                                                    <div class="payment-radio">
-                                                        <input type="radio" value="cash" name="payment-method"
-                                                        required >
+                                                        <input type="radio" value="cash" name="payment-method" required>
                                                         <label class="payment-label" for="cash">
                                                             CASH ON DELIVERY
                                                         </label>
-                                                    </div> 
+                                                    </div>
                                                     <div class="payment-info cash hide-in-default" data-method="cash">
                                                         <p>Pay with cash upon delivery.</p>
                                                     </div>
@@ -287,9 +458,11 @@ Checkout
                                                         your experience throughout this website, and for other purposes
                                                         described in
                                                         our privacy policy.</p>
-                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Proceed to checkout
-                                        </button>
+                                                    <button type="submit" class="btn btn-size-md btn-fullwidth">Proceed
+                                                        to checkout
+                                                    </button>
                                                 </div>
+                                                {% endif %}
                                         </form>
                                     </div>
 

@@ -22,6 +22,7 @@ class Payment(models.Model):
         return str(self.payment_method)
 
 
+
  
 
 
@@ -38,7 +39,7 @@ class Order(models.Model):
     
 
 class Order_Product (models.Model):
-    STATUS =(('Order Confirmed','Order Confirmed'),
+    STATUS =(('Order Pending','Order Pending'),('Order Confirmed','Order Confirmed'),
                 ("Shipped","Shipped"),
                 ("Out for delivery","Out for delivery"),
                 ("Delivered","Delivered"),
@@ -48,12 +49,31 @@ class Order_Product (models.Model):
     user = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
     payment = models.ForeignKey(Payment,on_delete=models.CASCADE,null=True)
     product = models.ForeignKey(Products, on_delete=models.CASCADE,null=True)
-    status = models.CharField(max_length=100,choices=STATUS,default='Order Confirmed',null=True)
+    status = models.CharField(max_length=100,choices=STATUS,default='Order Pending',null=True)
     quantity = models.IntegerField(null=True)
     product_price = models.FloatField(null=True)
   
     def __str__(self):
         return str(self.product)
+
+class Wallet(models.Model):
+    user = models.ForeignKey(Account,on_delete=models.CASCADE)
+    amount=models.FloatField( max_length=15, null = True, default= 0 )
+    decription_amount=models.CharField(null=True,max_length=200)
+
+
+    def __str__(self):
+        return self.user.username
+class WalletDetails(models.Model):
+        user = models.ForeignKey(Account,on_delete=models.CASCADE)
+        balance = models.FloatField(max_length=15, null = True, default= 0 )
+        wallet=models.ForeignKey(Wallet,null=True,on_delete=models.CASCADE)
+
+
+
+
+
+
 
 
 

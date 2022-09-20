@@ -1,0 +1,24 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block title %}
+{% endblock %}
+{% block externalLinks %}
+
+{% endblock %}
+{% block contentbody %}
+<div class="main-content-wrapper">
+    <div class="page-content-inner ptb--80 pt-md--40 pb-md--60">
+        <div class="container">
+<div class="col-12" id="cat_htmx" hx-trigger="load, click delay:1s">
+    {% include "Cart/htmx-cart.html" %}
+
+    </div>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (evt)=> {
+           // evt.detail.parameters['auth_token'] = getAuthToken();  add a new parameter into the request
+             evt.detail.headers['X-CSRFToken'] = '{{csrf_token}}'; // add a new header into the request
+        });
+    </script>
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+{% endblock %}

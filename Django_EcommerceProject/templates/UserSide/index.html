@@ -20,12 +20,11 @@
                     }'
                     data-slick-responsive='[{"breakpoint": 768, "settings": {"arrows": false}}]'>
                         <div class="item">
-                            <div class="single-slide d-flex align-items-center " style="background-color: rgb(183 183 183);
-                        ">
+                            <div class="single-slide d-flex align-items-center " style=" background-color: rgb(247, 248, 249);">
                                 <div class="row align-items-center g-0 w-100">
                                     <div class="col-xl-7 col-md-6 mb-sm--50">
                                         <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="plr--15">
-                                            <img src="{% static 'project/main.png' %}" alt="Slider O1 image" class="mx-auto">
+                                            <img src="{% static 'banners/q5.jpg' %}" alt="Slider O1 image" class="mx-auto">
                                         </figure>
                                     </div>
                                     <div class="col-md-6 col-lg-5 offset-lg-1 offset-xl-0">
@@ -36,7 +35,7 @@
                                                 <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Heavenly Bakes </h1>
                                             </div>
                                             <div class="slider-content__btn">
-                                                <a href="#" class="btn btn-outline btn-brw-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
+                                                <a href="{% url 'Shop' %}" class="btn btn-outline btn-brw-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +47,7 @@
                                 <div class="row align-items-center g-0 w-100">
                                     <div class="col-xl-6 col-md-6 mb-sm--50 order-md-2">
                                         <figure data-animation="fadeInUp" data-duration=".3s" data-delay=".3s" class="pl-15 pr--60">
-                                            <img src="{% static 'project/main.png' %}" alt="Slider O1 image" class="mx-auto">
+                                            <img src="{% static 'banners/q3.jpg' %}" alt="Slider O1 image" class="mx-auto">
                                         </figure>
                                     </div>
                                     <div class="col-md-5 col-lg-5 offset-md-1 order-md-1">
@@ -59,7 +58,7 @@
                                                 <h1 class="heading__primary lh-pt7" data-animation="fadeInUp" data-duration=".3s" data-delay=".3s">Abotar Lighting</h1>
                                             </div>
                                             <div class="slider-content__btn">
-                                                <a href="#" class="btn btn-outline btn-brw-2 btn-brc-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
+                                                <a href="{% url 'Shop' %}" class="btn btn-outline btn-brw-2 btn-brc-2" data-animation="fadeInUp" data-duration=".3s" data-delay=".6s">Shop Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -100,6 +99,12 @@
                                     <div class="product-image">
                                         <figure class="product-image--holder">
                                             <img src="{{product.Product_image.url}}" alt="Product">
+                                            <span class="product-badge sale">
+                                                {% if product.discount_percentage > 0 %}
+                                                You Saved {{product.discount_percentage}}%
+                                                {% else %}
+                                                 On Sale
+                                                 {% endif %}</span>
                                         </figure>
                                         <a href="{% url 'showParticularproducts' product.id %}" class="product-overlay"></a>
                                         <div class="product-action">
@@ -117,11 +122,11 @@
                                     <div class="product-info plr--20">
                                         <h3 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}</a></h3>
                                         <div class="product-info-bottom">
-                                            <div class="product-price-wrapper">
+                                         <div class="product-price-wrapper">
                                                 {% if product.discount_price > 0 %}
-                                                <span class="money"> <del>₹{{product.price}}</del> </span>
-                                                <br>
-                                                <span class="money">Discount : ₹{{product.discount_price}}</span>
+                                                <span class="money text-dark fs-3"> <del>₹{{product.price}}</del> </span>
+                                                
+                                                <span class="money fs-2">₹{{product.discount_price}}</span>
                                                 {% else %}
                                                 <span class="money">₹{{product.price}}</span>
                                                 {% endif %}
@@ -153,12 +158,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="feature-product bg-color" data-bg-color="#d7fbf9">
-                        <div class="feature-product__inner bg-color" data-bg-color="#e9fefd">
+                    <div class="feature-product bg-color" data-bg-color=" rgb(247, 248, 249);" style=" background-color: rgb(247, 248, 249);">
+                        <div class="feature-product__inner bg-color" data-bg-color="#ffffff">
                             <div class="feature-product__info">
                                 <p class="hastag">#New choice</p>
                                 <h2 class="feature-product__title"><a href="product-details.html">Healthy taste</a></h2>
-                                <a href="shop.html" class="feature-product__btn">Buy now</a>
+                                <a href="{% url 'Shop' %}" class="feature-product__btn">Buy now</a>
                             </div>
                             <figure class="feature-product__image mb-sm--30">
                                 <a href="product-details.html">
@@ -187,15 +192,18 @@
                             <button type="button" class="nav-item nav-link active" id="new-all-tab" data-bs-toggle="tab" data-bs-target="#new-all" role="tab" aria-controls="new-all" aria-selected="true">
                                 <span class="nav-text">All</span>
                             </button>
-                            <button type="button" class="nav-item nav-link" id="new-wooden-tab" data-bs-toggle="tab" data-bs-target="#new-wooden" role="tab" aria-controls="new-wooden" aria-selected="false">
-                                <span class="nav-text">Fruits</span>
+                            {% for i in Categories %}
+                            
+                            <button type="button" class="nav-item nav-link" id="new-wooden-tab" data-bs-toggle="tab" data-bs-target="#new-wooden{{i.id}}" role="tab" aria-controls="new-wooden" aria-selected="false">
+                                <span class="nav-text">{{i.title}}</span>
                             </button>
-                            <button type="button" class="nav-item nav-link" id="new-furnished-tab" data-bs-toggle="tab" data-bs-target="#new-furnished" role="tab" aria-controls="new-furnished" aria-selected="false">
-                                <span class="nav-text">Milk Products</span>
+                            {% endfor %}
+                            <!-- <button type="button" class="nav-item nav-link" id="new-furnished-tab" data-bs-toggle="tab" data-bs-target="#new-furnished" role="tab" aria-controls="new-furnished" aria-selected="false">
+                                <span class="nav-text">Breads</span>
                             </button>
                             <button type="button" class="nav-item nav-link" id="new-table-tab" data-bs-toggle="tab" data-bs-target="#new-table" role="tab" aria-controls="new-table" aria-selected="false">
                                 <span class="nav-text">Sweets</span>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -213,10 +221,16 @@
                                             <div class="product-image">
                                                 <figure class="product-image--holder">
                                                     <img src="{{product.Product_image.url}}" alt="Product">
+                                                    <span class="product-badge sale">
+                                                        {% if product.discount_percentage > 0 %}
+                                                        You Saved {{product.discount_percentage}}%
+                                                        {% else %}
+                                                         On Sale
+                                                         {% endif %}</span>
                                                 </figure>
                                                 <a href="{% url 'showParticularproducts' product.id %}" class="product-overlay"></a>
                                                 <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn" href="{% url 'showParticularproducts' product.id %}">
+                                                    <a data-bs-toggle="modal" data-bs-target="#allproductModal{{product.id}}" class="action-btn" href="{% url 'showParticularproducts' product.id %}">
                                                         <i class="la la-eye"></i>
                                                     </a>
                                                     <a href="{% url 'AddtoWishlist' product.id %}" class="action-btn">
@@ -231,15 +245,15 @@
                                                 <div class="product-category">
                                                     <a href="{% url 'showParticularproducts' product.id %}"><b>{{product.product_name}}</b></a>
                                                 </div>
-                                                <!-- <h4 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_description}}</a></h4>
+                                                <!--  <h4 class="product-title"><a href="{% url 'showParticularproducts' product.id %}">{{product.product_description}}</a></h4>
                                                 <p><a href="{% url 'showParticularproducts' product.id %}">{{product.product_long_description}}</a></p> -->
                                                 
                                                 <div class="product-info-bottom">
                                                     <div class="product-price-wrapper">
                                                         {% if product.discount_price > 0 %}
-                                                <span class="money"> <del>₹{{product.price}}</del> </span>
-                                                <br>
-                                                <span class="money">Offer ₹{{product.discount_price}}</span>
+                                                <span class="money text-dark"> <del>₹{{product.price}}</del> </span>
+                                                
+                                                <span class="money "> ₹{{product.discount_price}}</span>
                                                 {% else %}
                                                 <span class="money">₹{{product.price}}</span>
                                                 {% endif %}
@@ -260,7 +274,95 @@
                                 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="new-wooden" role="tabpanel" aria-labelledby="new-wooden-tab">
+                        {% for product in products %}
+                        <!-- Qicuk View Modal End -->
+                        <div class="modal fade product-modal" id="allproductModal{{product.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-body">
+                                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-remove"></i></span>
+                                  </button>
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                          <div class="element-carousel slick-vertical-center"
+                                          data-slick-options='{
+                                              "slidesToShow": 1,
+                                              "slidesToScroll": 1,
+                                              "arrows": true,
+                                              "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-angle-double-left" },
+                                              "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-angle-double-right" }
+                                          }'
+                                          >
+                                              <div class="product-image">
+                                                  <div class="product-image--holder">
+                                                      <a href="product-details.html">
+                                                          <img src="{{product.Product_image.url}}" alt="Product Image" class="primary-image">
+                                                      </a>
+                                                  </div>
+                                                  <span class="product-badge sale">You Saved  {{product.discount_percentage}}% </span>
+                                              </div>
+                                              <div class="product-image">
+                                                  <div class="product-image--holder">
+                                                      <a href="product-details.html">
+                                                          <img src="{{product.Productimage_two.url}}" alt="Product Image" class="primary-image">
+                                                      </a>
+                                                  </div>
+                                                  <span class="product-badge sale">You Saved  {{product.discount_percentage}}% </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                          <div class="modal-box product-summary">
+                                              <div class="product-navigation text-right mb--20">
+                                                  <a href="#" class="prev"><i class="la la-angle-double-left"></i></a>
+                                                  <a href="#" class="next"><i class="la la-angle-double-right"></i></a>
+                                              </div>
+                                              <div class="product-rating d-flex mb--20">
+                                                  <div class="star-rating star-three">
+                                                      <span>Rated <strong class="rating">5.00</strong> out of 5</span>
+                                                  </div>
+                                              </div>
+                                              <h3 class="product-title mb--20">{{product.product_name}}</h3>
+                                              <p class="product-short-description mb--25">{{product.product_description}}.</p>
+                                              <div class="product-price-wrapper mb--25">
+                                                {% if product.discount_price > 0 %}
+                                                <span class="money "> <del>₹{{product.price}}</del> </span>
+                                                
+                                                <span class="money text-danger"> ₹{{product.discount_price}}</span>
+                                                {% else %}
+                                                <span class="money">₹{{product.price}}</span>
+                                                {% endif %}
+                                              </div>
+                                              
+                                              <div class="product-action d-flex flex-sm-row flex-column align-items-sm-center align-items-start mb--30">
+                                                  
+                                                  <a href=""><button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.location.href='cart.html'">
+                                                      Add To Cart
+                                                  </button></a>
+                                              </div>
+                                              <div class="product-footer-meta">
+                                                  <p><span>Category:</span>
+                                                    <a href="#">{{product.category}}</a>
+                                                      
+                                                  </p>
+                                                  <p><span>SubCategory:</span>
+                                                    <a href="#">{{product.subcategories}}</a>
+                                                      
+                                                  </p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Qicuk View Modal End -->
+                          {% endfor %}
+                        {% for i in Categories %}
+
+                        <div class="tab-pane fade" id="new-wooden{{i.id}}" role="tabpanel" aria-labelledby="new-wooden-tab">
                             <div class="row">
                                 <div class="col-lg-3 col-sm-6 mb--45">
                                     <div class="ft-product HTfadeInUp">
@@ -300,434 +402,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-01-270x300.jpg ' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-04-270x300.jpg ' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-06-270x300.jpg ' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                                
+                                
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="new-furnished" role="tabpanel" aria-labelledby="new-furnished-tab">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-02-270x300.jpg ' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-01-270x300.jpg ' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-05-270x300.jpg' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-03-270x300.jpg' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="new-table" role="tabpanel" aria-labelledby="new-table-tab">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-03-270x300.jpg' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-10-270x300.png' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-04-270x300.jpg' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb--45">
-                                    <div class="ft-product HTfadeInUp">
-                                        <div class="product-inner">
-                                            <div class="product-image">
-                                                <figure class="product-image--holder">
-                                                    <img src="{% static 'templateresources/assets/img/products/prod-03-270x300.jpg' %}" alt="Product">
-                                                </figure>
-                                                <a href="product-details.html" class="product-overlay"></a>
-                                                <div class="product-action">
-                                                    <a data-bs-toggle="modal" data-bs-target="#productModal" class="action-btn">
-                                                        <i class="la la-eye"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-heart-o"></i>
-                                                    </a>
-                                                    <a href="wishlist.html" class="action-btn">
-                                                        <i class="la la-repeat"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="product-category">
-                                                    <a href="product-details.html">Chair</a>
-                                                </div>
-                                                <h3 class="product-title"><a href="product-details.html">Golden Easy Spot Chair.</a></h3>
-                                                <div class="product-info-bottom">
-                                                    <div class="product-price-wrapper">
-                                                        <span class="money">$150</span>
-                                                    </div>
-                                                    <a href="cart.html" class="add-to-cart pr--15">
-                                                        <i class="la la-plus"></i>
-                                                        <span>Add To Cart</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -738,14 +421,12 @@
     <!-- Product Tab Area End -->
 
     <!-- Brand Logo Area Start -->
-                            </div>
-                        </div>
-                    </div></div></div></div></section>
-    <div class="brand-logo-area mb--80 mb-md--60">
+                            
+    <div class="brand-logo-area mb--80 mb-md--60" >
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-12">
-                    <div class="brand-log-wrapper bg-color ptb--75" data-bg-color="#e9fefd">
+                    <div class="brand-log-wrapper bg-color ptb--75" data-bg-color="rgb(247, 248, 249);" style=" background-color: rgb(247, 248, 249);">
                         <div class="element-carousel"
                         data-slick-options='{
                             "slidesToShow": 5,
@@ -759,27 +440,27 @@
                         ]'>
                             <div class="item">
                                 <figure>
-                                    <img src="{% static 'templateresources/assets/img/brand/brand-01.png' %}" alt="Brand" class="mx-auto">
+                                    <img src="{% static 'project/p1.jpeg' %}" alt="Brand" class="mx-auto" style="width:151px ; height: 140px; background-size: contain;">
                                 </figure>
                             </div>
                             <div class="item">
                                 <figure>
-                                    <img src="{% static 'templateresources/assets/img/brand/brand-02.png' %}" alt="Brand" class="mx-auto">
+                                    <img src="{% static 'project/p6.jpg' %}" alt="Brand" class="mx-auto" style="width:151px ; height: 140px;">
                                 </figure>
                             </div>
                             <div class="item">
                                 <figure>
-                                    <img src="{% static 'templateresources/assets/img/brand/brand-03.png' %}" alt="Brand" class="mx-auto">
+                                    <img src="{% static 'project/p5.jfif' %}" alt="Brand" class="mx-auto" style="width:151px ; height:140px;">
                                 </figure>
                             </div>
                             <div class="item">
                                 <figure>
-                                    <img src="{% static 'templateresources/assets/img/brand/brand-04.png' %}" alt="Brand" class="mx-auto">
+                                    <img src="{% static 'project/p11.jpg' %}" alt="Brand" class="mx-auto" style="width:151px ; height: 140px;">
                                 </figure>
                             </div>
                             <div class="item">
                                 <figure>
-                                    <img src="{% static 'templateresources/assets/img/brand/brand-05.png' %}" alt="Brand" class="mx-auto">
+                                    <img src="{% static 'project/p2.jpg' %}" alt="Brand" class="mx-auto" style="width:151px ; height: 140px;">
                                 </figure>
                             </div>
                         </div>
@@ -791,15 +472,15 @@
     <!-- Brand Logo Area End -->
 
     <!-- Best Sale Product Area Start -->
-    <section class="best-sale-product-area mb--75 mb-md--55">
+    <section class="best-sale-product-area mb--75 mb-md--55" >
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="best-sale-product bg-color" data-bg-color="#f7f8f9">
                         <div class="best-sale-product__inner bg-color" data-bg-color="#ffffff">
-                            <figure class="best-sale-product__img">
+                            <figure class="best-sale-product__img" class="img-fluid">
                                 <a href="product-details.html">
-                                    <img src="{% static 'templateresources/assets/img/products/best-product-01.png' %}" alt="Best Sale Product">
+                                    <img src="{% static 'project/b3.webp' %}" class="img-fluid" alt="Best Sale Product" style="width: 50vh; height:45vh">
                                 </a>
                             </figure>
                             <div class="best-sale-product__info">
@@ -807,16 +488,18 @@
                                     <span class="best-sale-product__heading--main">Best Sale</span>
                                     <span class="best-sale-product__heading--sub">Get Best Discount</span>
                                 </h2>
-                                <p class="best-sale-product__desc">It is a long established fact that a reader will be distracted by the readable content</p>
-                                <a href="shop.html" class="btn btn-outline btn-size-md btn-color-primary btn-shape-round btn-hover-2">Shop Now</a>
+                                <p class="best-sale-product__desc "> <span class="fs-2 ">Where dedication and perfection meet.</span>  <br>
+                                    Delivering happiness for over 50 years.
+                                </p>
+                                <a href="{% url 'Shop' %}" class="btn btn-outline btn-size-md btn-color-primary btn-shape-round btn-hover-2">Shop Now</a>
                             </div>
                         </div>
                         <figure class="best-sale-product__top-image">
-                            <img src="{% static 'templateresources/assets/img/others/1.png' %}" alt="bg image">
+                            <img src="{% static 'banners/q8.jpg' %}" alt="bg image" class="img-fluid" style="width: 23vh; height:30vh ;">
                         </figure>
                     </div>
                 </div>
-            </div> -->
+            </div> 
         </div>
     </section>
     <!-- Best Sale Product Area End -->
@@ -826,7 +509,7 @@
         <div class="container">
             <div class="row mb--35 mb-md--23">
                 <div class="col-12 text-center">
-                    <h2>News &amp; Updates</h2>
+                    <h2>Our Specials</h2>
                 </div>
             </div>
             <div class="row">
@@ -845,12 +528,12 @@
                                 <div class="blog__inner">
                                     <div class="blog__media">
                                         <figure class="image">
-                                            <img src="{% static 'templateresources/assets/img/blog/blog-01.jpg' %}" alt="Blog" class="w-100">
-                                            <a href="blog-details-image.html" class="item-overlay"></a>
+                                            <img src="{% static 'project/cake.jpg' %}" alt="Blog" class="w-100" style="width:41vh;height: 34vh;">
+                                            <a href="{% url 'Shop' %}" class="item-overlay"></a>
                                         </figure>
                                     </div>
                                     <div class="blog__info">
-                                        <h2 class="blog__title"><a href="blog-details-image.html">There are many variations of passages of Lorem.</a></h2>
+                                        <h2 class="blog__title"><a href="{% url 'Shop' %}">Bread and pastries made with the finest ingredients.</a></h2>
                                     </div>
                                 </div>
                             </article>
@@ -860,12 +543,12 @@
                                 <div class="blog__inner">
                                     <div class="blog__media">
                                         <figure class="image">
-                                            <img src="{% static 'templateresources/assets/img/blog/blog-02.jpg' %}" alt="Blog" class="w-100">
-                                            <a href="blog-details-image.html" class="item-overlay"></a>
+                                            <img src="{% static 'project/b2.webp' %}" alt="Blog" class="w-100" style="width:41vh;height: 34vh;">
+                                            <a href="{% url 'Shop' %}" class="item-overlay"></a>
                                         </figure>
                                     </div>
                                     <div class="blog__info">
-                                        <h2 class="blog__title"><a href="blog-details-image.html">There are many variations of passages of Lorem.</a></h2>
+                                        <h2 class="blog__title"><a href="{% url 'Shop' %}">We provide the best-tasting gluten-free baked goods.</a></h2>
                                     </div>
                                 </div>
                             </article>
@@ -875,12 +558,12 @@
                                 <div class="blog__inner">
                                     <div class="blog__media">
                                         <figure class="image">
-                                            <img src="{% static 'templateresources/assets/img/blog/blog-03.jpg' %}" alt="Blog" class="w-100">
-                                            <a href="blog-details-image.html" class="item-overlay"></a>
+                                            <img src="{% static 'project/p2.jpg' %}" alt="Blog" class="w-100" style="width:41vh;height: 34vh;">
+                                            <a href="{% url 'Shop' %}" class="item-overlay"></a>
                                         </figure>
                                     </div>
                                     <div class="blog__info">
-                                        <h2 class="blog__title"><a href="blog-details-image.html">There are many variations of passages of Lorem.</a></h2>
+                                        <h2 class="blog__title"><a href="{% url 'Shop' %}">Sweet and savory delicacies inspired by Italy’s numerous bakeries and patisseries.</a></h2>
                                     </div>
                                 </div>
                             </article>

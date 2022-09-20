@@ -8,6 +8,7 @@ Checkout
 {% block contentbody %}
 <div class=" text-center mt-5" >
 <p class="fs-1"><b> Your Order is confirmed</b></p>
+<a href="{% url 'Invoice' orderInvoice.id %}" class="btn my-5">View Invoice</a>
 <a href="{% url 'ViewOrderDetails' %}" class="btn my-5">View order Details</a>
 </div>
 {% endblock %}

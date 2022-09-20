@@ -14,7 +14,11 @@ urlpatterns = [
 
     path('address',views.add_address,name='AddressAdd'),
 
-    path('applycoupon',views.apply_coupon,name='apply_coupon')
+    path('applycoupon',views.apply_coupon,name='apply_coupon'),
+    path('removecoupon',views.remove_coupon,name='remove_coupon'),
+    path('add_cart_ajax/', views.add_cart_ajax, name="add_cart_ajax"),
+    path('minus_cart_ajax/', views.minus_cart_ajax, name="minus_cart_ajax"),
+
 
   
     

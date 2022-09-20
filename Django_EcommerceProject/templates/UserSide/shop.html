@@ -1,0 +1,300 @@
+{% extends 'UserSide/base_userside.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block externalLinks %}
+<style>
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 70%;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 1000px;
+        height: 5px;
+        background: #000000;
+        border: none;
+        border-radius: 3px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: rgb(0, 0, 0);
+        margin-top: -5px;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #000000;
+    }
+</style>
+{% endblock %}
+{% block contentbody %}
+<!-- Breadcrumb area Start -->
+<section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">Shop Left Sidebar</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="current"><span>Shop Left Sidebar</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb area End -->
+
+<!-- Main Content Wrapper Start -->
+<div class="main-content-wrapper">
+    <div class="shop-page-wrapper ptb--80">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8 order-lg-2 mb-md--50">
+                    <div class="shop-toolbar mb--50">
+                        <div class="row align-items-center">
+                            <!-- <div class="col-md-5 mb-sm--30 mb-xs--10">
+                                <div class="shop-toolbar__left">
+                                    <div class="product-ordering">
+                                        <select class="product-ordering__select nice-select">
+                                            <option value="0">Default Sorting</option>
+                                            <option value="1">Relevance</option>
+                                            <option value="2">Name, A to Z</option>
+                                            <option value="3">Name, Z to A</option>
+                                            <option value="4">Price, low to high</option>
+                                            <option value="5">Price, high to low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-md-7">
+                                <div
+                                    class="shop-toolbar__right d-flex justify-content-md-end justify-content-start flex-sm-row flex-column">
+                                    <p class="product-pages">Showing Result 08 Among 72</p>
+                                    <div class="product-view-mode ml--50 ml-xs--0">
+                                        <a class="active" href="#" data-target="grid">
+                                            <img src="{% static 'templateresources/assets/img/icons/grid.png' %}"
+                                                alt="Grid">
+                                        </a>
+                                        <a href="#" data-target="list">
+                                            <img src="{% static 'templateresources/assets/img/icons/list.png' %}"
+                                                alt="Grid">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-products">
+                        <div class="row">
+                            {% for product in Products %}
+
+                            <div class="col-xl-4 col-sm-6 mb--50">
+                                <div class="ft-product">
+                                    <div class="product-inner">
+                                        <div class="product-image">
+                                            <figure class="product-image--holder">
+                                                <img src="{{product.Product_image.url}}" alt="Product">
+                                                <span class="product-badge sale">
+                                                    {% if product.discount_percentage > 0 %}
+                                                    You Saved {{product.discount_percentage}}%
+                                                    {% else %}
+                                                     On Sale
+                                                     {% endif %}</span>
+
+                                            </figure>
+                                            <a href="{% url 'showParticularproducts' product.id %}"
+                                                class="product-overlay"></a>
+                                            <div class="product-action">
+                                                <a data-bs-toggle="modal" data-bs-target="#productModal"
+                                                    class="action-btn">
+                                                    <i class="la la-eye"></i>
+                                                </a>
+                                                <a href="{% url 'AddtoWishlist' product.id %}" class="action-btn">
+                                                    <i class="la la-heart-o"></i>
+                                                </a>
+                                                <a href="{% url 'AddToCart' product.id %}" class="action-btn">
+                                                    <i class="la la-repeat"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <!-- <div class="product-category">
+                                                <a href="#">{{product.category}}</a>
+                                            </div>
+                                            <div class="product-category">
+                                                <a href="#">{{product.subcategories}}</a>
+                                            </div> -->
+                                            <h3 class="product-title"><a
+                                                    href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}.</a>
+                                            </h3>
+                                            <div class="product-info-bottom">
+                                                <div class="product-price-wrapper">
+                                                    {% if product.discount_price > 0 %}
+                                                <span class="money text-dark fs-3"> <del>₹{{product.price}}</del> </span>
+                                                
+                                                <span class="money fs-2">₹{{product.discount_price}}</span>
+                                                {% else %}
+                                                <span class="money">₹{{product.price}}</span>
+                                                {% endif %}
+                                                </div>
+                                                <a href="{% url 'AddToCart' product.id %}" class="add-to-cart pr--15">
+                                                    <i class="la la-plus"></i>
+                                                    <span>Add To Cart</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ft-product-list">
+                                    <div class="product-inner">
+                                        <figure class="product-image">
+                                            <a href="product-details.html">
+                                                <img src="{{product.Product_image.url}}" alt="Products">
+                                                <span class="product-badge sale">
+                                                    {% if product.discount_percentage > 0 %}
+                                                    You Saved {{product.discount_percentage}}%
+                                                    {% else %}
+                                                     On Sale
+                                                     {% endif %}</span>
+                                            </a>
+                                            <div class="product-thumbnail-action">
+                                                <a data-bs-toggle="modal" data-bs-target="#productModal"
+                                                    class="action-btn quick-view">
+                                                    <i class="la la-eye"></i>
+                                                </a>
+                                            </div>
+                                        </figure>
+                                        <div class="product-info">
+                                            <h3 class="product-title mb--25">
+                                                <a href="{% url 'showParticularproducts' product.id %}">{{product.product_name}}</a>
+                                            </h3>
+
+                                            <div class="product-price-wrapper mb--15 mb-sm--10">
+                                                {% if product.discount_price > 0 %}
+                                                <span class="money text-dark fs-3"> <del>₹{{product.price}}</del> </span>
+                                                
+                                                <span class="money fs-2">₹{{product.discount_price}}</span>
+                                                {% else %}
+                                                <span class="money">₹{{product.price}}</span>
+                                                {% endif %}
+                                                
+                                            </div>
+                                            <p class="product-short-description mb--20">
+                                                {{product.product_long_description}}
+                                            </p>
+                                            <div class="ft-product-action-list d-flex align-items-center">
+                                                <a href="{% url 'AddToCart' product.id %}" class="btn btn-size-md">Add To Cart</a>
+                                                <a href="wishlist.html" class="ml--20 action-btn">
+                                                    <i class="la la-heart-o"></i>
+                                                </a>
+                                                <a href="wishlist.html" class="ml--20 action-btn">
+                                                    <i class="la la-repeat"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+
+
+
+
+                        </div>
+                    </div>
+                    <nav class="pagination-wrap">
+                        <ul class="pagination">
+                            <li><span class="page-number current">1</span></li>
+                            <li><a href="#" class="page-number">2</a></li>
+                            <li><span class="dot"></span></li>
+                            <li><span class="dot"></span></li>
+                            <li><span class="dot"></span></li>
+                            <li><a href="#" class="page-number">16</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-xl-3 col-lg-4 order-lg-1">
+                    <aside class="shop-sidebar" >
+                        <div class="shop-widget mb--40 p-5" style=" background-color: rgb(247, 248, 249);">
+                            <h3 class="widget-title mb--25">Category</h3>
+                            <ul class="widget-list category-list">
+                                <li>
+                                    <a href="{% url 'Shop' %}">
+                                        <span class="category-title">All</span>
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                {% for category in Categories %}
+                                <li>
+                                    <a href="{% url 'Shop' %}?category={{category.title}}">
+                                        <span class="category-title">{{category.title}}</span>
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                        <div class="shop-widget mb--40 p-5" style=" background-color: rgb(247, 248, 249);">
+                            <h3 class="widget-title mb--25">SubCategory</h3>
+                            <ul class="widget-list category-list">
+                                <li>
+                                    <a href="{% url 'Shop' %}">
+                                        <span class="category-title">All</span>
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                {% for subcategory in Subcategories %}
+                                <li>
+                                    <a href="{% url 'Shop' %}?subcategory={{subcategory.title}}">
+                                        <span class="category-title">{{subcategory.title}}</span>
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                        <div class="shop-widget mb--40 p-5" style=" background-color: rgb(247, 248, 249);">
+                            <div class="product-widget mb-30">
+                                <h3 class="widget-title mb--25">Filter By Price</h3>
+                                <div class="price__slider mt-30">
+                                    <input type="range" class="multi-range success" value="{{FilterPrice}}"
+                                        min="{{min_price.price__min}}" max="{{max_price.price__max}}" id="rangeInput"
+                                        oninput="maxPrice.value=this.value" width="400px;" />
+                                    <div>
+                                        <form action="" class="s-form mt-20" method="get">
+                                             <b>₹ <input type="number" id="maxPrice" readonly="" name="FilterPrice"
+                                                onkeyup="rangeInput.value=this.value"
+                                                value={{FilterPrice}}{{minMaxPrice.price__min}} style="border: none; border-width: 0;  box-shadow: none;" ></b>
+
+                                            <button type="submit" id="priceFilterBtn"
+                                                class="tp-btn-square-lg btn-dark btn-sm btn-block mt-2">Filter</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Content Wrapper Start -->
+{% endblock %}
+{% block CustomScripts %}
+{% endblock %}

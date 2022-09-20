@@ -4,7 +4,83 @@
 {% block title %}
 {% endblock %}
 {% block externalLinks %}
+<style>
+    .container-plus {
+      display: flex;
+      width: 100%;
+      ;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+    }
 
+    .quantity-plus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .quantity__minus,
+    .quantity__plus {
+      display: block;
+      width: 22px;
+      height: 31px;
+      margin: 0;
+      background: #dee0ee;
+      text-decoration: none;
+      text-align: center;
+      line-height: 23px;
+    }
+
+    .quantity__minus:hover,
+    .quantity__plus:hover {
+      background: #575b71;
+      color: #fff;
+    }
+
+    .quantity__minus {
+        border-top: 2px solid #dee0ee;
+      border-bottom: 2px solid #dee0ee;
+      border-left: 1px solid #dee0ee;
+      border-right: 2px solid #dee0ee;
+      background: #fff;
+      color: #8184a1;;
+    }
+
+    .quantity__plus {
+        border-top: 2px solid #dee0ee;
+      border-bottom: 2px solid #dee0ee;
+      border-left: 1px solid #dee0ee;
+      border-right: 2px solid #dee0ee;
+      background: #fff;
+      color: #8184a1;
+    }
+
+    .quantity__input {
+      width: 34px;
+      height: 31px;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      border-top: 2px solid #dee0ee;
+      border-bottom: 2px solid #dee0ee;
+      border-left: 1px solid #dee0ee;
+      border-right: 2px solid #dee0ee;
+      background: #fff;
+      color: #000000;
+    }
+
+    .quantity__minus:link,
+    .quantity__plus:link {
+      color: #8184a1;
+    }
+
+    .quantity__minus:visited,
+    .quantity__plus:visited {
+      color: #fff;
+    }
+  </style>
 {% endblock %}
 {% block contentbody %}
 <section class="page-title-area bg-image ptb--80" data-bg-image="assets/img/bg/page_title_bg.jpg">
@@ -21,20 +97,136 @@
     </div>
 </section>
 <!-- Breadcrumb area End -->
-
 <!-- Main Content Wrapper Start -->
 <div class="main-content-wrapper">
     <div class="page-content-inner ptb--80 pt-md--40 pb-md--60">
         <div class="container">
+            {% if Cart_items %}
+        <div class="row" >
+      
+                <div class="col-lg-8 mb-md--50" >
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="table-content table-responsive">
+                                <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                            <th>Product Image </th>
+                                            <th class="text-start">Product</th>
+                                            <th>price</th>
+                                            <th>quantity</th>
+                                            <th>total</th>
+                                        </tr>
+                                    </thead>
+                                    {% for i in Cart_items %}
+                                    <tbody>
+                                        <tr>
+                                            <!-- <td class="product-remove text-start"><a href="{% url 'DeleteFromCart' i.product.id %}"><i class="la la-remove"></i></a></td> -->
+                                            <td class="text-start">
+                                                <form method="POST" action="{% url 'DeleteFromCart' i.product.id %}">
+                                                    {% csrf_token %}
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <i type="submit"
+                                                        class=" la la-remove  show_confirm product-remove text-danger"
+                                                        data-toggle="tooltip" title='Delete'></i>
+                                                </form>
+                                            </td>
+                                            <td class="product-thumbnail text-start">
+                                                <img src="{{i.product.Product_image.url}}" alt="Product Thumnail">
+                                            </td>
+                                            <td class="product-name text-start wide-column">
+                                                <h3>
+                                                    <a href="{% url 'showParticularproducts' i.product.id  %}">
+                                                        {{i.product.product_name}}</a>
+                                                </h3>
+                                            </td>
+                                            <td class="product-price">
+                                                <span class="product-price-wrapper">
+                                                    <span class="money">₹{{i.product.price}}</span>
+                                                </span>
+                                            </td>
+                                            <div>
+                                            <td class="product-quantity">
+                                                         <div class=" d-flex justify-content-between">
+                                                         <button type="submit" onclick="minus({{i.id}})" class="quantity__minus m-1"><span>-</span></button>
+                                                         <input name="quantity" type="" id="{{i.id}}" class="quantity__input m-1" value="{{i.quantity}}">
+                                                        <button type="submit" onclick="add({{i.id}})" class="quantity__plus m-1"><span>+</span></button>
+                                                        </div>
+                                            </td>
+                                        </div>
+                                            <td class="product-total-price">
+                                                <span class="product-price-wrapper">
+                                                    <span class="money" name="producttotal" id="a{{i.id}}">₹{{i.product.discount_price|mul:i.quantity}}
+                                                        
+                                                    </span>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart-collaterals">
+                        <div class="cart-totals">
+                            <h5 class="font-size-14 font-bold mb--15">Cart totals</h5>
+                            <div class="cart-calculator">
+                                <div class="cart-calculator__item">
+                                    <div class="cart-calculator__item--head">
+                                        <span>Subtotal</span>
+                                    </div>
+                                    <div class="cart-calculator__item--value">
+                                        <span id="subtotal" >₹{{Subtotal}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="cart-calculator__item">
+                                    <div class="cart-calculator__item--head">
+                                        <span>Tax</span>
+                                    </div>
+                                    <div class="cart-calculator__item--value">
+                                        <span id="Tax">{{Tax}}</span>
+                                        <p>(Calculated Tax)</p>
+                                    </div>
+                                </div>
+
+                                <div class="cart-calculator__item order-total">
+                                    <div class="cart-calculator__item--head">
+                                        <span>Total</span>
+                                    </div>
+                                    <div class="cart-calculator__item--value">
+                                        <span class="product-price-wrapper">
+                                            <span class="money" id="Alltotal">₹ {{Total}}</span>
+
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'AddressAdd'%}" class="btn btn-size-md btn-shape-square btn-fullwidth">
+                            Proceed To Checkout
+                        </a>
+
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center m-4">
+                    <h1>Your Cart is Empty</h1>
+                    <a href="{% url 'Index'  %}"><button class="btn btn-size-md mt-2">Back to Home</button></a>
+                </div>
+    
+                {% endif %}
             
-                {% include 'Cart/htmx-cart.html' %}
+        </div>
 
-                
-            
-
-
-
-            
         </div>
     </div>
 </div>
@@ -47,7 +239,7 @@
         event.preventDefault();
         swal({
             title: `Are you sure you want to Remove Product From Cart?`,
-            text: "If you remove this, it need to be added once again to cart.",
+            text: "If you remove this, You can add once again to cart.",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -58,6 +250,93 @@
                 }
             });
     });
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function add(id) {
+            sendData();
+            function sendData() {
+            fetch('/cart/add_cart_ajax/', {
+                method: "POST",
+                headers: {
+                "Content-type": "application/jason",
+                "X-CSRFToken": csrftoken,
+                },
+                body: JSON.stringify({
+
+                id: id,
+
+
+                }),
+            })
+                .then(response => response.json())
+                .then((data) => {
+                document.getElementById(id).value = data.quantity;
+                document.getElementById('a'+data.id).innerHTML ='₹'+ data.producttotal;
+                document.getElementById('subtotal').innerHTML ='₹'+ data.Total;
+                document.getElementById('Tax').innerHTML = '₹'+data.Tax;
+                document.getElementById('Alltotal').innerHTML ='₹'+data.Alltotal;
+
+
+                });
+            }
+
+            // Replace the above to show a success message within this page, e.g.
+            // const element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '';
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+
+}
+function minus(id) {
+    minusData();
+    function minusData() {
+    fetch('/cart/minus_cart_ajax/', {
+        method: "POST",
+        headers: {
+        "Content-type": "application/jason",
+        "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify({
+
+        id: id,
+
+
+        }),
+    })
+        .then(response => response.json())
+        .then((data) => {
+        document.getElementById(id).value = data.quantity;
+        document.getElementById('a'+data.id).innerHTML ='₹'+ data.producttotal;
+        document.getElementById('subtotal').innerHTML ='₹'+ data.Total;
+        document.getElementById('Tax').innerHTML = '₹'+data.Tax;
+        document.getElementById('Alltotal').innerHTML ='₹'+data.Alltotal;
+
+
+        });
+}
+
+// Replace the above to show a success message within this page, e.g.
+// const element = document.getElementById('paypal-button-container');
+// element.innerHTML = '';
+// element.innerHTML = '<h3>Thank you for your payment!</h3>';
+// Or go to another URL:  actions.redirect('thank_you.html');
+
+}
+
 </script>
 {% endblock %}
 

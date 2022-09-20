@@ -17,6 +17,9 @@ urlpatterns = [
 
     # --------------------------- products in Userside --------------------------- #
     path('showparticularproducts/<int:id>',views.showParticularproducts,name='showParticularproducts'),
+    path('shop',views.shop,name='Shop'),
+    path('subshop',views.subshop,name='SubShop'),
+
     
 
     

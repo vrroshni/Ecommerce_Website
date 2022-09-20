@@ -69,10 +69,15 @@
                                                     
                                                 </li>
                                                 <li class="mainmenu__item menu-item-has-children megamenu-holder">
-                                                    <a href="{% url 'Index' %}" class="mainmenu__link">
+                                                    <a href="{% url 'Shop' %}" class="mainmenu__link">
                                                         <span class="mm-text">Shop</span>
                                                     </a>
                                                     
+                                                </li>
+                                                <li class="mainmenu__item">
+                                                    <a href="{% url 'ViewCart'%}" class="mainmenu__link">
+                                                        <span class="mm-text">Cart</span>
+                                                    </a>
                                                 </li>
                                                 {% if user.is_authenticated%}
                                                 <li class="mainmenu__item menu-item-has-children">
@@ -108,11 +113,7 @@
                                                         <span class="mm-text">Wishlist </span>
                                                     </a>
                                                 </li>
-                                                <li class="mainmenu__item">
-                                                    <a href="{% url 'ViewCart'%}" class="mainmenu__link">
-                                                        <span class="mm-text">Cart</span>
-                                                    </a>
-                                                </li>
+                                                
                                                 {% endif %}
                                                 {% if user.is_authenticated%}
                                                 <li class="mainmenu__item">
@@ -372,7 +373,7 @@
         <!-- OffCanvas Menu End -->
 
         <!-- Mini Cart Start -->
-        <aside class="mini-cart" id="miniCart">
+        <aside class="mini-cart" id="miniCart1">
             <div class="mini-cart-wrapper">
                 <div class="mini-cart__close">
                     <a href="#" class="btn-close"><i class="la la-remove"></i></a>
@@ -606,17 +607,17 @@
       })
     </script>
 
-
+<!-- 
     <script>
         window.setTimeout(function() {
             $(".alert").fadeTo(500, 0).slideUp(500, function(){
                 $(this).remove(); 
             });
         }, 1500);
-    </script>
+    </script> -->
 
     <!-- Main JS -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>

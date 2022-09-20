@@ -1,6 +1,6 @@
 {% load mathfilters %}
         {% if Cart_items %}
-        <div class="row"  id="tasks" hx-target="#tasks" hx-swap="outerHTML">
+        <div class="row" >
       
                 <div class="col-lg-8 mb-md--50" >
                     <div class="row g-0">
@@ -48,12 +48,18 @@
                                             <td class="product-quantity">
 
                                                 <!-- <input type="number" class="quantity-input" name="qty" id="qty-1" value="1" min="1"> -->
-                                                <a
-                                                    hx-post="{% url 'DecreaseQty' i.product.id  %}">-</a>
+                                                <span 
+                                                    hx-delete="{% url 'DecreaseQty' i.product.id  %}"
+                                                    hx-target="#cartbox"
+                                                    hx-swap="outerhtml"> -</span> <span class="m-3">
+                                                        
+                                                        {{i.quantity}}
+                                                        
+                                                    </span>
                                                     
-                                                    {{i.quantity}}
-                                                    <a
-                                                    hx-post="{% url 'IncreaseQty' i.product.id %}">+</a>
+                                                    <span
+                                                    hx-post="{% url 'IncreaseQty' i.product.id %}" hx-target="#cartbox"
+                                                    hx-swap="outerhtml"> +</span>
 
                                             </td>
                                         </div>
@@ -126,3 +132,4 @@
                 {% endif %}
             
         </div>
+        
