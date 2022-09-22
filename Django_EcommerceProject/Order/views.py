@@ -517,7 +517,7 @@ def success(request):
         wallet_balance_add.balance-=walletamount
         print(wallet_balance_add.balance,'afterwalletbalance...............')
         wallet_balance_add.save()
-        getwallet.decription_amount="debited for purchasing"
+        getwallet.decription_amount="Debited for purchasing"
         getwallet.amount=walletamount
         getwallet.save()
 
@@ -680,7 +680,7 @@ def payment_done(request):
         wallet_balance_add.balance-=walletamount
         print(wallet_balance_add.balance,'afterwalletbalance...............')
         wallet_balance_add.save()
-        getwallet.decription_amount="debited for purchasing"
+        getwallet.decription_amount="Debited for purchasing"
         getwallet.amount=walletamount
         getwallet.save()
     cartlist_items.delete()

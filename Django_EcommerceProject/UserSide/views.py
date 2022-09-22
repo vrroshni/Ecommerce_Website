@@ -1,4 +1,3 @@
-
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib import messages
@@ -240,6 +239,7 @@ def userProfileInfo(request):
             return redirect(userProfileInfo)
         user.save()
         return redirect(userProfileInfo)
+
     context={
         'user':user,
         'OrderProductDetails':orderproductdetails,
@@ -251,8 +251,8 @@ def userProfileInfo(request):
 
 
 def showParticularproducts(request,id):
-    allproducts=Products.objects.all()
     product=Products.objects.get(id=id)
+    allproducts=Products.objects.filter(category=product.category)
     return render(request,'UserSide/showParticularproducts.html',{'product':product,'Allproducts':allproducts})
     
 

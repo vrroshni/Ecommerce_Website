@@ -1,7 +1,4 @@
-from email.policy import default
 from django.db import models
-from django.urls import reverse
-
 # Create your models here.
 
 class Categories(models.Model):

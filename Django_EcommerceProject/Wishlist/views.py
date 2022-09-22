@@ -1,6 +1,3 @@
-from ast import Index
-from email import message
-from pyexpat.errors import messages
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from Admin.models import *
